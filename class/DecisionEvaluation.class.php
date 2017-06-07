@@ -1,9 +1,7 @@
-
 <?php
-
 /**
  * #####################################################################################################################
- * Copyright (C) 2016   Christian Mancosu, Christian Engelbert
+ * Copyright (C) 2017   Christian Mancosu, Christian Engelbert, Philip Stumpf
  * #####################################################################################################################
  * This file is part of AccessV2.
  *
@@ -25,15 +23,19 @@
 /**
  * Class DecisionEvaluation
  * @desc
- * This class gets the result, i.e. the evaluation, of the decision making process
- * and returns it to the calling class (DecisionMaking.class).
+ * This class gets the result, i.e. the evaluation, of the decision making process by calling the respective functions
+ * on Decision Controller and returns it to the calling class (DecisionMaking.class).
  */
 class DecisionEvaluation
 {
 	private $sessionController;
 	private $decisionController;
 
-	private $jsonArray;
+    private $featureArray;
+    private $subfeatureArray;
+    private $subfeatureOrArray;
+    private $compareArray;
+    private $emptyArray = array();
 
 	/**
 	 * DecisionEvaluation constructor.
@@ -43,11 +45,18 @@ class DecisionEvaluation
 		$this->sessionController = new SessionController();
 		$this->decisionController = new DecisionController();
 		$this->getParams();
-		$jsonString = json_encode($this->jsonArray);
-		$this->decisionController->logDecision($jsonString);
-		$output = json_encode($this->decisionController->getDecisionResult($this->jsonArray));
+
+		$output = json_encode($this->decisionController->getDecisionResult($this->featureArray, $this->subfeatureArray, $this->subfeatureOrArray));
 		$output .= '#';
 		$output .= json_encode($this->decisionController->getAuthenticationDescriptions());
+        $output .= '#';
+        $output .= json_encode($this->decisionController->getPerformances($this->compareArray));
+        $output .= '#';
+        $output .= json_encode($this->decisionController->getDecisionResult($this->featureArray, $this->compareArray, $this->emptyArray));
+        $output .= '#';
+        $output .= json_encode($this->decisionController->getFails($this->featureArray, $this->subfeatureArray, $this->subfeatureOrArray));
+
+
 		echo $output;
 	}
 
@@ -56,9 +65,12 @@ class DecisionEvaluation
 	 */
 	private function getParams()
 	{
-		if (isset($_POST["json"]))
+		if (isset($_POST["features"]))
 		{
-			$this->jsonArray = json_decode($_POST["json"], true);
+            $this->featureArray = json_decode($_POST["features"], true);
+            $this->subfeatureArray = json_decode($_POST["subfeatures"], true);
+            $this->subfeatureOrArray = json_decode($_POST["subfeaturesor"], true);
+            $this->compareArray = json_decode($_POST["compares"], true);
 		}
 	}
 

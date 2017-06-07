@@ -32,13 +32,13 @@
     <meta name="author" content="">
     <link rel="icon" href="img/favicon.ico">
     <title><? echo $data_pagetitle ?></title>
-    <!-- USED FRAMEWORKS AND RESPECTIVE STYLESHEETS-->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/jquery-ui.min.css" rel="stylesheet">
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery-ui.min.js"></script>
-    <!-- MAIN STYLESHEET -->
+    <script src="js/jquery.ui.touch-punch.min.js"></script>
+    <script src="js/chart.min.js"></script>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
     <link href="css/main.css" rel="stylesheet">
 </head>
 <body>

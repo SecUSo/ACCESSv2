@@ -1,7 +1,7 @@
 <?
 /**
  * #####################################################################################################################
- * Copyright (C) 2016   Thomas Weber
+ * Copyright (C) 2017   Thomas Weber, Philip Stumpf
  * #####################################################################################################################
  * This file is part of AccessV2.
  *
@@ -27,8 +27,8 @@
  *
  */
 define('DB_HOST', 'localhost');
-define('DB_USER', '');
+define('DB_USER', 'root');
 define('DB_PASSWORD', '');
-define('DB_DB', '');
+define('DB_DB', 'access');
 
 ?>

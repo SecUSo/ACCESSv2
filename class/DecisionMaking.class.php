@@ -1,7 +1,7 @@
 <?
 /**
  * #####################################################################################################################
- * Copyright (C) 2016   Christian Mancosu, Christian Engelbert
+ * Copyright (C) 2017   Christian Mancosu, Christian Engelbert, Philip Stumpf
  * #####################################################################################################################
  * This file is part of AccessV2.
  *
@@ -39,7 +39,7 @@ class DecisionMaking
      */
     private function initTemplate()
     {
-        $data_pagetitle = "ACCESS BASIC - DECISION"; // title must be dynamically changeable!
+        $data_pagetitle = "ACCESS - Decision Support"; // title must be dynamically changeable!
         $data_validSession = $this->sessionController->isSessionValid();
         $data_name = $this->sessionController->getName();
         $data_isAdmin = $this->sessionController->getIsAdmin();

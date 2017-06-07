@@ -1,275 +1,298 @@
-$(document).ready(function() {
-    malkeElementsDroppable();
-    toggleFolding();
-    sendConfiguration();
-    deselectCheckboxesOnClickOfClass0();
-    overlayReady();
-    deselectRadioButtons();
-    setHelpBoxHook();
-    var items = document.querySelectorAll(".fold_category");
-    for (var i = 0; i < items.length; i++) {
-            items[i].click();
-    }
-    var items = document.querySelectorAll(".fold_feature");
-    for (var i = 0; i < items.length; i++) {
-        items[i].click();
-    }
-});
+/**
+ * #####################################################################################################################
+ * Copyright (C) 2017   Philip Stumpf
+ * #####################################################################################################################
+ * This file is part of AccessV2.
+ *
+ * AccessV2 is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ * AccessV2 is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ *     along with AccessV2.  If not, see <http://www.gnu.org/licenses/>.
+ * #####################################################################################################################
+ **/
 
-function setHelpBoxHook(){
-    var helpBox = $('#helpBox');
+/**
+ * Base Javascript Class for Decision Making Platform
+ * Starts Decision Making and Returns Data in Tables and Graphics
+ */
 
-    $('.info-help').click(function(){
-        var helpBoxText = "<h3>"+$(this).attr('id')+"</h3><p>"+$(this).attr('title')+"</p>";
-        helpBox.html(helpBoxText);
-        document.getElementById('helpBox').style.display = "block";
-    });
+$(".showResult").on("click", function() {
+    // Initialize Variables
+    var featureArray = {};
+    var subFeatureArray = {};
+    var subFeatureOr = {};
+    var compareArray = {};
+    var counter = 0;
 
-    helpBox.click(function(){
-        document.getElementById('helpBox').style.display = "none";
-    });
-}
+    // Push Selected Features in List -> Same Value for Features in same bubble
+    $(".feature-list").each(function() {
+        var itemcounter = 0;
+        $(this).find( "li" ).each(function() {
+            featureArray[this.id] = [];
+            featureArray[this.id].push(counter);
+            itemcounter++;
+        });
+        if (itemcounter > 0) {
+            counter++;
+        }
+        });
 
-function overlayReady() {
-    $('#close').click(
-        function() {
-            $('#container').hide('slow',
-                function() {
-                    $('#overlay').fadeOut();
+    // Create List of Features and Subfeatures for Hard Constraints. Value ID=1 if Subfeature is in "and" Selection.
+    // Create Second List "or" with all "or"-Selection Pairs.
+    // Create Second List Compares without Selection to get a Evaluation Result with no filtered Authentication Systems for Comparison in Evaluation.
+
+    $("#subFeature-list> li").each(function() {
+        subFeatureArray[this.id] = [];
+        compareArray[this.id] = [];
+        subFeatureArray[this.id].push(1);
+        compareArray[this.id].push(1);
+        var subFeatures = {};
+        var compareSubFeatures = {};
+        $(".subfeature", this).each(function() {
+            if($(this).hasClass('and')) {
+                subFeatures[this.id] = 1;
+                compareSubFeatures[this.id] = 0;
+            } else {
+                subFeatures[this.id] = 0;
+                compareSubFeatures[this.id] = 0;
+                if($(this).hasClass('or')) {
+                    var pairs = {};
+                    var itemcounter = 0;
+                    var subID = $(this).id;
+                    $(this).find(".dropdown-toggle").each((function() {
+                        var selText = $(this).text();
+                        pairs[selText] = [];
+                        pairs[selText].push(1);
+                        itemcounter++;
+                    }));
+                    subFeatureOr[this.id] = [];
+                    subFeatureOr[this.id].push(pairs);
                 }
-            );
-        }
-    );
-}
-
-
-function toggleFolding() {
-
-    $(".fold_category").on("click", function() {
-        $(this).closest("div").children().not(".fold_category, .category_name").toggle("fold", {size:"50px"}, 500);
+            }
+        });
+        subFeatureArray[this.id].push(subFeatures);
+        compareArray[this.id].push(compareSubFeatures);
     });
 
-    $(".fold_feature").on("click", function() {
+    // Create JSON Arrays for Ajax Call
+    var features = JSON.stringify(featureArray);
+    var subfeatures = JSON.stringify(subFeatureArray);
+    var subfeaturesor = JSON.stringify(subFeatureOr);
+    var compares = JSON.stringify(compareArray);
 
-        $(this).closest("div").children().not(".fold_feature, .feature_name, .select-feat").toggle("fold", {size:"50px"}, 500);
-    });
-
-}
-
-function malkeElementsDroppable() {
-
-    $(".category_conatiner_DP").sortable(
-        {
-            items: ".category_DP"
-        }
-    );
-
-    $(".category_DP").sortable(
-        {
-            items: ".feature_DP"
-            //cancel: ["input.select-subfeat", "span.subfeat_name"]
-        }
-
-    );
-
-    $(".feature_DP").sortable(
-        {
-            items: ".subfeature_DP"
-        }
-
-    );
-
-    $('.category_conatiner_DP').disableSelection();
-
-}
-
-function sendConfiguration() {
-
-    $("#sendSelection").on("click", function() {
-        //createOrderedArrayOfSubfeatures();
-        createConfigurationObject();
-        console.log("fire");
-    });
-}
-
-function createConfigurationObject(){
-
-    /**
-     * Take all the children of type "div" of our container, these are the children of
-     * type category. Call the according function for taking the configuration of the
-     * Features/Subfeatures...
-     */
-
-    // create an array of strings containing the name of the subfeatre of a feature
-    var myConfiguration = {};
-
-    $("#category_container").children("div").each(function() {  // die children sind die Kategorien
-        //console.log("#" + this.id);
-        myConfiguration[this.id] = createOrderedArrayOfFeatures("#" + this.id);
-    });
-
-    var json = JSON.stringify(myConfiguration);
-    //console.log(json);
-    //console.log("READY");
+    // Start Ajax Call to Server where Decision Request is calculated
     $.ajax(
         {
             method: "POST",
             url: "?DecisionEvaluation",
             cache: false,
             data:
-            {
-                "json":json
-            }
+                {
+                    "features":features,
+                    "subfeatures":subfeatures,
+                    "subfeaturesor":subfeaturesor,
+                    "compares":compares
+                }
         }
     ).done(function(html) {
 
+        // Get Result Data
         var data = html.split('#');
-
+        //  Performance for Table
         var data_val = $.parseJSON(data[0]);
+        // Descriptions of Features
         var data_desc = $.parseJSON(data[1]);
+        // Perfomances for Each Feature of Authentication Systems for Graph
+        var data_perf = $.parseJSON(data[2]);
+        // Non Filtered Perfomances for Comparison
+        var data_compare = $.parseJSON(data[3]);
+        // FailureList
+        var data_fails = $.parseJSON(data[4]);
 
-        var resultTable = "<table><tr><th>Authentication Scheme</th><th>Performance</th></tr>";
 
+        // Create Result Table
+        var resultTable = "";
+        var compaererD = "";
         var i = 0;
 
         $.each(data_val, function(authName, performance) {
             if (i > 4) {
                 return false;
             }
-            resultTable += '<tr><td>' +
-                '<span class="glyphicon glyphicon-question-sign info-help" id="'+authName+'" title="'+data_desc[authName]+'"></span>' +
-                authName+"</td><td>"+performance+"</td></tr>";
+            resultTable += '<tr class="table-item"><td>' +
+                authName+'</td><td>'+performance+'</td><td><a href="?Content&id=' + data_desc[authName] + '" target="blank" style="font-size:22px">' +
+                '<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td></tr>';
             i++;
         } );
 
-        resultTable += "</table>";
+        resultTable += '<tr id="compare-item" class="hidden table-item"></tr>';
 
-        $('#overlay').show('slow',
-            function() {
-                $('#container').fadeIn('slow');
-                $('#changeText').html(resultTable);
-            }
-        );
+        // Last Table Entry for Comparison with other Autentication Systems
+        $.each(data_compare, function(authName) {
+                compaererD += '<li><a>' + authName + '</a></li>';
+            i++;
+        } );
 
-        setHelpBoxHook();
-        //console.log(html);
-    }).fail(function(xhr, status, error) {
-        console.error(xhr.responseText);
-    }
-    );
 
-}
+        $("#changeTable .table-item").remove();
+        $('#changeTable tr:first-child').after(resultTable);
+        $('#compare-dropdown li:first-child').after(compaererD);
 
-function createOrderedArrayOfFeatures(elementID) { // Übergebe Kategorie
 
-    /**
-     * Take the ID of a Feature and make an array of subfeatures, accordingly
-     */
-    var categoryFeatures = {};
-    var categorySubset = {};
 
-    $(elementID).children(".feature_DP").each(function() {
-        categoryFeatures[this.id] = [];
-        if ($("#"+this.id).children("[id^=IN_F_]").is(":checked")) {
-            categoryFeatures[this.id].push(1);
-        } else {
-            categoryFeatures[this.id].push(0);
+        var keys = [];
+        for (var key in featureArray) {
+                keys.push(key);
         }
-        //categoryFeatures[this.id].push($("#"+this.id).children("[id^=IN_F_]").is(":checked"));
-        categoryFeatures[this.id].push(createOrderedArrayOfSubfeatures("#"+this.id));
-    });
-    //console.log(categoryFeatures);
-    //var json = JSON.stringify(categoryFeatures);
-    return categoryFeatures;
-}
 
+        $('#myChart').remove(); // this is my <canvas> element
+        $('#changeChart').append('<canvas id="myChart"><canvas>');
 
-function createOrderedArrayOfSubfeatures(elementID) { // elementID ist ein Feature
-    //console.log($(elementID).attr("class"));
-    /**
-     * Declare an object we want to use for storage of subfeature names and values
-     */
-    var subFeatureArray = {};
-    /**
-     * Then:
-     * 1. get all the children of our feature here and iterate over them
-     * 2. using the id of the element, store it's value (i.e. if checked) during the iteration
-     * 3. return the result to the caller
-     */
-
-    /**
-     * Hier über die entsprechenden Kinder des aktuellen divs iterieren und direkt
-     * die entsprechenden Werte speichern.
-     */
-    $(elementID).children(".subfeature_DP, fieldset").each(function() {
-        //console.log($(this).children());
-        //console.log($(this).children("[id^=IN_SF_]"));
-        if($(this).prop("tagName") == "FIELDSET"){
-            //console.log("inside fieldset");
-            $(this).children("div").each(function() {
-                if ($(this).children("[id^=IN_SF_]").is(":checked")) {
-                    subFeatureArray[this.id] = 1;
-                } else {
-                    subFeatureArray[this.id] = 0;
+        // Generate Graph
+        var mDatasets = [];
+        var colors= ['#5DA5DA', '#FAA43A', '#60BD68', '#F17CB0', '#B2912F', '#B276B2',
+            '#DECF3F'];
+        var color_count = 0;
+        var count = 0;
+            for (var authenticationNameKey in data_val) {
+            if (count < 5) {
+                var values = [];
+                for (var featureNameKey in featureArray) {
+                        values.push(data_perf[authenticationNameKey][featureNameKey]);
                 }
-                //subFeatureArray[this.id] = $(this).children("[id^=IN_SF_]").is(":checked");
-            });
-        }else {
-            if ($(this).children("[id^=IN_SF_]").is(":checked")) {
-                subFeatureArray[this.id] = 1;
-            } else {
-                subFeatureArray[this.id] = 0;
+                var datasetObject = {};
+                    datasetObject['label'] = authenticationNameKey;
+                    datasetObject['data'] = values;
+                    datasetObject['backgroundColor'] = colors[color_count];
+                 color_count++;
+
+
+                mDatasets.push(datasetObject);
+                count++;
+                }
             }
-            //subFeatureArray[this.id] = $(this).children("[id^=IN_SF_]").is(":checked"); // attention: $(this).children can't be $('#'+this.id).children !!!
-        }
-    });
 
-    return subFeatureArray;
+        var ctx = document.getElementById('myChart').getContext('2d');
 
-}
+        var myChart = new Chart(ctx, {
+            type: "bar",
+            data: {
+                labels: keys,
+                datasets: mDatasets
 
-function deselectCheckboxesOnClickOfClass0() {
+            },
+            options: {
+                scales: {
+                    xAxes: [{
+                        ticks: {
+                            autoSkip: false,
+                            //maxRotation: 90,
+                            //minRotation: 90
+                        }
+                    }]
+                }
+            }
+        });
 
-    $(".selectability_2").on("click", "[id=IN_SF_0]", function() {
 
-        if ($(this).is(':checked')) {
-            $(this).closest("div").siblings().each(function() {
-                $(this).find("input").prop("checked", false);
-                $(this).find("input").attr("disabled", true);
+        // Create Table for Evaluation of Authentications that failed Hard Constraints
+        var resultTable2 = "";
+        $.each(data_compare, function(authName2) {
+            if (!(authName2 in data_val)) {
+                resultTable2 += '<tr class="table-item"><td>' +  authName2 + '</td><td>' + data_fails[authName2] + '</td><td><a href="?Content&id=' + data_desc[authName2] + '" target="blank" style="font-size:22px"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td></tr>';
+            }
+            i++;
+        } );
+
+        $('#changeTable2 tr:first-child').after(resultTable2);
+
+
+        // Show Result
+        $("#feature-selection").hide();
+        $("#subFeature-selection").hide();
+        $("#decisionResult").show();
+
+
+
+        var compareClicked = false;
+
+
+
+        // Compare other Authentications in Result Table
+        $("#compare-dropdown li").click(function(){
+            if (compareClicked == true) {
+                mDatasets.pop();
+            }
+            var tableRow = "";
+            tableRow += '<tr id="compare-item" style="color: #F15854;"><td>' +$(this).text()+
+                '</td><td >'+data_compare[$(this).text()]+'</td><td><a href="/" target="blank" style="font-size:22px">' +
+                '<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td></tr>';
+
+
+            $('#compare_name').html($(this).text());
+            $('#compare_perf').html(data_compare[$(this).text()]);
+            $("#compare_perf").removeClass("hidden");
+            $("#compare_info").removeClass("hidden");
+            $("#compare_info").attr("href", '?Content&id=' + data_desc[$(this).text()]);
+
+            $("#myChart").remove();
+            $("#changeChart").append( '<canvas id="myChart"></canvas>' );
+            var values = [];
+
+            for (var featureNameKey in featureArray) {
+                values.push(data_perf[$(this).text()][featureNameKey]);
+            }
+            var datasetObject = {};
+            datasetObject['label'] = $(this).text(),
+                datasetObject['data'] = values,
+                datasetObject['backgroundColor'] = '#F15854'
+
+
+            mDatasets.push(datasetObject);
+
+
+
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: "bar",
+                data: {
+                    labels: keys,
+                    datasets: mDatasets
+
+                },
+                options: {
+                    scales: {
+                        xAxes: [{
+                            ticks: {
+                                autoSkip: false,
+                                //maxRotation: 90,
+                                //minRotation: 90
+                            }
+                        }]
+                    }
+                }
             });
-        } else {
 
-            $(this).closest("div").siblings().each(function() {
-                $(this).find("input").removeAttr("disabled");
-            });
+            compareClicked = true;
 
+        });
+
+
+
+        // Ajax Error Handling
+    }).fail(function(xhr, status, error) {
+            console.error(xhr.responseText);
         }
-
-    });
-
-}
-
-
-function deselectRadioButtons() {
-    $("input[type=radio]").on("click", function() {
-        //var ID = $(this).attr("id");
-        //var id = '\''+ID+'\'';
-        console.log($(this).attr('id'));
-        if ($(this).attr('checked')) {
-            $(this).attr('checked', false);
-            //$(this).attr('previousValue', true);
-        } else {
-
-            $(this).attr('checked', true);
-            $(this).attr('previousValue', false);
-        }
-    });
-}
-
-
-
-
-
+    );
+});
 
 
 

@@ -2,7 +2,7 @@
 
 /**
  * #####################################################################################################################
- * Copyright (C) 2016   Christian Mancosu, Christian Engelbert
+ * Copyright (C) 2017   Christian Mancosu, Christian Engelbert, Philip Stumpf
  * #####################################################################################################################
  * This file is part of AccessV2.
  *
@@ -22,6 +22,15 @@
  **/
 
 
+
+/**
+ * DecisionController
+ * @desc Providing Main Functionality for ACCESSv2 Decision Making.
+ *
+ */
+
+
+
 /**
  * Class FeatureSet
  * @desc
@@ -36,10 +45,11 @@ class FeatureSet
 }
 
 /**
- * Class FeatureSet
+ * Class DecisionController
  * @desc
- * This class is the preparation for the decision making of the platform. It builds an array of categories, features
- * and subfeatures and their description. This array will
+ * This class is the Base Class for the Decision Making Process. It gets all Relevant Data from the Database and the
+ * User Input from Ajax Requests and Calculates the respective Decision Results. For Detailed Information see
+ * Function Documentation.
  */
 class DecisionController
 {
@@ -59,7 +69,6 @@ class DecisionController
      */
     public function getIndexContent()
     {
-        //$sqlData = "SELECT category, feature, subfeature FROM category_feature_subfeature";
         $sqlData = "SELECT   category
                             ,feature
                             ,subfeature
@@ -122,7 +131,7 @@ class DecisionController
         $query = "
             SELECT 
                 a.name as name,
-                i.description as description
+                i.id as idnr
             FROM
                 auth_authentications a
             LEFT JOIN auth_info i
@@ -132,7 +141,7 @@ class DecisionController
         $result = $this->dbController->secureGet($query);
 
         foreach($result as $row){
-            $output[$row['name']] = $row['description'];
+            $output[$row['name']] = $row['idnr'];
         }
 
         return $output;
@@ -170,7 +179,7 @@ class DecisionController
      * @desc
      * Gets all the subfeatures and it's description from the database and returns it
      * as an array.
-     * @return array - an array of names of subfeatures and the corresponding descriptions
+     * @return array - an array of names of Subfeatures and the corresponding descriptions
      */
     public function getSubFeatureDescriptions()
     {
@@ -262,7 +271,6 @@ class DecisionController
 
                     ORDER BY auth_name, feat_name asc";
 
-        //print_r($query);
         $queryResult = $this->dbController->secureGet($query);
 
         $tempOutput = array();
@@ -270,25 +278,29 @@ class DecisionController
         foreach($queryResult as $row)
         {
             $tempOutput[$row['auth_name']][$row['feat_name']]['performance'] = $row['performance_val'];
-            $tempClassNameArray = explode('+', $row['class_name']); // BOOOOOOOOOOOOOOM!
+            $tempClassNameArray = explode('+', $row['class_name']);
             sort($tempClassNameArray);
-            $tempClassName = implode('+', $tempClassNameArray); // SORRY TOO LATE, WE'RE DUMB xD
+            $tempClassName = implode('+', $tempClassNameArray);
             $tempOutput[$row['auth_name']][$row['feat_name']]['class_name'] = $tempClassName;
 
         }
-
-        //print_r($tempOutput);
 
         foreach($tempOutput as $authName => $featureArray)
         {
             $tempBool = true;
 
             foreach ($classSelection as $inputFeatureName => $inputClassName) {
-                if ($inputClassName != $featureArray[$inputFeatureName]['class_name'] && $inputClassName != '+') {
-                    $tempBool = false;
-                    break;
+                if ($inputClassName != '+') {
+                    $inputtemp = explode('+', $inputClassName);
+                    $databasetemp = explode('+', $featureArray[$inputFeatureName]['class_name']);
+                    foreach ($inputtemp as $key) {
+                        if(!(in_array($key,$databasetemp))) {
+                            $tempBool = false;
+                        }
+                    }
                 }
             }
+
             if ($tempBool)
             {
                 foreach ($featureArray as $featureName => $classArray)
@@ -298,92 +310,57 @@ class DecisionController
             }
         }
 
-
-
-        //print_r($result);
-
         return $result;
     }
 
     /**
      * @desc
-     * This function gets a configuration of categories, features and subfeatures and returns an
-     * evaluation result, according to the AHP calculation method.
+     * This function gets a configuration of Features and Two Arrays of Subfeatures (And and Or) and returns the
+     * Evaluation Result based on Calculation Method
      *
-     * @param $decisionConfiguration - the current configuration of the user for the decision making
      * @return array - array with the results of the evaluation of the decision making
      */
-    public function getDecisionResult($decisionConfiguration)
+    public function getDecisionResult($featureArray, $subFeatureArray, $subFeatureArrayOr)
     {
-        //print_r($decisionConfiguration);
-        // make fancy things here
-        $tempResult = array();
-        $result = array();
 
-        foreach ($decisionConfiguration as $featureArray)
-        {
-            //$tempResult[] = $featureArray;
-            foreach (array_keys($featureArray) as $keyname)
-            {
-                $tempFeatureSet = new FeatureSet();
-                $tempFeatureSet->name = $keyname;
-                if($featureArray[$keyname][0] == 1)
-                {
-                    $tempFeatureSet->checked = true;
-                } else {
-                    $tempFeatureSet->checked = false;
-                }
+        $result = $this->calculatePriorityValuesForCategory($featureArray);
 
-                $tempResult[] = $tempFeatureSet;
-            }
 
-            $result = array_merge($result, $this->calculatePriorityValuesForCategory($tempResult));
-            unset($tempResult);
-            $tempResult = array();
+        $authSystemPerformances = $this->getAuthSystemPerformances($this->getSubFeatureConfiguration($subFeatureArray));
 
-        }
+        if (!empty($subFeatureArrayOr)) {
+            foreach ($subFeatureArrayOr as $subFeatName1 => $subFeatPairs) {
 
-        //print_r($tempResult);
-        //print_r($result);
-
-        $inputData = array();
-
-        foreach ($decisionConfiguration as $featureArray)
-        {
-            foreach (array_keys($featureArray) as $featureName)
-            {
-                $tempArray = $featureArray[$featureName][1];
-                $tempString = "";
-                $tempStringArray = array();
-                foreach ($tempArray as $subFeatName => $value)
-                {
-                    if ($value == 1)
-                    {
-                        $tempStringArray[] = $subFeatName;
+                $subFeatureArray2 = $subFeatureArray;
+                foreach (array_keys($subFeatureArray) as $featureName) {
+                    $tempArray = $subFeatureArray[$featureName][1];
+                    foreach ($tempArray as $subFeatName => $value) {
+                        if ($subFeatName1 == $subFeatName) {
+                            $subFeatureArray2[$featureName][1][$subFeatName] = 1;
+                        }
                     }
                 }
-                if (sizeof($tempStringArray) > 0)
-                {
-                    sort($tempStringArray);
-                    foreach ($tempStringArray as $classNameSubstring)
-                    {
-                        $tempString .= $classNameSubstring.'+';
+                $authSystemPerformances1 = $this->getAuthSystemPerformances($this->getSubFeatureConfiguration($subFeatureArray2));
+
+                foreach (array_keys($subFeatPairs[0]) as $subFeatName2) {
+                    $subFeatureArray3 = $subFeatureArray;
+                    foreach (array_keys($subFeatureArray) as $featureName) {
+                        $tempArray = $subFeatureArray[$featureName][1];
+                        foreach ($tempArray as $subFeatName => $value) {
+                            if ($subFeatName2 == $subFeatName) {
+                                $subFeatureArray3[$featureName][1][$subFeatName] = 1;
+                            }
+                        }
                     }
-                    $tempString = substr($tempString, 0, -1);
-                } else {
-                    $tempString = '+';
+                    $authSystemPerformances2 = $this->getAuthSystemPerformances($this->getSubFeatureConfiguration($subFeatureArray3));
+
+                    $authSystemPerformancesTEST = array_merge($authSystemPerformances1, $authSystemPerformances2);
+                    $authSystemPerformances = array_intersect_key($authSystemPerformances, $authSystemPerformancesTEST);
+
                 }
-
-                $inputData[$featureName] = $tempString;
-                unset($tempStringArray);
-
             }
-
         }
 
-        $authSystemPerformances = $this->getAuthSystemPerformances($inputData);
-
-        //print_r($authSystemPerformances);
 
         $output = array();
 
@@ -393,122 +370,358 @@ class DecisionController
 
             foreach($featureArray as $authFeatureName => $dbPerformance)
             {
-                $tempVal += $dbPerformance * $result[$authFeatureName];
+                if (isset($result[$authFeatureName])) {
+                    $tempVal += $dbPerformance * $result[$authFeatureName];
+                }
             }
 
             $output[$authName] = $tempVal;
         }
 
-        //sort($output);
-
         array_reverse($output);
 
         arsort($output);
 
-        //print_r($output);
 
         return $output;
     }
 
+
     /**
      * @desc
-     * Algorithm for the calculation of the priority values of a category
-     * 0. Declare and initiate a counter c with value 0 and a counter elem with value 0
-     * 1. Determine the length l of the given array of features of our category
-     * 2. The first element (either checked or not) gets the value l
-     * 3. If the next feature f is not selected:
-     *      If the feature f - 1 (i.e. the feature before) is unselected:
-     *          If the feature f - 1 has a value:
-     *              The current feature f at position p gets the value of the feature f - 1
-     *          If the feature f - 1 has no value:
-     *              Add 1 to elem
-     *              Add l - p to c
+     * This function gets a Set of selected and unselected SubFeatures and returns a combination of the selected
+     * Subfeatures as Class Name for Extraction of Database Values
      *
-     *      If the feature f - 1 (i.e. the feature before) is selected:
-     *          Add 1 to elem
-     *          Add l - p to c
+     * @param $subFeatureArray - the current configuration of SubFeatures
+     * @return outputData - array with combined, set Subfeatures
+     */
+
+    public function getSubFeatureConfiguration($subFeatureArray)
+    {
+        $outputData = array();
+        foreach (array_keys($subFeatureArray) as $featureName)
+        {
+            $tempArray = $subFeatureArray[$featureName][1];
+            $tempString = "";
+            $tempStringArray = array();
+            foreach ($tempArray as $subFeatName => $value)
+            {
+                if ($value == 1)
+                {
+                    $tempStringArray[] = $subFeatName;
+                }
+            }
+            if (sizeof($tempStringArray) > 0)
+            {
+                sort($tempStringArray);
+                foreach ($tempStringArray as $classNameSubstring)
+                {
+                    $tempString .= $classNameSubstring.'+';
+                }
+                $tempString = substr($tempString, 0, -1);
+            } else {
+                $tempString = '+';
+            }
+
+            $outputData[$featureName] = $tempString;
+            unset($tempStringArray);
+
+        }
+
+
+        return $outputData;
+    }
+
+    /**
+     * @desc
+     * This function gets Set of Features and Returns the Perfomances for Given Features from Database, without checking
+     * Subfeature Configuration, used mainly for comparison
      *
-     *    If the next feature f is selected:
-     *      For every unchecked element before
-     *          If it has no value:
-     *              Set it's value to c / elem
-     *          If it has a value:
-     *              proceed
-     *      The current feature f at list position p gets as value l - the current position p, where l is the lenght of the list
-     *      The counter c will be set back to 0
-     *      The counter elem will be set back to 0
-     *
-     * 4. Calculate the overall sums by normalizing the values (= value of position p divided by l)
-     *
+     * @param $featureArray - the current configuration of the user for the decision making
+     * @return $authSystemPerformances - array with the rrespective Perfomances
+     */
+    public function getPerformances($featureArray)
+    {
+
+        $inputData = array();
+
+        foreach (array_keys($featureArray) as $featureName)
+        {
+            $tempArray = $featureArray[$featureName][1];
+            $tempString = "";
+            $tempStringArray = array();
+            foreach ($tempArray as $subFeatName => $value)
+            {
+                if ($value == 1)
+                {
+                    $tempStringArray[] = $subFeatName;
+                }
+            }
+            if (sizeof($tempStringArray) > 0)
+            {
+                sort($tempStringArray);
+                foreach ($tempStringArray as $classNameSubstring)
+                {
+                    $tempString .= $classNameSubstring.'+';
+                }
+                $tempString = substr($tempString, 0, -1);
+            } else {
+                $tempString = '+';
+            }
+
+            $inputData[$featureName] = $tempString;
+            unset($tempStringArray);
+
+        }
+
+        return $authSystemPerformances = $this->getAuthSystemPerformances($inputData);
+    }
+
+
+
+    /**
+     * @desc
+     * Algorithm for the calculation of the priority values of Feature Configuration
      * @param $featureArray - numeric array of type FeatureSet
-     *
-     * @return $result - associative array containing the feature name as key and it's priority value as value
+     * @return output - associative array containing the feature name as key and it's priority value as value
      */
     public function calculatePriorityValuesForCategory($featureArray)
     {
-        //print_r($featureArray);
-        $c = 0;
-        $elem = 0;
-        $result = array();
-        $uncheckedElements = array();
-        $lastElement = null;
 
-        $l = sizeof($featureArray);
-
-        foreach($featureArray as $position => $featureSet)
+        $input = array();
+        foreach (array_keys($featureArray) as $keyname)
         {
-            if ($position == 0)
-            {
-                $result[$featureSet->name] = $l;
-                $lastElement = $featureSet;
-                continue;
+            $input[$keyname] = $featureArray[$keyname][0];
+        }
+
+
+        $occurences = array_count_values($input);
+        $l = sizeof($input);
+        $iterator = 0;
+        $output = array();
+
+/*
+       // SIMPLE METHOD (Count Bubbles and give all Features in Bubble Same Value starting with highest)
+       $maxValue = end($input) + 1;
+
+        foreach ($input as $key => $value) {
+
+
+            $equals = $occurences[$value];
+            for ($i = 0; $i < $equals; $i++) {
+                $output[$key] = $maxValue;
+            }
+            $iterator++;
+            if ($iterator == $occurences[$value]) {
+                $maxValue = $maxValue - 1;
+                $iterator = 0;
             }
 
-            if ($featureSet->checked)
-            {
-                $result[$featureSet->name] = $l - $position;
-                if ($elem > 0)
-                {
-                    $valueForUncheckedElements = $c / sizeof($uncheckedElements);
-                    foreach($uncheckedElements as $element)
-                    {
-                        $result[$element->name] = $valueForUncheckedElements;
+        }
+*/
+
+        foreach ($input as $key => $value)  {
+
+            $output[$key] = 0;
+
+            $equals = $occurences[$value];
+            for ($i = 0; $i < $equals; $i++) {
+                $output[$key] =  $output[$key] + ($l - $i);
+            }
+
+            $iterator++;
+            $output[$key] = $output[$key] / $occurences[$value];
+            if ($iterator == $occurences[$value]) {
+                $l = $l -  $occurences[$value];
+                $iterator = 0;
+            }
+        }
+
+
+        $baseForNormalization = array_sum($output);
+        foreach ($output as $position => $value)
+        {
+            $output[$position] = $value / $baseForNormalization;
+        }
+
+
+        return $output;
+
+    }
+
+
+
+    /**
+     * @desc
+     * This function Gets a Array of Features and Subfeatures and Which Authentications fail on HardConstraint
+     * for selected KNF-Configuration and returns with the respective HardConstraint
+     *
+     * @return $authSystemPerformances - array with the failing Authentications and respective HardConstraints
+     */
+
+    public function getFails($featureArray, $subFeatureArray, $subFeatureArrayOr)
+    {
+
+        $authSystemPerformances = $this->getFailureList($this->getSubFeatureConfiguration($subFeatureArray));
+
+
+        if (!empty($subFeatureArrayOr)) {
+            foreach ($subFeatureArrayOr as $subFeatName1 => $subFeatPairs) {
+
+                $subFeatureArray2 = $subFeatureArray;
+                foreach (array_keys($subFeatureArray) as $featureName) {
+                    $tempArray = $subFeatureArray[$featureName][1];
+                    foreach ($tempArray as $subFeatName => $value) {
+                        if ($subFeatName1 == $subFeatName) {
+                            $subFeatureArray2[$featureName][1][$subFeatName] = 1;
+                        }
                     }
-                    unset($uncheckedElements);
-                    $uncheckedElements = array();
                 }
-                $c = 0;
-                $elem = 0;
-                $lastElement = $featureSet;
-            } else {
-                if (!($lastElement->checked) && array_key_exists($lastElement->name, $result))
-                {
-                    $result[$featureSet->name] = $result[$lastElement->name];
-                    $lastElement = $featureSet;
-                } else {
-                    $uncheckedElements[]=$featureSet;
-                    $c += $l - $position;
-                    $elem += 1;
-                    $lastElement = $featureSet;
+                $authSystemPerformances1 = $this->getFailureList($this->getSubFeatureConfiguration($subFeatureArray2));
+
+                foreach (array_keys($subFeatPairs[0]) as $subFeatName2) {
+                    $subFeatureArray3 = $subFeatureArray;
+                    foreach (array_keys($subFeatureArray) as $featureName) {
+                        $tempArray = $subFeatureArray[$featureName][1];
+                        foreach ($tempArray as $subFeatName => $value) {
+                            if ($subFeatName2 == $subFeatName) {
+                                $subFeatureArray3[$featureName][1][$subFeatName] = 1;
+                            }
+                        }
+                    }
+                    $authSystemPerformances2 = $this->getFailureList($this->getSubFeatureConfiguration($subFeatureArray3));
+
+                    $authSystemPerformancesTEST = array_intersect_key($authSystemPerformances1, $authSystemPerformances2);
+                    $authSystemPerformances = array_merge($authSystemPerformances, $authSystemPerformancesTEST);
+
                 }
-            }
-
-        }
-
-        if ($elem > 0)
-        {
-            $valueForUncheckedElements = $c / sizeof($uncheckedElements);
-            foreach($uncheckedElements as $element)
-            {
-                $result[$element->name] = $valueForUncheckedElements;
             }
         }
 
-        $baseForNormalization = array_sum($result);
-        foreach ($result as $position => $value)
+
+        return $authSystemPerformances;
+
+    }
+
+
+
+
+    /**
+     * @desc
+     * Helper Function for getFails() which extracts contnet from Database and fetches Fails for single configuration
+     *
+     * @return $result List of Failing Authentications and HardConstraints
+     */
+
+    public function getFailureList($classSelection)
+    {
+        $result = array();
+        $query = "SELECT
+                    aa.name AS auth_name,
+                    cf.name AS feat_name,
+                    ccf.name AS class_name,
+                    ap.value AS performance_val
+
+                    FROM authentication_feature_class afc
+                      JOIN auth_authentications aa
+                        ON afc.auth_authentication = aa.id
+                      JOIN cat_features cf
+                        ON afc.cat_feature = cf.id
+                      JOIN cat_class_feature ccf
+                        ON afc.cat_class_feature = ccf.id
+                      JOIN auth_performances ap
+                        ON afc.auth_authentication = ap.auth_authentication AND afc.cat_feature = ap.cat_feature
+
+                    ORDER BY auth_name, feat_name asc";
+
+        $queryResult = $this->dbController->secureGet($query);
+
+        $tempOutput = array();
+
+        foreach($queryResult as $row)
         {
-            $result[$position] = $value / $baseForNormalization;
+            $tempOutput[$row['auth_name']][$row['feat_name']]['performance'] = $row['performance_val'];
+            $tempClassNameArray = explode('+', $row['class_name']);
+            sort($tempClassNameArray);
+            $tempClassName = implode('+', $tempClassNameArray);
+            $tempOutput[$row['auth_name']][$row['feat_name']]['class_name'] = $tempClassName;
+
         }
+
+        foreach($tempOutput as $authName => $featureArray)
+        {
+
+            foreach ($classSelection as $inputFeatureName => $inputClassName) {
+                if ($inputClassName != '+') {
+                    $inputtemp = explode('+', $inputClassName);
+                    $databasetemp = explode('+', $featureArray[$inputFeatureName]['class_name']);
+                    foreach ($inputtemp as $key) {
+                        if(!(in_array($key,$databasetemp))) {
+                            if (array_key_exists ( $authName , $result )) {
+                                $result[$authName] .= ', '.$key;
+                            }
+                            else {
+                                $result[$authName] = $key;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return $result;
+    }
+
+
+
+    /**
+     * @desc
+     * This function Gets a Array of Features and Subfeatures and Returns How Many Authentication Schemes
+     * pass the Given Hard Constraints (Subfeatures)
+     *
+     * @param $decisionConfiguration - the current configuration of the user for the decision making
+     * @return array - array with the results of the evaluation of the decision making
+     */
+    public function getResultCount($featureArray, $subFeatureArray, $subFeatureArrayOr)
+    {
+
+        $authSystemPerformances = $this->getAuthSystemPerformances($this->getSubFeatureConfiguration($subFeatureArray));
+
+        if (!empty($subFeatureArrayOr)) {
+            foreach ($subFeatureArrayOr as $subFeatName1 => $subFeatPairs) {
+
+                $subFeatureArray2 = $subFeatureArray;
+                foreach (array_keys($subFeatureArray) as $featureName) {
+                    $tempArray = $subFeatureArray[$featureName][1];
+                    foreach ($tempArray as $subFeatName => $value) {
+                        if ($subFeatName1 == $subFeatName) {
+                            $subFeatureArray2[$featureName][1][$subFeatName] = 1;
+                        }
+                    }
+                }
+                $authSystemPerformances1 = $this->getAuthSystemPerformances($this->getSubFeatureConfiguration($subFeatureArray2));
+
+                foreach (array_keys($subFeatPairs[0]) as $subFeatName2) {
+                    $subFeatureArray3 = $subFeatureArray;
+                    foreach (array_keys($subFeatureArray) as $featureName) {
+                        $tempArray = $subFeatureArray[$featureName][1];
+                        foreach ($tempArray as $subFeatName => $value) {
+                            if ($subFeatName2 == $subFeatName) {
+                                $subFeatureArray3[$featureName][1][$subFeatName] = 1;
+                            }
+                        }
+                    }
+                    $authSystemPerformances2 = $this->getAuthSystemPerformances($this->getSubFeatureConfiguration($subFeatureArray3));
+
+                    $authSystemPerformancesTEST = array_merge($authSystemPerformances1, $authSystemPerformances2);
+                    $authSystemPerformances = array_intersect_key($authSystemPerformances, $authSystemPerformancesTEST);
+
+                }
+            }
+        }
+
+        $result = count($authSystemPerformances);
+
         return $result;
     }
 
@@ -516,7 +729,7 @@ class DecisionController
      * logDecision($json)
      * @desc Logs the DecisionRequest JSON-String in the Database with a Hash to determine duplicate Entries
      * @param $json - The JSON-String of the Decision Request
-     */
+     *
     public function logDecision($json)
     {
         $query = "INSERT INTO
@@ -538,21 +751,7 @@ class DecisionController
 
         $this->dbController->secureSet($query);
     }
-
+    */
 }
 
 ?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
