@@ -165,6 +165,8 @@ $(".showResult").click(function(){
     $("#subFeature-selection").hide();
     $("#counter").hide();
     $("#decisionResult").show();
+    // Fix Appending Problem of Second Table
+    $("#changeTable2 .table-item").remove();
 });
 
 
@@ -213,3 +215,25 @@ function initialize() {
 
     $( "#sortable1, #sortable2, #sortable3" ).disableSelection();
 }
+
+
+// Toggle all Table Items
+
+$("#table-show-all").click(function(){
+    $(".table-item-hidden").toggleClass('hidden');
+});
+
+// Toggle example in Step 1
+$("#show_ex1").click(function(){
+    $("#example_step1").toggleClass('hidden');
+});
+
+// Toggle example in Step 2
+$("#show_ex2").click(function(){
+    $("#example_step2").toggleClass('hidden');
+});
+
+
+
+
+window.onbeforeunload = function() { return "Your work will be lost. Please Use Platform Navigation"; };

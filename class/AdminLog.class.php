@@ -1,7 +1,7 @@
 <?php
 /**
  * #####################################################################################################################
- * Copyright (C) 2016   Christian Engelbert
+ * Copyright (C) 2017   Christian Engelbert, Philip Stumpf
  * #####################################################################################################################
  * This file is part of AccessV2.
  *
@@ -58,7 +58,9 @@ class AdminLog
         $data_validSession = $this->sessionController->isSessionValid();
         $data_name = $this->sessionController->getName();
         $data_isAdmin = $this->sessionController->getIsAdmin();
-        $data = $this->logController->getTopRequests();
+        $dataFeatures = $this->logController->getFeatureLog();
+        $dataSubfeaturesAnd = $this->logController->getSubfeatureAndLog();
+        $dataSubfeaturesOr = $this->logController->getSubfeatureOrLog();
 
         include_once("content/header.php");
         include_once("content/navigation.php");

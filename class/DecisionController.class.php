@@ -442,7 +442,6 @@ class DecisionController
      */
     public function getPerformances($featureArray)
     {
-
         $inputData = array();
 
         foreach (array_keys($featureArray) as $featureName)
@@ -725,33 +724,166 @@ class DecisionController
         return $result;
     }
 
+
+
     /**
      * logDecision($json)
      * @desc Logs the DecisionRequest JSON-String in the Database with a Hash to determine duplicate Entries
      * @param $json - The JSON-String of the Decision Request
      *
-    public function logDecision($json)
-    {
-        $query = "INSERT INTO
-                    decision_log
-                    (jsondata, jsonhash, quantity)
-                  VALUES
-                    ('%s', '%s', 1)
-                  ON DUPLICATE KEY UPDATE
-                    quantity = quantity + 1
-                 ";
+    public function logDecision($featureArray) {
 
-        $jsonHash = md5($json);
+        foreach (array_keys($featureArray) as $featureName) {
 
-        $query = sprintf(
-            $query,
-            $json,
-            $jsonHash
-        );
+            $jsonString = json_encode($featureName);
 
-        $this->dbController->secureSet($query);
+            $query = "INSERT INTO
+                        decision_log
+                        (jsondata, jsonhash, quantity)
+                      VALUES
+                        ('%s', '%s', 1)
+                      ON DUPLICATE KEY UPDATE
+                        quantity = quantity + 1
+                     ";
+
+            $jsonHash = md5($jsonString);
+
+            $query = sprintf(
+                $query,
+                $jsonString,
+                $jsonHash
+            );
+
+            $this->dbController->secureSet($query);
+        }
     }
-    */
+
+     */
+
+    /**
+     * logDecision($json)
+     * @desc Logs the DecisionRequest JSON-String in the Database with a Hash to determine duplicate Entries
+     * @param $json - The JSON-String of the Decision Request
+     *
+     */
+    public function logFeatures($featureArray) {
+
+        foreach (array_keys($featureArray) as $featureName) {
+
+            $jsonString = json_encode($featureName);
+
+            $query = "INSERT INTO
+                        log_feature
+                        (jsondata, jsonhash, quantity)
+                      VALUES
+                        ('%s', '%s', 1)
+                      ON DUPLICATE KEY UPDATE
+                        quantity = quantity + 1
+                     ";
+
+            $jsonHash = md5($jsonString);
+
+            $query = sprintf(
+                $query,
+                $jsonString,
+                $jsonHash
+            );
+
+            $this->dbController->secureSet($query);
+        }
+
+    }
+
+
+
+    /**
+     * logDecision($json)
+     * @desc Logs the DecisionRequest JSON-String in the Database with a Hash to determine duplicate Entries
+     * @param $json - The JSON-String of the Decision Request
+     *
+     */
+    public function logSubfeaturesAnd($subFeatureArray) {
+
+        foreach (array_keys($subFeatureArray) as $featureName)
+        {
+            $tempArray = $subFeatureArray[$featureName][1];
+            foreach ($tempArray as $subFeatName => $value)
+            {
+                if ($value == 1)
+                {
+                    $jsonString = json_encode($subFeatName);
+
+                    $query = "INSERT INTO
+                        log_subfeatures_and
+                        (jsondata, jsonhash, quantity)
+                      VALUES
+                        ('%s', '%s', 1)
+                      ON DUPLICATE KEY UPDATE
+                        quantity = quantity + 1
+                     ";
+
+                    $jsonHash = md5($jsonString);
+
+                    $query = sprintf(
+                        $query,
+                        $jsonString,
+                        $jsonHash
+                    );
+
+                    $this->dbController->secureSet($query);
+
+                }
+
+            }
+
+
+
+        }
+    }
+
+
+
+    /**
+     * logDecision($json)
+     * @desc Logs the DecisionRequest JSON-String in the Database with a Hash to determine duplicate Entries
+     * @param $json - The JSON-String of the Decision Request
+     *
+     */
+    public function logSubfeaturesOr($subfeatureOrArray) {
+
+        foreach ($subfeatureOrArray as $subFeatName1 => $subFeatPairs) {
+            foreach (array_keys($subFeatPairs[0]) as $subFeatName2) {
+                $jsonString = json_encode($subFeatName1);
+                $jsonString .= 'OR';
+                $jsonString .= json_encode($subFeatName2);
+
+
+                $query = "INSERT INTO
+                        log_subfeatures_or
+                        (jsondata, jsonhash, quantity)
+                      VALUES
+                        ('%s', '%s', 1)
+                      ON DUPLICATE KEY UPDATE
+                        quantity = quantity + 1
+                     ";
+
+                $jsonHash = md5($jsonString);
+
+                $query = sprintf(
+                    $query,
+                    $jsonString,
+                    $jsonHash
+                );
+
+                $this->dbController->secureSet($query);
+
+                
+            }
+         }
+    }
+
+
+
 }
 
 ?>

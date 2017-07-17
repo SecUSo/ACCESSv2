@@ -39,6 +39,9 @@
                     </div>
                     <p>Choose the features that are important for you and align them in descending order on the right hand side.
                         Features in the same group are equally important.</p>
+                    <button id="show_ex1" type="button" class="btn btn-info">Show/Hide Example</button>
+                    <img id="example_step1" class="example_image hidden" src="img/example_step1.jpg" alt="example" height="auto" width="100%">
+                    <hr>
                     <nav aria-label="...">
                         <ul class="pager">
                             <li class="next showSubFeatures"><a href="javascript:void(0)"><b>Select Hard-Constraints <span aria-hidden="true">&rarr;</span></b></a></li>
@@ -83,8 +86,14 @@
                             <span class="sr-only">66% Complete</span>
                         </div>
                     </div>
-                    <p>Choose optional Hard Constraints, that are requirements for your chosen Authentication Schemes [AND].
-                    Additionally you can choose pairs of Authentication schemes, so that only one of them is a required Constraint for the result [OR]</p>
+                    <p>Choose optional Hard Constraints, that must be implemented by your wanted Authentication </p>
+                    <p>
+                        <span class="glyphicon glyphicon-ok aria-hidden="true"> : This Hard Constraint must be fulfilled </span><br/>
+                        <span class="glyphicon glyphicon-transfer aria-hidden="true"> : Only one of the chosen Hard Constraints must be fulfilled </span><br/>
+                    </p>
+                    <button id="show_ex2" type="button" class="btn btn-info">Show/Hide Example</button>
+                    <img id="example_step2" class="example_image hidden" src="img/example_step2.jpg" alt="example" height="auto" width="100%">
+                   <hr>
                     <nav aria-label="...">
                         <ul class="pager">
                             <li class="previous showFeatures"><a href="javascript:void(0)"><b><span aria-hidden="true">&larr;</span> Choose Features</b></a></li>
@@ -105,25 +114,26 @@
                             <div>
                                 <ol class="subfeature-list2 list-group">
                                     <? foreach($fArr as $subFeatureName => $statusCode) { if($subFeatureName != NULL || "0"){?>
-                                        <li id="<? echo $subFeatureName; ?>" class="subfeature list-group-item">
+                                        <li id="<? echo $subFeatureName; ?>" class="subfeature list-group-item" value="<?php echo $data_subFeatureDescriptions[$subFeatureName];?>">
+                                            <button type="button" class="btn btn-xs pull-left info-button">
+                                                <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+                                            </button>
                                             <span class="li-name"><? echo $subFeatureName; ?></span>
                                             <span class="clearfix">
                                             <a class="plus-button pull-right"><span class="glyphicon glyphicon-plus aria-hidden="true"></span></a>
                                             <div class="andorgroup btn-group pull-right" role="group" aria-label="...">
-                                                <button type="button" class="btn btn-xs btn-default andButton">AND</button>
-                                                <button type="button" class="btn btn-xs btn-default orButton">OR</button>
+                                                <button type="button" class="btn btn-xs btn-default andButton"><span class="glyphicon glyphicon-ok aria-hidden="true"></span></button>
+                                                <button type="button" class="btn btn-xs btn-default orButton"><span class="glyphicon glyphicon-transfer aria-hidden="true"> OR</button>
                                                 <div class="or-dropdowngroup btn-group" role="group">
                                                     <button type="button" class="btn btn-xs btn-default dropdown-toggle disabled" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                         Choose Subfeature
                                                         <span class="caret"></span>
                                                     </button>
                                                     <ul class="dropdown-menu or-dropdown">
-                                                        <? foreach($cat_feat_subfeat as $categoryName2 => $cArr2) {?>
-                                                            <? foreach($cArr2 as $featureName2 => $fArr2) {if($featureName2 != NULL){?>
-                                                                <? foreach($fArr2 as $subFeatureName2 => $statusCode2) { if($subFeatureName2 != NULL || "0"){?>
-                                                                   <? if($subFeatureName2 != $subFeatureName) { ?>
-                                                                    <li class="dropdownli"><? echo $subFeatureName2; ?></li>
-                                                                <? }}}}}} ?>
+                                                        <? foreach($data_subFeatureDescriptions as $subFeatureNamexx => $subFeatureDescription) {?>
+                                                            <? if($subFeatureNamexx != $subFeatureName) { ?>
+                                                                <li class="dropdownli"><? echo $subFeatureNamexx; ?></li>
+                                                        <? }} ?>
                                                     </ul>
                                                 </div>
                                         </li>
@@ -145,7 +155,13 @@
                         <span class="sr-only">100% Complete</span>
                     </div>
                 </div>
-                <p>Congratulations! Here you can evaluate your result. If you want to change something you can go back and choose another input</p>
+                <p>Congratulations! Here you can evaluate your result. If you want to change something you can go back and choose another input. Use the Compare function in Table to evaluate! </p>
+                <p>
+                    <span class="glyphicon glyphicon-th-list  aria-hidden="true"> : Best performing Authentications with overall performance </span><br/>
+                    <span class="glyphicon glyphicon-stats aria-hidden="true"> : Single Performances for all selected features,</span><br/>
+                    <span class="glyphicon glyphicon-flash aria-hidden="true"> : Authentications that failed on Hard Constraint </span><br/>
+                </p>
+                <hr>
                 <nav aria-label="...">
                     <ul class="pager">
                         <li class="previous showSubFeatures"><a href="javascript:void(0)"><b><span aria-hidden="true">&larr;</span> Select Hard-Constraints</b></a></li>
@@ -153,9 +169,11 @@
                 </nav>
             </div>
                 <div class="content-block col-sm-12">
+                    <h4><span class="glyphicon glyphicon-th-list aria-hidden="true"></span> Added Performances</h4>
+                    <div id="table-show-all" style="text-align: right"><a href="javascript:void(0)">Show/Hide all Results</a></div>
                     <table id="changeTable" class="table .table-bordered">
                         <tr><th>Authentication Scheme</th><th>Performance</th><th>Info</th></tr>
-                        <tr>
+                        <tr style="border-top: 2px solid black;">
                             <td><div class="btn-group">
                                     <span id="compare_name">Compare</span>
                                     <button type="button" class="btn-sm dropdown-toggle" data-toggle="dropdown">
@@ -171,11 +189,11 @@
                             <td><a id="compare_info" class="hidden" href="/" target="blank"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
                         </tr>
                     </table>
-
+                    <h4><span class="glyphicon glyphicon-stats aria-hidden="true"></span> Single Feature Performances</h4>
                     <div id="changeChart">
                         &nbsp;<canvas id="myChart"></canvas>
                     </div>
-
+                    <h4><span class="glyphicon glyphicon-flash aria-hidden="true"></span> Filtered Authentications by Hard Constraints</h4>
                     <div id="hard-constraints">
                         <table id="changeTable2" class='table .table-bordered'">
                             <tr><th>Authentication Scheme</th><th>Failed on Hard Constraint(s)</th><th>Information</th></tr>

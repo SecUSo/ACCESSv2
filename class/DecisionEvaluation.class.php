@@ -46,6 +46,10 @@ class DecisionEvaluation
 		$this->decisionController = new DecisionController();
 		$this->getParams();
 
+        $this->decisionController->logFeatures($this->featureArray);
+        $this->decisionController->logSubfeaturesAnd($this->subfeatureArray);
+        $this->decisionController->logSubfeaturesOr($this->subfeatureOrArray);
+
 		$output = json_encode($this->decisionController->getDecisionResult($this->featureArray, $this->subfeatureArray, $this->subfeatureOrArray));
 		$output .= '#';
 		$output .= json_encode($this->decisionController->getAuthenticationDescriptions());

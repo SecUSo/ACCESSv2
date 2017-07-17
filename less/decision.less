@@ -85,7 +85,6 @@ ol li:hover  {
   margin: 20px;
 }
 
-
 /* Category Styles for List Items */
 
 .Security {
@@ -100,22 +99,34 @@ ol li:hover  {
   background-color: @cyan !important;
 }
 
+
+/* Styles for Jumbotron*/
+.example_image {
+  margin-top: 10px;
+}
+
 /* Styles for Step1 (Feature Selection)*/
-.feature-list {
+.droptrue {
   padding: 20px;
   background-color: #ccc;
 }
 
 /* Styles for Step2 (Hard Constraints) */
 #subFeature-list {
+  .panel-heading {
+    padding: 0 15px;
+  }
   .featurename {
-    padding: 10px 0;
+    padding: 11px 0;
+    font-size: 12px;
+    color: white;
   }
   .categoryname {
     margin:10px;
   }
   .li-name {
-    width: 50%; float: left;
+   float: left;
+    margin-left: 20px;
   }
   .plus-button {
     margin: 2px 0 0 10px;
@@ -123,8 +134,14 @@ ol li:hover  {
   .andorgroup {
     text-align: right;
   }
+  .andorgroup .glyphicon{
+    top: 2px;
+  }
   .dropdownli {
-    color: black; font-size: 10px; padding:2px;
+    color: black; font-size: 12px; padding: 2px 0 2px 2px;
+  }
+  .dropdownli:hover {
+    color: darkslategrey;
   }
 }
 
@@ -140,6 +157,15 @@ ol li:hover  {
   }
   #compare_info {
     font-size:22px;
+  }
+  #compare_name {
+    font-weight: bold;
+  }
+  .compare_link:hover {
+    cursor: pointer;
+  }
+  .failed_compare a{
+    color: darkred;
   }
 }
 
@@ -180,4 +206,9 @@ ol li:hover  {
   top: 20px;
   right: 45px;
   font-size: 60px;
+}
+
+/* Styles for Result Table */
+.table-item-hidden {
+  //display: none;
 }

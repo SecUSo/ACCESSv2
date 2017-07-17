@@ -1,7 +1,7 @@
 <?php
 /**
  * #####################################################################################################################
- * Copyright (C) 2016   Christian Engelbert
+ * Copyright (C) 2017   Christian Engelbert, Philip Stumpf
  * #####################################################################################################################
  * This file is part of AccessV2.
  *
@@ -21,43 +21,74 @@
  **/
 ?>
 <div id="logoverview">
-<div class="container">
-    <div class="row">
-        <div class="content-block col-sm-12">
-            <h2 class="auth_name">DECISION LOG</h2>
-            <hr>
-
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>Quantity</th>
-                    <th>Request</th>
-                </tr>
-                </thead>
-                <tbody>
-            <? $i = 0; foreach($data as $logObject){ ?>
-                <tr>
-                    <td><? echo $logObject->quantity; ?></td>
-                    <td class="clickable-json" id="<? echo $i; ?>" value="<?
-                    echo htmlspecialchars($logObject->jsondata);
-                    ?>">
-                        <p class="glyphicon-hoverpointer">Expand&nbsp;<span class="glyphicon glyphicon-th-large"></span></p></td>
+    <div class="container">
+        <div class="row">
+            <div class="content-block col-sm-4">
+                <h2 class="auth_name">Top Features</h2>
+                <hr>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Quantity</th>
+                        <th>Request</th>
                     </tr>
-            <? $i++;} ?>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                <? $i = 0; foreach($dataFeatures as $logObject){ ?>
+                    <tr>
+                        <td><? echo $logObject->quantity; ?></td>
+                        <td class="clickable-json" id="<? echo $i; ?>">
+                            <? echo htmlspecialchars($logObject->jsondata); ?>
+                        </td>
+                        </tr>
+                <? $i++;} ?>
+                    </tbody>
+                </table>
+            </div>
+            <div class="content-block col-sm-4">
+                <h2 class="auth_name">Top SubFeautres</h2>
+                <hr>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Quantity</th>
+                        <th>Request</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <? $i = 0; foreach($dataSubfeaturesAnd as $logObject2){ ?>
+                        <tr>
+                            <td><? echo $logObject2->quantity; ?></td>
+                            <td class="clickable-json" id="<? echo $i; ?>">
+                                <? echo htmlspecialchars($logObject2->jsondata); ?>
+                            </td>
+                        </tr>
+                        <? $i++;} ?>
+                    </tbody>
+                </table>
+            </div>
+            <div class="content-block col-sm-4">
+                <h2 class="auth_name">Top Features</h2>
+                <hr>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Quantity</th>
+                        <th>Request</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <? $i = 0; foreach($dataSubfeaturesOr as $logObject3){ ?>
+                        <tr>
+                            <td><? echo $logObject3->quantity; ?></td>
+                            <td class="clickable-json" id="<? echo $i; ?>">
+                                <? echo htmlspecialchars($logObject3->jsondata); ?>
+                            </td>
+                        </tr>
+                        <? $i++;} ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-    <div id="container">
-        <p>
-            <a href="#" id="close">close</a>
-        </p>
-        <p id="changeText">
-
-        </p>
-    </div>
-    <div id="overlay"></div>
 </div>
-</div>
-
-<script src="js/logoverview.js"></script>

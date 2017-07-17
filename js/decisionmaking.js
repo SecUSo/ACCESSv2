@@ -84,8 +84,14 @@ $(".showResult").on("click", function() {
 
     // Create JSON Arrays for Ajax Call
     var features = JSON.stringify(featureArray);
+
+    console.log(features);
     var subfeatures = JSON.stringify(subFeatureArray);
+
+    console.log(subfeatures);
     var subfeaturesor = JSON.stringify(subFeatureOr);
+
+    console.log(subfeaturesor);
     var compares = JSON.stringify(compareArray);
 
     // Start Ajax Call to Server where Decision Request is calculated
@@ -106,7 +112,7 @@ $(".showResult").on("click", function() {
 
         // Get Result Data
         var data = html.split('#');
-        //  Performance for Table
+        //  Performances
         var data_val = $.parseJSON(data[0]);
         // Descriptions of Features
         var data_desc = $.parseJSON(data[1]);
@@ -125,19 +131,26 @@ $(".showResult").on("click", function() {
 
         $.each(data_val, function(authName, performance) {
             if (i > 4) {
-                return false;
+                resultTable += '<tr class="table-item table-item-hidden hidden"><td>' +
+                    authName+'</td><td>'+performance+'</td><td><a href="?Content&id=' + data_desc[authName] + '" target="blank" style="font-size:22px">' +
+                    '<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td></tr>';
+            } else {
+                resultTable += '<tr class="table-item"><td>' +
+                    authName+'</td><td>'+performance+'</td><td><a href="?Content&id=' + data_desc[authName] + '" target="blank" style="font-size:22px">' +
+                    '<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td></tr>';
             }
-            resultTable += '<tr class="table-item"><td>' +
-                authName+'</td><td>'+performance+'</td><td><a href="?Content&id=' + data_desc[authName] + '" target="blank" style="font-size:22px">' +
-                '<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td></tr>';
             i++;
         } );
 
         resultTable += '<tr id="compare-item" class="hidden table-item"></tr>';
 
         // Last Table Entry for Comparison with other Autentication Systems
-        $.each(data_compare, function(authName) {
-                compaererD += '<li><a>' + authName + '</a></li>';
+        $.each(data_perf, function(authName) {
+                if (authName in data_val) {
+                    compaererD += '<li><a class="compare_link">' + authName + '</a></li>';
+                } else {
+                    compaererD += '<li class="failed_compare"><a class="compare_link">' + authName + '<span class="glyphicon glyphicon-flash" aria-hidden="true"></span></a></li>';
+                }
             i++;
         } );
 
@@ -205,7 +218,7 @@ $(".showResult").on("click", function() {
 
         // Create Table for Evaluation of Authentications that failed Hard Constraints
         var resultTable2 = "";
-        $.each(data_compare, function(authName2) {
+        $.each(data_perf, function(authName2) {
             if (!(authName2 in data_val)) {
                 resultTable2 += '<tr class="table-item"><td>' +  authName2 + '</td><td>' + data_fails[authName2] + '</td><td><a href="?Content&id=' + data_desc[authName2] + '" target="blank" style="font-size:22px"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td></tr>';
             }
