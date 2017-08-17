@@ -88,8 +88,8 @@
                     </div>
                     <p>Choose optional Hard Constraints, that must be implemented by your wanted Authentication </p>
                     <p>
-                        <span class="glyphicon glyphicon-ok aria-hidden="true"> : This Hard Constraint must be fulfilled </span><br/>
-                        <span class="glyphicon glyphicon-transfer aria-hidden="true"> : Only one of the chosen Hard Constraints must be fulfilled </span><br/>
+                        <span class="glyphicon glyphicon-ok aria-hidden="true"></span> : This Hard Constraint must be fulfilled <br/>
+                        <span class="glyphicon glyphicon-transfer aria-hidden="true"></span> : Only one of the chosen Hard Constraints must be fulfilled<br/>
                     </p>
                     <button id="show_ex2" type="button" class="btn btn-info">Show/Hide Example</button>
                     <img id="example_step2" class="example_image hidden" src="img/example_step2.jpg" alt="example" height="auto" width="100%">
@@ -157,9 +157,9 @@
                 </div>
                 <p>Congratulations! Here you can evaluate your result. If you want to change something you can go back and choose another input. Use the Compare function in Table to evaluate! </p>
                 <p>
-                    <span class="glyphicon glyphicon-th-list  aria-hidden="true"> : Best performing Authentications with overall performance </span><br/>
-                    <span class="glyphicon glyphicon-stats aria-hidden="true"> : Single Performances for all selected features,</span><br/>
-                    <span class="glyphicon glyphicon-flash aria-hidden="true"> : Authentications that failed on Hard Constraint </span><br/>
+                    <span class="glyphicon glyphicon-th-list  aria-hidden="true"></span> : Best performing Authentications with overall performance <br/>
+                    <span class="glyphicon glyphicon-stats aria-hidden="true"></span> : Single Performances for all selected features<br/>
+                    <span class="glyphicon glyphicon-flash aria-hidden="true"></span>: Authentications that failed on Hard Constraint<br/>
                 </p>
                 <hr>
                 <nav aria-label="...">

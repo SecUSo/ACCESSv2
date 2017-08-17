@@ -24,7 +24,7 @@
     <div class="container">
         <div class="row">
             <div class="content-block col-sm-4">
-                <h2 class="auth_name">Top Features</h2>
+                <h2 class="auth_name">Features</h2>
                 <hr>
                 <table class="table table-striped">
                     <thead>
@@ -46,7 +46,7 @@
                 </table>
             </div>
             <div class="content-block col-sm-4">
-                <h2 class="auth_name">Top SubFeautres</h2>
+                <h2 class="auth_name">SubFeatures</h2>
                 <hr>
                 <table class="table table-striped">
                     <thead>
@@ -68,7 +68,7 @@
                 </table>
             </div>
             <div class="content-block col-sm-4">
-                <h2 class="auth_name">Top Features</h2>
+                <h2 class="auth_name">OR-Selections</h2>
                 <hr>
                 <table class="table table-striped">
                     <thead>

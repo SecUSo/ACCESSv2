@@ -563,6 +563,7 @@ class DecisionController
 
         $authSystemPerformances = $this->getFailureList($this->getSubFeatureConfiguration($subFeatureArray));
 
+        $result = array();
 
         if (!empty($subFeatureArrayOr)) {
             foreach ($subFeatureArrayOr as $subFeatName1 => $subFeatPairs) {
@@ -589,16 +590,29 @@ class DecisionController
                         }
                     }
                     $authSystemPerformances2 = $this->getFailureList($this->getSubFeatureConfiguration($subFeatureArray3));
+                    $sums = array();
+                    foreach (array_keys($authSystemPerformances1 + $authSystemPerformances2) as $key) {
+                        $sums[$key] = (isset($authSystemPerformances1[$key]) ? $authSystemPerformances1[$key] . ",": "") . (isset($authSystemPerformances2[$key]) ? $authSystemPerformances2[$key] : "");
+                    }
 
-                    $authSystemPerformancesTEST = array_intersect_key($authSystemPerformances1, $authSystemPerformances2);
-                    $authSystemPerformances = array_merge($authSystemPerformances, $authSystemPerformancesTEST);
+                    $sums_clean = array();
+                    foreach ($sums as $key => $value) {
+                        $sums_clean[$key] = implode(',', array_unique(explode(',', $value)));
+                    }
+
+
+                    $authSystemPerformances = array_merge($authSystemPerformances, $sums_clean);
 
                 }
             }
         }
 
 
-        return $authSystemPerformances;
+        foreach ($authSystemPerformances as $key => $value) {
+            $result[$key] = implode(', ', array_unique(explode(',', $value)));
+        }
+
+        return $result;
 
     }
 
@@ -657,7 +671,7 @@ class DecisionController
                     foreach ($inputtemp as $key) {
                         if(!(in_array($key,$databasetemp))) {
                             if (array_key_exists ( $authName , $result )) {
-                                $result[$authName] .= ', '.$key;
+                                $result[$authName] .= ','.$key;
                             }
                             else {
                                 $result[$authName] = $key;

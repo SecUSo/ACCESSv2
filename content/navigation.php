@@ -33,12 +33,10 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="?Index"><img src="img/logo.png" alt="Access" height="50" width="auto"/></a>
+            <a class="navbar-brand" href="?DecisionMaking"><img src="img/decisionsupport.png" alt="DecisionSupport" height="50" width="auto"/></a>
         </div>
         <?/* LEFT NAVIGATION BAR, SOME NAVIGATION POINTS ONLY VISIBLE FOR ADMINS*/?>
         <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li><a href="?DecisionMaking">Decision Making</a></li>
-            </ul>
             <?/* BEGIN ADMIN*/?>
             <? if ($data_isAdmin) { ?>
             <ul class="nav navbar-nav">

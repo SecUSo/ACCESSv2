@@ -24,11 +24,13 @@
  */
 $( document ).ready(function() {
     initialize();
+    var action = false;
 });
 
 // And Button in Step 2
 $(".andButton").click(function(){
     var standardText = 'Choose Subfeature';
+    action = true;
     $(this).toggleClass("active");
     $(this).parent('.btn-group').parent('span').parent('li').toggleClass("and");
     $(this).parent('.btn-group').parent('span').parent('li').removeClass("or");
@@ -61,6 +63,7 @@ $(".andButton").click(function(){
 
 // Or Button in Step 2
 $(".orButton").click(function() {
+    action = true;
     var standardText = 'Choose Subfeature';
     if ($(this).hasClass("active")) {
         $(this).removeClass("active");
@@ -145,6 +148,7 @@ $(".plus-button").click(function(){
 
 //Navigation of Platform -> goToStep 1
 $(".showFeatures").click(function(){
+    action = true;
     $("#subFeature-selection").hide();
     $("#decisionResult").hide();
     $("#counter").hide();
@@ -153,6 +157,7 @@ $(".showFeatures").click(function(){
 
 //Navigation of Platform -> goToStep 2
 $(".showSubFeatures").click(function(){
+    action = true;
     $("#feature-selection").hide();
     $("#decisionResult").hide();
     $("#counter").show();
@@ -161,6 +166,7 @@ $(".showSubFeatures").click(function(){
 
 //Navigation of Platform -> goToStep 3 --> Evaluate
 $(".showResult").click(function(){
+    action = true;
     $("#feature-selection").hide();
     $("#subFeature-selection").hide();
     $("#counter").hide();
@@ -177,6 +183,7 @@ $(".btn").mouseup(function(){
 
 // Create new List Container
 $("#addlist").click(function(){
+    action = true;
     $('#toggleButtons').before('<ol class="list-group droptrue feature-list" style="padding: 20px; background-color: #ccc;"></ol>');
     initialize();
 });
@@ -236,4 +243,4 @@ $("#show_ex2").click(function(){
 
 
 
-window.onbeforeunload = function() { return "Your work will be lost. Please Use Platform Navigation"; };
+window.onbeforeunload = function() { if (action == true) { return "Your work will be lost. Please confirm to leave Decision Support"; }};

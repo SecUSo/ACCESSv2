@@ -84,14 +84,8 @@ $(".showResult").on("click", function() {
 
     // Create JSON Arrays for Ajax Call
     var features = JSON.stringify(featureArray);
-
-    console.log(features);
     var subfeatures = JSON.stringify(subFeatureArray);
-
-    console.log(subfeatures);
     var subfeaturesor = JSON.stringify(subFeatureOr);
-
-    console.log(subfeaturesor);
     var compares = JSON.stringify(compareArray);
 
     // Start Ajax Call to Server where Decision Request is calculated
@@ -217,15 +211,23 @@ $(".showResult").on("click", function() {
 
 
         // Create Table for Evaluation of Authentications that failed Hard Constraints
+        var resultDisclaimer = '<tr  class="table-item"><td colspan=\"3\" style=\"text-align: center\">No Authentications filtered by Hard Constraint(s). Please choose Hard Constraints in Step 2</td></tr>';
         var resultTable2 = "";
+        var isempty = false;
         $.each(data_perf, function(authName2) {
             if (!(authName2 in data_val)) {
+                isempty = true;
                 resultTable2 += '<tr class="table-item"><td>' +  authName2 + '</td><td>' + data_fails[authName2] + '</td><td><a href="?Content&id=' + data_desc[authName2] + '" target="blank" style="font-size:22px"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td></tr>';
             }
             i++;
         } );
 
-        $('#changeTable2 tr:first-child').after(resultTable2);
+        if (isempty == true) {
+            $('#changeTable2 tr:first-child').after(resultTable2);
+        } else {
+            $('#changeTable2 tr:first-child').after(resultDisclaimer);
+        }
+
 
 
         // Show Result
