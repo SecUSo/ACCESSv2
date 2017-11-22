@@ -67,6 +67,7 @@ class AdminClassifyAuthentications
             $parameters[0],
             $parameters[1]
         );
+
         $data_tableHeader = $this->getTableHeader($data_content);
 
         include_once("content/header.php");
@@ -87,12 +88,12 @@ class AdminClassifyAuthentications
      */
     private function getParams()
     {
-        if(isset($_GET['class']) && isset($_GET['feature'])){
+        if (isset($_GET['class']) && isset($_GET['feature'])) {
             return array(
                 htmlspecialchars($_GET['class']),
                 htmlspecialchars($_GET['feature'])
             );
-        }else{
+        } else {
             return array();
         }
     }
@@ -108,7 +109,7 @@ class AdminClassifyAuthentications
         $output = array();
         $output[] = array_keys($data)[0];
 
-        foreach($data[array_keys($data)[0]] as $name => $val){
+        foreach ($data[array_keys($data)[0]] as $name => $val) {
             $output[] = $name;
         }
 
@@ -116,4 +117,5 @@ class AdminClassifyAuthentications
     }
 
 }
+
 ?>

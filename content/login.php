@@ -33,7 +33,7 @@
                 <strong>Failure!</strong> Please check your data!
             </div>
             <div id="reg-error2" class="reg-error alert alert-danger">
-                <strong>Failure!</strong> Wrong captcha code!
+                <strong>Failure!</strong> Wrong invite code!
             </div>
             <div id="reg-error3" class="reg-error alert alert-danger">
                 <strong>Failure!</strong> Please check your data!
@@ -57,12 +57,8 @@
                        autofocus>
                 <label for="registerinputPassword" class="sr-only"></label>
                 <input type="password" id="registerinputPassword" class="form-control" placeholder="Password" required>
-                <img class="img-responsive center-block"
-                     src="data:image/png;base64, <? echo $tempCaptcha->getCaptcha() ?>"/>
-                <label for="registerinputCaptcha" class="sr-only"></label>
-                <input type="text" id="registerinputCaptcha" class="form-control" placeholder="Captcha code" required>
-                <input type="hidden" id="registerinputCaptchaHash" value="<?php $tempCaptcha->getCaptchaHash(); ?>">
-
+                <label for="registerinputInviteCode" class="sr-only"></label>
+                <input type="text" id="registerinputInviteCode" class="form-control" placeholder="Invite code" required>
                 <div class="checkbox">
                     <label>
                         <input type="checkbox" value="remember-me" required> I have read and do accept the Terms of

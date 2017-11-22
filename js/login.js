@@ -80,7 +80,7 @@ $(document).ready(function () {
      * return codes:
      * 0 - success
      * 1 - wrong input(param)
-     * 2 - wrong captcha code
+     * 2 - wrong invite code
      * 3 - user (email) already exists
      * format: { "status": code }
      */
@@ -100,8 +100,7 @@ $(document).ready(function () {
                     Organization: $('#registerinputOrganization').val(),
                     EMail: $('#registerinputEMail').val(),
                     Password: $('#registerinputPassword').val(),
-                    CaptchaCode: $('#registerinputCaptcha').val(),
-                    CaptchaHash: $('#registerinputCaptchaHash').val()
+                    InviteCode: $('#registerinputInviteCode').val()
                 })
             },
             success: function (data) {
@@ -110,15 +109,15 @@ $(document).ready(function () {
                 if (json_obj.status == 0) {
                     window.location.href = "?Index";
                 }
-                else if (json_obj.status == 1){
+                else if (json_obj.status == 1) {
                     $("#reg-error1").show();
                 }
-                else if (json_obj.status == 2){
+                else if (json_obj.status == 2) {
                     $("#reg-error2").show();
-            }
-                else if (json_obj.status == 3){
+                }
+                else if (json_obj.status == 3) {
                     $("#reg-error3").show();
-            }
+                }
 
             },
             error: function () {

@@ -32,6 +32,7 @@ class UserRegistration
     public static $isViewable = TRUE;
     private $userController;
     private $sessionController;
+    private $inviteController;
 
     private $sFirstName;
     private $sLastName;
@@ -40,13 +41,13 @@ class UserRegistration
     private $sTitle;
     private $sOrganization;
     private $sPGPPublicKey;
-    private $sCaptchaCode;
-    private $sCaptchaHash;
+    private $sInviteCode;
 
     public function __construct()
     {
         $this->userController = new UserController();
         $this->sessionController = new SessionController();
+        $this->inviteController = new InviteSystemController();
         $this->getParams();
         $this->registration();
     }
@@ -62,8 +63,7 @@ class UserRegistration
             if (isset($jsonArr["Title"])) $this->sTitle = $jsonArr["Title"];
             if (isset($jsonArr["Organization"])) $this->sOrganization = $jsonArr["Organization"];
             if (isset($jsonArr["PGPPublicKey"])) $this->sPGPPublicKey = $jsonArr["PGPPublicKey"];
-            if (isset($jsonArr["CaptchaCode"])) $this->sCaptchaCode = $jsonArr["CaptchaCode"];
-            if (isset($jsonArr["CaptchaHash"])) $this->sCaptchaHash = $jsonArr["CaptchaHash"];
+            if (isset($jsonArr["InviteCode"])) $this->sInviteCode = $jsonArr["InviteCode"];
         }
     }
 
@@ -73,8 +73,7 @@ class UserRegistration
             $this->sLastName == '' ||
             $this->sEMail == '' ||
             $this->sPassword == '' ||
-            $this->sCaptchaCode == '' ||
-            $this->sCaptchaHash == ''
+            $this->sInviteCode == ''
         ) {
             return FALSE;
         }
@@ -89,13 +88,13 @@ class UserRegistration
         if (!$this->checkParams())
             $this->returnStatus(1);
 
-        if (!Captcha::checkCaptcha($this->sCaptchaCode, $this->sCaptchaHash))
-            $this->returnStatus(2);
-
         $checkUniqueEmail = $this->userController->getUserByEMail($this->sEMail);
         if (count($checkUniqueEmail) > 0) {
             $this->returnStatus(3);
         }
+
+        if (!$this->inviteController->checkAndDeleteInviteCode($this->sInviteCode))
+            $this->returnStatus(2);
 
         $this->userController->addUser($this->sLastName, $this->sFirstName, $this->sTitle,
             $this->sEMail, $this->sOrganization, md5($this->sPassword), $this->sPGPPublicKey);
@@ -110,7 +109,7 @@ class UserRegistration
      * return codes:
      * 0 - success
      * 1 - wrong input(param)
-     * 2 - wrong captcha code
+     * 2 - wrong invite code
      * 3 - user (email) already exists
      * format: { "status": code }
      */

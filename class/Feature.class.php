@@ -55,6 +55,8 @@ class Feature
         $data_isUser = $this->sessionController->isSessionValid();
         $data_contentId = $_GET['id'];
         $data_contentType = "feature";
+        $data_comment_type = "plaintext";
+
         // print_r($data_ahpMatrixCaptions);
         include_once("content/header.php");
         include_once("content/navigation.php");

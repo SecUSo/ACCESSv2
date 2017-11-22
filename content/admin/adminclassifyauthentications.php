@@ -30,8 +30,9 @@
             <hr>
             <div class="panel panel-default">
                 <div class="panel-heading">ACCESS</div>
-                <div id="system-container" class="table-responsive">
-                    <table class="table table-bordered">
+                <div style="height: 600px; overflow: scroll" id="system-container" class="table-responsive">
+                    <table id="classification-table" class="table table-bordered">
+                    <thead>
                         <tr>
                             <? if(isset($data_tableHeader)){
                                 for($i = 0; $i<=count($data_tableHeader); $i++){?>
@@ -40,6 +41,7 @@
                                     </th>
                                 <? }} ?>
                         </tr>
+                    </thead>
                         <? if(isset($data_tableHeader)){
                             for($y = 0; $y<count($data_tableHeader); $y++){?>
                                 <tr>
@@ -51,7 +53,7 @@
                                                 <? if(($x-1)==$y){ ?>
                                                     1
                                                 <?}elseif(($x-1)>$y){?>
-                                                    <select class="dropdown" id="<? echo $y; ?>_<? echo $x-1; ?>">
+                                                    <select class="dropdown" style="position:static" id="<? echo $y; ?>_<? echo $x-1; ?>">
                                                         <? $t=$data_content[array_keys($data_content)[$y]]; ?>
                                                         <? $val=$t[array_keys($t)[$x-2-$y]]; ?>
                                                         <option value="3/2"<? echo ($val=="1.5")?' selected="selected"':'';?>>3/2</option>
@@ -71,5 +73,5 @@
         </div><!-- /.content -->
     </div> <!-- row -->
 </div>
-
+<script src="js/tableHeadFixer.js"></script>
 <script src="js/adminclassifyauthentications.js"></script>

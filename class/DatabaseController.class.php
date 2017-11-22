@@ -54,6 +54,11 @@ class DatabaseController extends DatabaseConnection
         return mysqli_real_escape_string($this->connection, strip_tags($input));
     }
 
+    public function getLatestInsertionId()
+    {
+        return parent::getLatestInsertionId();
+    }
+
 
 }
 

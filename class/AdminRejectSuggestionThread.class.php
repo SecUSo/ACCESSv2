@@ -51,7 +51,7 @@ class AdminRejectSuggestionThread
             $this->returnStatus(1);
 
         if ($this->sContentType == 'auth')
-            $this->discussionController->rejecttAuthSuggestion($this->sId);
+            $this->discussionController->rejectAuthSuggestion($this->sId);
         else if ($this->sContentType == 'feature')
             $this->discussionController->rejectFeatureSuggestion($this->sId);
         else if ($this->sContentType == 'subfeature')

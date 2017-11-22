@@ -64,6 +64,7 @@ class AdminClassifyAuthenticationsClassesOverview
         $data_content = $this->classifyAuthenticationsController->getClassesContent(
             $featureName
         );
+
         include_once("content/header.php");
         include_once("content/navigation.php");
         include_once("content/admin/adminclassifyauthenticationsclassesoverview.php");

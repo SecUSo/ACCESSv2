@@ -64,7 +64,7 @@ class DatabaseConnection
         if (!mysqli_query($this->connection, $query)) {
             echo "SQL ERROR (SET)";
             //debug
-            //printf("SQL ERROR: %s\n", mysqli_error($this->connection));
+            // printf("SQL ERROR: %s\n", mysqli_error($this->connection));
         }
     }
 
@@ -73,7 +73,8 @@ class DatabaseConnection
     {
         $get_result = mysqli_query($this->connection, $query);
         if (!$get_result) {
-            echo "SQL ERROR (GET)";
+            return array();
+            //echo "SQL ERROR (GET)";
             //debug
             //printf("SQL ERROR: %s\n", mysqli_error($this->connection));
         }
@@ -84,6 +85,12 @@ class DatabaseConnection
         }
         return $get_data;
     }
+
+    protected function getLatestInsertionId()
+    {
+        return mysqli_insert_id($this->connection);
+    }
+
 }
 
 ?>

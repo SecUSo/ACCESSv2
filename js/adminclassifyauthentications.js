@@ -22,36 +22,40 @@
 /**
  * Set related fields to reciprocal values of the Drop-Down Fields
  */
-$(document).ready(function(){
-    $.each($('select.dropdown'), function(){
+$(document).ready(function () {
+    $.each($('select.dropdown'), function () {
         var correspondingField = $(this).attr('id');
         var coord = correspondingField.split('_');
-        var val = eval($('#'+correspondingField+' option:selected').val());
+        var val = eval($('#' + correspondingField + ' option:selected').val());
 
-        if(val > 1){
-            $('td#'+String(coord[1]+'_'+String(coord[0]))).html('2/3');
-        }else if(val < 1){
-            $('td#'+String(coord[1]+'_'+String(coord[0]))).html('3/2');
-        }else{
-            $('td#'+String(coord[1]+'_'+String(coord[0]))).html('1');
+        if (val > 1) {
+            $('td#' + String(coord[1] + '_' + String(coord[0]))).html('2/3');
+        } else if (val < 1) {
+            $('td#' + String(coord[1] + '_' + String(coord[0]))).html('3/2');
+        } else {
+            $('td#' + String(coord[1] + '_' + String(coord[0]))).html('1');
         }
     });
+
+    //fixed table header left
+    $("#classification-table").tableHeadFixer({'left': 1});
+    $("#classification-table").tableHeadFixer({'head' : true});
 });
 
 /**
  * Set OnChange-Listener to the DropDowns to set the reciprocal value to the related field
  */
-$('select.dropdown').on('change', function(){
+$('select.dropdown').on('change', function () {
     var correspondingField = $(this).attr('id');
     var coord = correspondingField.split('_');
-    var val = eval($('#'+correspondingField+' option:selected').val());
+    var val = eval($('#' + correspondingField + ' option:selected').val());
 
-    if(val > 1){
-        $('td#'+String(coord[1]+'_'+String(coord[0]))).html('2/3');
-    }else if(val < 1){
-        $('td#'+String(coord[1]+'_'+String(coord[0]))).html('3/2');
-    }else{
-        $('td#'+String(coord[1]+'_'+String(coord[0]))).html('1');
+    if (val > 1) {
+        $('td#' + String(coord[1] + '_' + String(coord[0]))).html('2/3');
+    } else if (val < 1) {
+        $('td#' + String(coord[1] + '_' + String(coord[0]))).html('3/2');
+    } else {
+        $('td#' + String(coord[1] + '_' + String(coord[0]))).html('1');
     }
 
 });
@@ -69,20 +73,20 @@ $('select.dropdown').on('change', function(){
  *      ...
  *  }
  */
-$('#send_scales').on('click', function(){
+$('#send_scales').on('click', function () {
     var output = {};
     var featureName = $('span#featureName').html();
     var className = $('span#className').html();
     var tableDimensions = parseInt($('tr :last-child').last().attr('id').split('_')[1]);
 
-    for(var y = 0; y < tableDimensions; y++){
-        var rowName = $('#side_'+y).attr('name');
+    for (var y = 0; y < tableDimensions; y++) {
+        var rowName = $('#side_' + y).attr('name');
 
         output[rowName] = {};
-        for(var x = y+1; x <= tableDimensions; x++){
-            var colName = $('#head_'+x).attr('name');
+        for (var x = y + 1; x <= tableDimensions; x++) {
+            var colName = $('#head_' + x).attr('name');
 
-            var toPush = String(eval($('select#'+String(y)+'_'+String(x)+' option:selected').val()));
+            var toPush = String(eval($('select#' + String(y) + '_' + String(x) + ' option:selected').val()));
             output[rowName][colName] = toPush;
         }
     }
@@ -93,12 +97,13 @@ $('#send_scales').on('click', function(){
         method: 'POST',
         url: "?AdminEditClassifications",
         cache: false,
-        data: {'feature':featureName,'class':className,'json':json}
-    }).done(function(html){
+        data: {'feature': featureName, 'class': className, 'json': json}
+    }).done(function (html) {
         console.log(html);
-        window.location.href="?AdminClassifyAuthenticationsFeatureOverview"
-    }).fail(function(xhr, status, error) {
+        window.location.href = "?AdminClassifyAuthenticationsFeatureOverview"
+    }).fail(function (xhr, status, error) {
         var err = eval("(" + xhr.responseText + ")");
         alert(err.Message);
     });
+
 });

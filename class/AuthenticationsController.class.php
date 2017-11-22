@@ -63,7 +63,7 @@ class AuthenticationsController
         $output = array();
 
         // Fill out Array for the Output
-        foreach($authentications as $value){
+        foreach ($authentications as $value) {
             $output[$value['name']] = $value['category'];
         }
 
@@ -97,7 +97,7 @@ class AuthenticationsController
 
         // Build up the Values for the Query
         $insertValues = "";
-        foreach($authArr as $authName => $authCat){
+        foreach ($authArr as $authName => $authCat) {
             $insertValues .= "('%s', '%s'),";
             $insertValues = sprintf($insertValues,
                 $this->dbController->escapeStripString($authName),
@@ -136,7 +136,7 @@ class AuthenticationsController
         // Build up the Information for the deleteQuery
         $deleteValues = "";
 
-        foreach($authArr as $authName => $value){
+        foreach ($authArr as $authName => $value) {
             $deleteValues .= "'%s',";
             $deleteValues = sprintf(
                 $deleteValues,
@@ -146,12 +146,33 @@ class AuthenticationsController
 
         $deleteValues = substr($deleteValues, 0, -1);
         $deleteQuery = sprintf(
-            $deleteQuery, 
+            $deleteQuery,
             $deleteValues
         );
 
         $this->dbController->secureSet($deleteQuery);
     }
 
+
+    /**
+     * getAllCategories()
+     * @return distinct array of all categories
+     * @desc Returnes all categories of auth_authentication
+     */
+    public function getAllCategories()
+    {
+        // Request all categories once from the database
+        $requestQuery = "
+          SELECT DISTINCT
+            category
+          FROM `auth_authentications`
+          ORDER BY category ASC;
+          ";
+
+        return $authentications = $this->dbController->secureGet($requestQuery);
+    }
+
+
 }
+
 ?>

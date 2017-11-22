@@ -58,7 +58,7 @@ class ClassifyAuthenticationsController
 
         $output = array();
 
-        foreach($result as $row){
+        foreach ($result as $row) {
             $output[$row['category']][] = $row['feature'];
         }
 
@@ -95,7 +95,7 @@ class ClassifyAuthenticationsController
 
         $output = array();
 
-        foreach($result as $row){
+        foreach ($result as $row) {
             $output[] = $row['className'];
         }
 
@@ -125,20 +125,19 @@ class ClassifyAuthenticationsController
         $authIDs = $this->getAuthIDs($classID);
         $authIDNames = $this->getAuthIDNames($authIDs);
         $knownScaleValues = $this->getKnownScaleValues($classID, $featureID);
-
         $temp = $authIDNames;
         $output = array();
 
-        while(sizeof($temp) >= 1){
+        while (sizeof($temp) >= 1) {
             $authName = array_shift($temp);
             $output[$authName] = array();
-            foreach($temp as $auth2Name){
+            foreach ($temp as $auth2Name) {
                 $output[$authName][$auth2Name] = 1;
             }
         }
 
-        foreach($knownScaleValues as $auth1 => $arr){
-            foreach($arr as $auth2 => $val){
+        foreach ($knownScaleValues as $auth1 => $arr) {
+            foreach ($arr as $auth2 => $val) {
                 $output[$authIDNames[$auth1]][$authIDNames[$auth2]] = $val;
             }
         }
@@ -168,13 +167,63 @@ class ClassifyAuthenticationsController
         return $result[0]['id'];
     }
 
+
+    public function getClassIDAndNameBySubFeatureNames($subFeatureArray)
+    {
+        $query = "SELECT name FROM `cat_subfeatures` WHERE ";
+        foreach ($subFeatureArray as $subfeature)
+            $query .= "name='" . $this->dbController->escapeStripString($subfeature) . "' OR ";
+
+        //Remove last OR from query
+        $query = substr($query, 0, -3);
+
+        $query .= "ORDER by id ASC;";
+
+        $sortedSubfeatureList = $this->dbController->secureGet($query);
+
+        $className = "";
+
+        foreach ($sortedSubfeatureList as $subfeature)
+            $className .= $subfeature["name"] . "+";
+
+        //Remove last + from className
+        $className = substr($className, 0, -1);
+
+        if (sizeof($subFeatureArray) == 0)
+            return array();
+
+        $query = "SELECT id,name FROM cat_class_feature WHERE name='%s' LIMIT 1;";
+
+        $query = sprintf($query, $className);
+
+        $result = $this->dbController->secureGet($query);
+        if (sizeof($result) > 0)
+            return $result[0];
+        else
+            return array("new_classname" => $className);
+    }
+
+    public function getZeroClassForFeatureId($featureId)
+    {
+        $query = "SELECT id,name FROM cat_class_feature WHERE name= '0' AND cat_feature=%d;";
+
+        $query = sprintf($query, $this->dbController->escapeStripString($featureId));
+
+        $result = $this->dbController->secureGet($query);
+        if (sizeof($result) > 0)
+            return $result[0];
+        else
+            return array();
+    }
+
+
     /**
      * getFeatureID($featureName)
      * @desc Gets the ID of a Feature-Name from the Database
      * @param $featureName - The Name of the Feature
      * @return int - The ID of the Feature
      */
-    private function getFeatureID($featureName)
+    public function getFeatureID($featureName)
     {
         $query = "SELECT id FROM cat_features WHERE name='%s' LIMIT 1";
 
@@ -212,7 +261,7 @@ class ClassifyAuthenticationsController
 
         $output = array();
 
-        foreach($result as $row){
+        foreach ($result as $row) {
             $output[] = $row['auth_authentication'];
         }
 
@@ -225,7 +274,7 @@ class ClassifyAuthenticationsController
      * @param $authIDs - An Array that holds Authentication Scheme IDs
      * @return array - An Array that references Authentication Scheme IDs to Authentication Scheme Names
      *                  Array (
-     +                          [Authentication Scheme ID] => "Authentication Scheme Name",
+     * +                          [Authentication Scheme ID] => "Authentication Scheme Name",
      *                          [Authentication Scheme ID] => "Authentication Scheme Name",
      *                          ...
      *                        )
@@ -235,7 +284,7 @@ class ClassifyAuthenticationsController
         $query = "SELECT id, name FROM auth_authentications WHERE id IN(%s) ORDER BY name ASC";
         $values = "";
 
-        foreach($authIDs as $authID){
+        foreach ($authIDs as $authID) {
             $values .= "%d,";
             $values = sprintf(
                 $values,
@@ -248,7 +297,7 @@ class ClassifyAuthenticationsController
         $result = $this->dbController->secureGet($query);
         $output = array();
 
-        foreach($result as $row){
+        foreach ($result as $row) {
             $output[$row['id']] = $row['name'];
         }
 
@@ -271,7 +320,7 @@ class ClassifyAuthenticationsController
         $query = "SELECT id, name FROM auth_authentications WHERE name IN(%s) ORDER BY name ASC";
         $values = "";
 
-        foreach($authNames as $authName){
+        foreach ($authNames as $authName) {
             $values .= "'%s',";
             $values = sprintf(
                 $values,
@@ -284,7 +333,7 @@ class ClassifyAuthenticationsController
         $result = $this->dbController->secureGet($query);
         $output = array();
 
-        foreach($result as $row){
+        foreach ($result as $row) {
             $output[$row['name']] = $row['id'];
         }
 
@@ -324,7 +373,7 @@ class ClassifyAuthenticationsController
         $result = $this->dbController->secureGet($query);
         $output = array();
 
-        foreach($result as $row){
+        foreach ($result as $row) {
             $output[$row['auth_authentication_1']][$row['auth_authentication_2']] = $row['value'];
         }
 
@@ -350,6 +399,10 @@ class ClassifyAuthenticationsController
      */
     public function setClassificationValues($class, $feature, $scaleValues)
     {
+
+        if(count($scaleValues) <= 1)
+            return;
+
         $featureName = $feature;
         $featureID = $this->getFeatureID($featureName);
         $className = $class;
@@ -357,7 +410,9 @@ class ClassifyAuthenticationsController
         $authNames = array();
         $authNames[] = array_keys($scaleValues)[0];
 
-        foreach($scaleValues[array_keys($scaleValues)[0]] as $authName => $val){
+
+
+        foreach ($scaleValues[array_keys($scaleValues)[0]] as $authName => $val) {
             $authNames[] = $authName;
         }
 
@@ -371,8 +426,8 @@ class ClassifyAuthenticationsController
 
         $values = "";
 
-        foreach($scaleValues as $auth1name => $cArr){
-            foreach($cArr as $auth2name => $val){
+        foreach ($scaleValues as $auth1name => $cArr) {
+            foreach ($cArr as $auth2name => $val) {
                 $values .= "(%d,%d,%d,%d,%f),";
                 $values = sprintf(
                     $values,
@@ -392,4 +447,5 @@ class ClassifyAuthenticationsController
     }
 
 }
+
 ?>

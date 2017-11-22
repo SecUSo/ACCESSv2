@@ -77,6 +77,31 @@ class ContentController
         return $this->dbController->secureGet($sqlData);
     }
 
+    public function getAllDescriptionWithName()
+    {
+        $sqlData = "SELECT description, name  FROM auth_authentications LEFT JOIN auth_info " .
+            "ON auth_authentications.id = auth_info.id;";
+        $result = $this->dbController->secureGet($sqlData);
+
+        $new_res = array();
+        foreach ($result as $entry) {
+            $new_res[$entry["name"]] = $entry["description"];
+        }
+        return $new_res;
+    }
+
+    public function getAllFeatureDescriptionsWithName()
+    {
+        $sqlData = "SELECT description, name FROM cat_features LEFT JOIN feature_info ON cat_features.id = feature_info.id;";
+        $result = $this->dbController->secureGet($sqlData);
+
+        $new_res = array();
+        foreach ($result as $entry) {
+            $new_res[$entry["name"]] = $entry["description"];
+        }
+        return $new_res;
+    }
+
     public function isInInfoTable($pk_id)
     {
         $sqlData = "SELECT id FROM auth_info WHERE id=" . $this->dbController->escapeStripString($pk_id);

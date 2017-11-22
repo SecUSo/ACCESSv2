@@ -53,6 +53,8 @@ class Subfeature
         $data_isUser = $this->sessionController->isSessionValid();
         $data_contentId = $_GET['id'];
         $data_contentType = "subfeature";
+        $data_comment_type = "plaintext";
+
         //print_r($data_subfeatures);
         include_once("content/header.php");
         include_once("content/navigation.php");

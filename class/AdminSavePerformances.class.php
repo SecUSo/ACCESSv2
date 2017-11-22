@@ -46,6 +46,7 @@ class AdminSavePerformances
         $this->sessionController = new SessionController();
         if (!$this->sessionController->getIsAdmin())
             die("error: no access!");
+
         $this->getParams();
         $this->performancesController->setPerformances($this->feature, $this->performances);
     }

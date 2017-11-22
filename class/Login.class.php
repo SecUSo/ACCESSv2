@@ -40,7 +40,6 @@ class Login
     private function initTemplate()
     {
         $data_pagetitle = "ACCESS BASIC - LOGIN";
-        $tempCaptcha = new Captcha();
         $data_validSession = $this->sessionController->isSessionValid();
         $data_name = $this->sessionController->getName();
         $data_isAdmin = $this->sessionController->getIsAdmin();

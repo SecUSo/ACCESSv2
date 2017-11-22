@@ -65,7 +65,7 @@ class PerformancesController
         $result = $this->dbController->secureGet($query);
         $output = array();
 
-        foreach($result as $row){
+        foreach ($result as $row) {
             $output[$row['auth_authentication_1']][$row['auth_authentication_2']] = $row['value'];
         }
 
@@ -88,7 +88,7 @@ class PerformancesController
         $result = $this->dbController->secureGet($query);
         $output = array();
 
-        foreach($result as $row){
+        foreach ($result as $row) {
             $output[] = $row['name'];
         }
 
@@ -113,8 +113,8 @@ class PerformancesController
         $numberOfAuths = 0;
         $rowSums = array();
 
-        foreach($tableContent as $row => $arr){
-            foreach($arr as $col => $val){
+        foreach ($tableContent as $row => $arr) {
+            foreach ($arr as $col => $val) {
                 $bj_rowValues[$col][] = $val;
             }
             $bj_values[$row] = 0;
@@ -122,15 +122,15 @@ class PerformancesController
 
         $numberOfAuths = sizeof($tableContent);
 
-        foreach($bj_rowValues as $col => $arr){
-            foreach($arr as $val){
+        foreach ($bj_rowValues as $col => $arr) {
+            foreach ($arr as $val) {
                 $bj_values[$col] += $val;
             }
         }
 
-        foreach($tableContent as $row => $arr){
+        foreach ($tableContent as $row => $arr) {
             $temp = 0;
-            foreach($arr as $col => $val){
+            foreach ($arr as $col => $val) {
                 $temp += $val;
             }
             $rowSums[$row] = $temp / $numberOfAuths;
@@ -155,24 +155,24 @@ class PerformancesController
         $col_cis = array();
         $lambdaVal = 0;
 
-        foreach($tableContent as $row => $arr){
-            foreach($arr as $col => $val){
+        foreach ($tableContent as $row => $arr) {
+            foreach ($arr as $col => $val) {
                 $bj_rowValues[$col][] = $val;
             }
             $bj_values[$row] = 0;
         }
 
-        foreach($bj_rowValues as $col => $arr){
-            foreach($arr as $val){
+        foreach ($bj_rowValues as $col => $arr) {
+            foreach ($arr as $val) {
                 $bj_values[$col] += $val;
             }
         }
 
-        foreach($bj_values as $col => $val){
-            $col_cis[$col] = $val*$performances[$col]/100;
+        foreach ($bj_values as $col => $val) {
+            $col_cis[$col] = $val * $performances[$col] / 100;
         }
 
-        foreach($col_cis as $ci){
+        foreach ($col_cis as $ci) {
             $lambdaVal += $ci;
         }
 
@@ -180,9 +180,9 @@ class PerformancesController
         $ri = $this->getNearestRI($numberOfAuths);
 
         return "CR = " .
-                number_format($ci, 2, '.', '') . "% / " .
-                number_format($ri, 2, '.', '') . "% = " .
-                number_format($ci/$ri*100, 2, '.', '') . "%";
+        number_format($ci, 2, '.', '') . "% / " .
+        number_format($ri, 2, '.', '') . "% = " .
+        number_format($ci / $ri * 100, 2, '.', '') . "%";
     }
 
     /**
@@ -204,7 +204,7 @@ class PerformancesController
 
         $values = "";
 
-        foreach($performances as $auth => $val){
+        foreach ($performances as $auth => $val) {
             $values .= "(%d, %d, %f),";
             $values = sprintf(
                 $values,
@@ -245,12 +245,12 @@ class PerformancesController
         $result = $this->dbController->secureGet($query);
 
         $riValueApprox = min($result[0]['ci_value'], $result[1]['ci_value']) +
-                        (
-                            min($result[0]['distance'], $result[1]['distance']) *
-                            (   abs($result[0]['ci_value'] - $result[1]['ci_value']) /
-                                ($result[0]['distance'] + $result[1]['distance'])
-                            )
-                        );
+            (
+                min($result[0]['distance'], $result[1]['distance']) *
+                (abs($result[0]['ci_value'] - $result[1]['ci_value']) /
+                    ($result[0]['distance'] + $result[1]['distance'])
+                )
+            );
 
         return $riValueApprox;
     }
@@ -274,5 +274,21 @@ class PerformancesController
         return $result[0]['id'];
     }
 
+    public function recalculateAllPerformances()
+    {
+        $query = "SELECT DISTINCT name FROM cat_features;";
+
+        $features = $this->dbController->secureGet($query);
+
+        foreach ($features as $feature) {
+
+            $data_content = $this->getIndexContent($feature["name"]);
+            $data_performances = $this->getPerformances($data_content);
+
+            $this->setPerformances($feature["name"], $data_performances);
+        }
+    }
+
 }
+
 ?>

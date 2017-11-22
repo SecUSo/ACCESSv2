@@ -37,6 +37,119 @@ class DiscussionController
         $this->dbController = new DatabaseController();
     }
 
+    public function addClassificationSuggestionForDiscussion($auth_authentication, $auth_name, $feature, $class, $class_values, $reference, $comment, $author_id)
+    {
+
+        $zeroClassAliases = array(
+            "Accessible" => "Non-Accessible",
+            "Negligible-Cost-per-User" => "Non-Negligible-Cost-per-User",
+            "Browser-Compatible" => "Non-Browser-Compatible",
+            "Server-Compatible" => "Non-Server-Compatible",
+            "Mature" => "Not-Mature",
+            "Non-Proprietary" => "Proprietary",
+            "Resilient-to-Physical-Oberservation" => "Non-Resilient-to-Physical-Oberservation",
+            "Resilient-to-Targeted-Impersonation" => "Non-Resilient-to-Targeted-Impersonation",
+            "Resilient-to-Throttled-Guessing" => "Non-Resilient-to-Throttled-Guessing",
+            "Resilient-to-Unthrottled-Guessing" => "Non-Resilient-to-Unthrottled-Guessing",
+            "Resilient-to-Internal-Observation" => "Non-Resilient-to-Internal-Observation",
+            "Resilient-to-Leaks-form-Other-Verifiers" => "Non-Resilient-to-Leaks-form-Other-Verifiers",
+            "Resilient-to-Phishing" => "Non-Resilient-to-Phishing",
+            "Resilient-to-Theft" => "Non-Resilient-to-Theft",
+            "Resilient-to-Third-Party" => "Non-Resilient-to-Third-Party",
+            "Requiring-Explicit-Consent" => "Non-Requiring-Explicit-Consent",
+            "Unlinkable" => "Linkable",
+            "Scalable-for-Users" => "Non-Scalable-for-Users",
+            "Easy-to-Learn" => "Non-Easy-to-Learn",
+            "Efficient-to-Use" => "Non-Efficient-to-Use",
+            "Easy-Recovery-from-Loss" => "Non-Easy-Recovery-from-Loss",
+            "Infrequent-Errors" => "Frequent-Errors"
+        );
+
+        $content = '<div class="panel panel-default"><div class="panel-heading"><h3 class="panel-title">Classification Suggestion</h3></div><div class="panel-body">
+            <dl class="dl-horizontal"><dt>Feature</dt><dd>' .
+            $this->dbController->escapeStripString($feature) .
+            '</dd><dt>Class</dt><dd>';
+
+        if ($this->dbController->escapeStripString($class) == "0")
+            $content .= $zeroClassAliases[$this->dbController->escapeStripString($feature)];
+        else
+            $content .= $this->dbController->escapeStripString($class);
+
+        $content .= '</dd><dt>References</dt><dd>' .
+            $this->dbController->escapeStripString($reference) .
+            '</dd><dt>Comment</dt><dd>' .
+            $this->dbController->escapeStripString($comment) .
+            '</dd><dt>Classvalues</dt><dd>';
+
+        foreach ($class_values as $class_value) {
+            if ($class_value["auth_1"] == $auth_name) {
+                if ($this->dbController->escapeStripString($class_value["value"]) == "1.5")
+                    $content .= "<span class=\"bg-success\"><b>" . $class_value["auth_1"] . "</b> is better than <b>" . $this->dbController->escapeStripString($class_value["auth_2"]) . "</b></span></br>";
+                else if ($this->dbController->escapeStripString($class_value["value"]) == "1")
+                    $content .= "<span class=\"bg-warning\"><b>" . $class_value["auth_1"] . "</b> is equal to <b>" . $this->dbController->escapeStripString($class_value["auth_2"]) . "</b></span></br>";
+                else
+                    $content .= "<span class=\"bg-danger\"><b>" . $class_value["auth_1"] . "</b> is worse than <b>" . $this->dbController->escapeStripString($class_value["auth_2"]) . "</b></span></br>";
+
+            } else {
+                if ($this->dbController->escapeStripString($class_value["value"]) == "1.5")
+                    $content .= "<span class=\"bg-danger\"><b>" . $class_value["auth_2"] . "</b> is worse than <b>" . $this->dbController->escapeStripString($class_value["auth_1"]) . "</b></span></br>";
+                else if ($this->dbController->escapeStripString($class_value["value"]) == "1")
+                    $content .= "<span class=\"bg-warning\"><b>" . $class_value["auth_2"] . "</b> is equal to <b>" . $this->dbController->escapeStripString($class_value["auth_1"]) . "</b></span></br>";
+                else
+                    $content .= "<span class=\"bg-success\"><b>" . $class_value["auth_2"] . "</b> is better than <b>" . $this->dbController->escapeStripString($class_value["auth_1"]) . "</b></span></br>";
+
+            }
+        }
+
+        $content .= '</dd></dl></div></div>';
+
+
+        $sqlData = "INSERT INTO discuss_auth " .
+            "(id, foreignid, post_type, post_threadstatus, post_content, post_authorid, post_date) " .
+            "VALUES(0," .
+            $this->dbController->escapeStripString($auth_authentication) . ", " .
+            "'auto-suggestion'," .
+            "'" . DiscussionController::defaultThreadStatus . "', " .
+            "'" . $content . "'," .
+            "'" . $this->dbController->escapeStripString($author_id) . "'," .
+            "NOW()" .
+            ");";
+        $this->dbController->secureSet($sqlData);
+        return $this->dbController->getLatestInsertionId();
+    }
+
+
+    public function addSubFeatureSuggestionForDiscussion($auth_authentication, $cat_subfeature, $value, $reference, $comment, $author_id)
+    {
+        $content = '<div class="panel panel-default"><div class="panel-heading"><h3 class="panel-title">Subfeature Suggestion</h3></div><div class="panel-body"><dl class="dl-horizontal"><dt>Subfeature</dt><dd>' .
+            $this->dbController->escapeStripString($cat_subfeature) .
+            '</dd><dt>Action</dt><dd>';
+
+        if ($this->dbController->escapeStripString($value) == "1")
+            $content .= 'Add (+)';
+        else
+            $content .= 'Remove (-)';
+
+        $content .= '</dd><dt>References</dt><dd>' .
+            $this->dbController->escapeStripString($reference) .
+            '</dd><dt>Comment</dt><dd>' .
+            $this->dbController->escapeStripString($comment) .
+            '</dd></dl></div></div>';
+
+        $sqlData = "INSERT INTO discuss_auth " .
+            "(id, foreignid, post_type, post_threadstatus, post_content, post_authorid, post_date) " .
+            "VALUES(0," .
+            $this->dbController->escapeStripString($auth_authentication) . ", " .
+            "'auto-suggestion'," .
+            "'" . DiscussionController::defaultThreadStatus . "', " .
+            "'" . $content . "'," .
+            "'" . $this->dbController->escapeStripString($author_id) . "'," .
+            "NOW()" .
+            ");";
+        $this->dbController->secureSet($sqlData);
+        return $this->dbController->getLatestInsertionId();
+    }
+
     public function addAuthComment($authId, $content, $authorId)
     {
         $sqlData = "INSERT INTO discuss_auth " .
@@ -232,7 +345,7 @@ class DiscussionController
     {
         $sqlData1 = "SELECT foreignid FROM discuss_subfeature WHERE id=" . $this->dbController->escapeStripString($id);
 
-        $tempEntry = $this->dbController->secureGet($sqlData1);
+        $tempEntry = $this->dbController->secureSet($sqlData1);
 
         if (count($tempEntry) == 0)
             return -1;
@@ -241,14 +354,14 @@ class DiscussionController
 
         $sqlData = "DELETE FROM discuss_subfeature WHERE id=" . $this->dbController->escapeStripString($id);
 
-        return $this->dbController->secureGet($sqlData);
+        return $this->dbController->secureSet($sqlData);
     }
 
     public function deleteSubFeatureThreads($id, $foreignid)
     {
         $sqlData = "DELETE FROM discuss_thread_subfeature WHERE thread_id=" . $this->dbController->escapeStripString($id) . " AND foreignid=" . $foreignid;
 
-        return $this->dbController->secureGet($sqlData);
+        return $this->dbController->secureSet($sqlData);
     }
 
     public function deleteFeatureDiscussion($id)
@@ -264,14 +377,14 @@ class DiscussionController
 
         $sqlData = "DELETE FROM discuss_feature WHERE id=" . $this->dbController->escapeStripString($id);
 
-        return $this->dbController->secureGet($sqlData);
+        return $this->dbController->secureSet($sqlData);
     }
 
     public function deleteFeatureThreads($id, $foreignid)
     {
         $sqlData = "DELETE FROM discuss_thread_feature WHERE thread_id=" . $this->dbController->escapeStripString($id) . " AND foreignid=" . $foreignid;
 
-        return $this->dbController->secureGet($sqlData);
+        return $this->dbController->secureSet($sqlData);
     }
 
     public function deleteAuthDiscussion($id)
@@ -287,14 +400,14 @@ class DiscussionController
 
         $sqlData = "DELETE FROM discuss_auth WHERE id=" . $this->dbController->escapeStripString($id);
 
-        return $this->dbController->secureGet($sqlData);
+        return $this->dbController->secureSet($sqlData);
     }
 
     public function deleteAuthThreads($id, $foreignid)
     {
         $sqlData = "DELETE FROM discuss_thread_auth WHERE thread_id=" . $this->dbController->escapeStripString($id) . " AND foreignid=" . $foreignid;
 
-        return $this->dbController->secureGet($sqlData);
+        return $this->dbController->secureSet($sqlData);
     }
 
 
@@ -302,63 +415,63 @@ class DiscussionController
     {
         $sqlData = "DELETE FROM discuss_thread_auth WHERE id=" . $this->dbController->escapeStripString($id);
 
-        return $this->dbController->secureGet($sqlData);
+        return $this->dbController->secureSet($sqlData);
     }
 
     public function deleteFeatureSubthread($id)
     {
         $sqlData = "DELETE FROM discuss_thread_feature WHERE id=" . $this->dbController->escapeStripString($id);
 
-        return $this->dbController->secureGet($sqlData);
+        return $this->dbController->secureSet($sqlData);
     }
 
     public function deleteSubfeatureSubthread($id)
     {
         $sqlData = "DELETE FROM discuss_thread_subfeature WHERE id=" . $this->dbController->escapeStripString($id);
 
-        return $this->dbController->secureGet($sqlData);
+        return $this->dbController->secureSet($sqlData);
     }
 
     public function acceptAuthSuggestion($id)
     {
         $sqlData = "UPDATE discuss_auth SET post_threadstatus='accepted' WHERE id=" . $this->dbController->escapeStripString($id);
 
-        return $this->dbController->secureGet($sqlData);
+        return $this->dbController->secureSet($sqlData);
     }
 
     public function acceptFeatureSuggestion($id)
     {
         $sqlData = "UPDATE discuss_feature SET post_threadstatus='accepted' WHERE id=" . $this->dbController->escapeStripString($id);
 
-        return $this->dbController->secureGet($sqlData);
+        return $this->dbController->secureSet($sqlData);
     }
 
     public function acceptSubfeatureSuggestion($id)
     {
         $sqlData = "UPDATE discuss_subfeature SET post_threadstatus='accepted' WHERE id=" . $this->dbController->escapeStripString($id);
 
-        return $this->dbController->secureGet($sqlData);
+        return $this->dbController->secureSet($sqlData);
     }
 
-    public function rejecttAuthSuggestion($id)
+    public function rejectAuthSuggestion($id)
     {
         $sqlData = "UPDATE discuss_auth SET post_threadstatus='rejected' WHERE id=" . $this->dbController->escapeStripString($id);
 
-        return $this->dbController->secureGet($sqlData);
+        return $this->dbController->secureSet($sqlData);
     }
 
     public function rejectFeatureSuggestion($id)
     {
         $sqlData = "UPDATE discuss_feature SET post_threadstatus='rejected' WHERE id=" . $this->dbController->escapeStripString($id);
 
-        return $this->dbController->secureGet($sqlData);
+        return $this->dbController->secureSet($sqlData);
     }
 
     public function rejectSubfeatureSuggestion($id)
     {
         $sqlData = "UPDATE discuss_subfeature SET post_threadstatus='rejected' WHERE id=" . $this->dbController->escapeStripString($id);
 
-        return $this->dbController->secureGet($sqlData);
+        return $this->dbController->secureSet($sqlData);
     }
 
     public function getLatestAuthThreads($countOfEntrys)

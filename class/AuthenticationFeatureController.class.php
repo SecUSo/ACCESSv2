@@ -55,7 +55,7 @@ class AuthenticationFeatureController
         $output = array();
 
         // Fill out Array for the Output
-        foreach($authentications as $value){
+        foreach ($authentications as $value) {
             array_push(
                 $output,
                 $value['name']
@@ -99,7 +99,7 @@ class AuthenticationFeatureController
         $subFeatureIdsResult = $this->dbController->secureGet($subFeatureIdsQuery);
         // Variable to Convert SubFeature-Names to their IDs
         $subFeatureToId = array();
-        foreach($subFeatureIdsResult as $row){
+        foreach ($subFeatureIdsResult as $row) {
             $subFeatureToId[$row['name']] = $row['id'];
         }
         return $subFeatureToId;
@@ -124,13 +124,11 @@ class AuthenticationFeatureController
         $subFeatureNameToID = $this->getSubFeatureIDs();
         $deleteValues = "";
 
-        foreach($subFeatureNames as $sfName){
+        foreach ($subFeatureNames as $sfName) {
             $deleteValues .= "'%d',";
             $deleteValues = sprintf(
                 $deleteValues,
-                $subFeatureNameToID[
-                    $this->dbController->escapeStripString($sfName)
-                ]
+                $subFeatureNameToID[$this->dbController->escapeStripString($sfName)]
             );
         }
 
@@ -163,7 +161,7 @@ class AuthenticationFeatureController
         $subFeatureNameToID = $this->getSubFeatureIDs();
         $insertValues = "";
 
-        foreach($subFeatureNames as $subFeatureName){
+        foreach ($subFeatureNames as $subFeatureName) {
             $insertValues .= "(%d,%d),";
             $insertValues = sprintf(
                 $insertValues,
@@ -203,7 +201,7 @@ class AuthenticationFeatureController
     {
         $authName = $this->dbController->escapeStripString($authName);
 
-        $requestAllQuery  = "
+        $requestAllQuery = "
             SELECT
               c.name as category,
               f.name as feature,
@@ -240,11 +238,11 @@ class AuthenticationFeatureController
         $resultArray = array();
 
         // Build the Output
-        foreach($allResult as $row){
+        foreach ($allResult as $row) {
             $resultArray[$row['category']][$row['feature']][$row['subfeature']] = false;
 
-            foreach($selectedResult as $srow){
-                if($srow['subfeature_id'] == $row['subfeature_id']){
+            foreach ($selectedResult as $srow) {
+                if ($srow['subfeature_id'] == $row['subfeature_id']) {
                     $resultArray[$row['category']][$row['feature']][$row['subfeature']] = true;
                     break;
                 }
@@ -254,5 +252,42 @@ class AuthenticationFeatureController
         return $resultArray;
     }
 
+    //Get clean data-obj with cat, feature, subfeature for auth. suggestions
+    public function getCleanAuthContent()
+    {
+        $requestAllQuery = "
+            SELECT
+              c.name as category,
+              f.name as feature,
+              s.id as subfeature_id,
+              s.name as subfeature
+            FROM
+              `cat_subfeatures` s
+            JOIN (cat_features f
+              JOIN cat_categories c
+              ON f.category=c.id)
+            ON s.feature=f.id
+            ";
+
+        // Get the Results from the Database
+        $allResult = $this->dbController->secureGet($requestAllQuery);
+
+        $resultArray = array();
+
+        $preSelectSelectiveSubfeatures = array("No-Secret-to-Remember", "No-Object-to-Carry", "No-Physical-Effort");
+
+        // Build the Output
+        foreach ($allResult as $row) {
+            if (in_array($row['subfeature'], $preSelectSelectiveSubfeatures))
+                $resultArray[$row['category']][$row['feature']][$row['subfeature']] = true;
+            else
+                $resultArray[$row['category']][$row['feature']][$row['subfeature']] = false;
+
+        }
+
+        return $resultArray;
+    }
+
 }
+
 ?>

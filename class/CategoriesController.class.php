@@ -61,7 +61,7 @@ class CategoriesController
         $sqlQuery = "SELECT category, feature, subfeature FROM category_feature_subfeature";
         $categoriesArray = $this->dbController->secureGet($sqlQuery);
         $output = array();
-        foreach($categoriesArray as $row){
+        foreach ($categoriesArray as $row) {
             $output[$row['category']][$row['feature']][] = $row['subfeature'];
         }
         return $output;
@@ -86,7 +86,7 @@ class CategoriesController
         $sqlQuery = "SELECT DISTINCT category, feature FROM category_feature_subfeature";
         $categoriesArray = $this->dbController->secureGet($sqlQuery);
         $output = array();
-        foreach($categoriesArray as $row){
+        foreach ($categoriesArray as $row) {
             $output[$row['category']][] = $row['feature'];
         }
         return $output;
@@ -113,13 +113,14 @@ class CategoriesController
         $data = $this->getAuthenticationsSubFeaturesForFeature($featureName);
         $outputArray = array();
         $classNames = array();
-        foreach($data as $authId => $Arr){
+
+        foreach ($data as $authId => $Arr) {
             $temp = "";
-            foreach($Arr as $subFeatureId => $subFeatureName){
+            foreach ($Arr as $subFeatureId => $subFeatureName) {
                 $temp .= $subFeatureName . '+';
             }
             $temp = substr($temp, 0, -1);
-            if(strlen($temp) == 0){
+            if (strlen($temp) == 0) {
                 $temp = '0';
             }
             array_push($classNames, $temp);
@@ -127,19 +128,19 @@ class CategoriesController
         sort($classNames, SORT_STRING);
 
         // Pre-Build the Output-Array
-        while(sizeof($classNames) > 1){
+        while (sizeof($classNames) > 1) {
             $class1name = array_shift($classNames);
             $outputArray[$class1name] = array();
 
-            foreach($classNames as $class2name){
+            foreach ($classNames as $class2name) {
                 $outputArray[$class1name][$class2name] = 1;
             }
 
         }
 
         $scaleValues = $this->getExistingScaleValuesForFeature($featureName);
-        foreach($scaleValues as $class1name => $cArr){
-            foreach($cArr as $class2name => $value){
+        foreach ($scaleValues as $class1name => $cArr) {
+            foreach ($cArr as $class2name => $value) {
                 $outputArray[$class1name][$class2name] = $value;
             }
         }
@@ -173,7 +174,7 @@ class CategoriesController
 
         // Then we push all related names of the Title-Column in the Array
         // The Array should now have every Class-Name for the Feature
-        foreach($data[trim($classNames[0])] as $name => $val){
+        foreach ($data[trim($classNames[0])] as $name => $val) {
             array_push(
                 $classNames,
                 $this->dbController->escapeStripString($name)
@@ -183,7 +184,7 @@ class CategoriesController
         $this->setClasses($featureID, $classNames);
         $classNameToId = $this->getClassIDsForFeature($featureID);
 
-        $insertScalesQuery =  "
+        $insertScalesQuery = "
             INSERT INTO
               `cat_class_value_pair`
               (cat_class_class_1, cat_class_class_2, value)
@@ -196,8 +197,8 @@ class CategoriesController
 
         $insertScalesValues = "";
 
-        foreach($data as $class1name => $arr){
-            foreach($arr as $class2name => $value){
+        foreach ($data as $class1name => $arr) {
+            foreach ($arr as $class2name => $value) {
                 $insertScalesValues .= "(%d,%d,%f),";
                 $insertScalesValues = sprintf(
                     $insertScalesValues,
@@ -239,7 +240,7 @@ class CategoriesController
 
         $output = array();
 
-        foreach($getClassIdsResult as $row){
+        foreach ($getClassIdsResult as $row) {
             $output[$row['name']] = $row['id'];
         }
 
@@ -252,7 +253,8 @@ class CategoriesController
      * @return int - The ID of the requested Feature
      * @desc Gets and returns the ID of the requested Feature from the Database.
      */
-    public function getFeatureID($feature){
+    public function getFeatureID($feature)
+    {
         // Query to get the ID of the Feature the Scale Values are related to
         $featureIdQuery = "SELECT id FROM `cat_features` WHERE name='%s' LIMIT 1";
         $featureIdQuery = sprintf(
@@ -310,7 +312,7 @@ class CategoriesController
         $result = $this->dbController->secureGet($query);
         $output = array();
 
-        foreach($result as $row){
+        foreach ($result as $row) {
             $output[$row['class1name']][$row['class2name']] = $row['value'];
         }
 
@@ -360,7 +362,7 @@ class CategoriesController
         $result = $this->dbController->secureGet($query);
         $output = array();
 
-        foreach($result as $row){
+        foreach ($result as $row) {
             $output[$row['AId']][$row['SfId']] = $row['SfName'];
         }
 
@@ -381,7 +383,7 @@ class CategoriesController
     public function setClasses($featureId, $classes)
     {
         // Query to insert Classes into the Database is they are not already in
-        $insertClassesQuery =  "
+        $insertClassesQuery = "
             INSERT IGNORE INTO
               `cat_class_feature`
               (`name`, `cat_feature`)
@@ -392,7 +394,7 @@ class CategoriesController
         $insertClassesValues = "";
 
         // Build up the Insert-Values for the Query with the Array that has all Class-Names and the Feature-ID from the Database
-        foreach($classes as $className){
+        foreach ($classes as $className) {
             $insertClassesValues .= "('%s',%d),";
             $insertClassesValues = sprintf(
                 $insertClassesValues,
@@ -424,7 +426,7 @@ class CategoriesController
         $deleteCatQuery = "DELETE FROM `cat_categories` WHERE name NOT IN(%s)";
         $deleteCatIn = "";
 
-        foreach($catNames as $catName){
+        foreach ($catNames as $catName) {
             $deleteCatIn .= "'%s',";
             $deleteCatIn = sprintf(
                 $deleteCatIn,
@@ -454,8 +456,7 @@ class CategoriesController
         $deleteFeatureQuery = "DELETE FROM `cat_features` WHERE name NOT IN(%s)";
         $deleteFeatureIn = "";
 
-        foreach($featNames as $featureName)
-        {
+        foreach ($featNames as $featureName) {
             $deleteFeatureIn .= "'%s',";
             $deleteFeatureIn = sprintf(
                 $deleteFeatureIn,
@@ -485,7 +486,7 @@ class CategoriesController
         $deleteSubQuery = "DELETE FROM `cat_subfeatures` WHERE name NOT IN(%s)";
         $deleteSubIn = "";
 
-        foreach($subFeatNames as $subFeatureName) {
+        foreach ($subFeatNames as $subFeatureName) {
             $deleteSubIn .= "'%s',";
             $deleteSubIn = sprintf(
                 $deleteSubIn,
@@ -515,7 +516,7 @@ class CategoriesController
         $insertCatQuery = "INSERT IGNORE INTO `cat_categories` (name) VALUES %s";
         $insertCatValues = "";
 
-        foreach($categoryNames as $categoryName){
+        foreach ($categoryNames as $categoryName) {
             $insertCatValues .= "('%s'),";
             $insertCatValues = sprintf(
                 $insertCatValues,
@@ -543,7 +544,8 @@ class CategoriesController
      *       )
      * @desc Inserts all the Features related to their Categories into the Database.
      */
-    public function insertFeatures($categoryFeatureNames){
+    public function insertFeatures($categoryFeatureNames)
+    {
         // Insert all the new Features
         $insertFeatureQuery = "INSERT IGNORE INTO `cat_features` (category, name) VALUES %s";
 
@@ -554,14 +556,14 @@ class CategoriesController
         // Array to convert Category-Names to Category-IDs
         $categoryNameToID = array();
 
-        foreach($categories as $row){
+        foreach ($categories as $row) {
             $categoryNameToID[$row['name']] = $row['id'];
         }
 
         $insertFeatureValues = "";
 
-        foreach($categoryFeatureNames as $categoryName => $feature){
-            foreach($feature as $featureName){
+        foreach ($categoryFeatureNames as $categoryName => $feature) {
+            foreach ($feature as $featureName) {
                 $insertFeatureValues .= "(%d, '%s'),";
                 $insertFeatureValues = sprintf(
                     $insertFeatureValues,
@@ -603,14 +605,14 @@ class CategoriesController
         $featureNameToID = array();
         $features = $this->dbController->secureGet($featureQuery);
 
-        foreach($features as $row){
+        foreach ($features as $row) {
             $featureNameToID[$row['name']] = $row['id'];
         }
 
         $insertSubValues = "";
 
-        foreach($featureSubFeatureNames as $featureName => $subFeature){
-            foreach($subFeature as $subFeatureName) {
+        foreach ($featureSubFeatureNames as $featureName => $subFeature) {
+            foreach ($subFeature as $subFeatureName) {
                 $insertSubValues .= "(%d, '%s'),";
                 $insertSubValues = sprintf($insertSubValues,
                     $featureNameToID[trim($this->dbController->escapeStripString($featureName))],
@@ -624,6 +626,7 @@ class CategoriesController
 
         $this->dbController->secureSet($insertSubQuery);
     }
-    
+
 }
+
 ?>

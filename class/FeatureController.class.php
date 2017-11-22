@@ -165,6 +165,21 @@ class FeatureController
         return $this->dbController->secureGet($sqlData);
     }
 
+    public function getAllSubfeatureDescriptions()
+    {
+        $sqlData = "SELECT name, description FROM cat_subfeatures LEFT JOIN subfeature_info " .
+            "ON cat_subfeatures.id = subfeature_info.id;";
+
+        $result = $this->dbController->secureGet($sqlData);
+
+        $new_res = array();
+        foreach($result as $entry)
+        {
+            $new_res[$entry["name"]] = $entry["description"];
+        }
+        return $new_res;
+    }
+
     public function getAHPMatrixByFeatureId($id)
     {
         $sqlData = "SELECT feature_authentications_value.value FROM feature_authentications_value " .
