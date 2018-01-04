@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 04. Jan 2018 um 01:09
+-- Erstellungszeit: 21. Nov 2017 um 04:02
 -- Server Version: 5.5.44
 -- PHP-Version: 5.4.45-0+deb7u9
 
@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `auth_authentications` (
   `category` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=93 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=46 ;
 
 --
 -- Daten für Tabelle `auth_authentications`
@@ -189,7 +189,7 @@ INSERT INTO `auth_performances` (`auth_authentication`, `cat_feature`, `value`) 
 (1, 10, 3.07778),
 (1, 11, 7.944452),
 (1, 12, 2.666668),
-(1, 13, 5.444445),
+(1, 13, 5.266667),
 (1, 14, 5.277783),
 (1, 15, 0.270335),
 (1, 16, 0.598765),
@@ -214,7 +214,7 @@ INSERT INTO `auth_performances` (`auth_authentication`, `cat_feature`, `value`) 
 (2, 10, 3.07778),
 (2, 11, 7.944452),
 (2, 12, 2.455557),
-(2, 13, 5.200001),
+(2, 13, 5.022223),
 (2, 14, 5.277783),
 (2, 15, 0.337002),
 (2, 16, 0.598765),
@@ -239,7 +239,7 @@ INSERT INTO `auth_performances` (`auth_authentication`, `cat_feature`, `value`) 
 (3, 10, 2.84815),
 (3, 11, 7.944452),
 (3, 12, 0.946667),
-(3, 13, 2.486667),
+(3, 13, 2.397778),
 (3, 14, 0.562963),
 (3, 15, 0.35552),
 (3, 16, 0.598765),
@@ -260,7 +260,7 @@ INSERT INTO `auth_performances` (`auth_authentication`, `cat_feature`, `value`) 
 (4, 6, 1.203704),
 (4, 7, 1.586667),
 (4, 8, 0.537037),
-(4, 9, 0.737037),
+(4, 9, 0.722222),
 (4, 10, 2.774076),
 (4, 11, 7.896304),
 (4, 12, 2.666668),
@@ -289,7 +289,7 @@ INSERT INTO `auth_performances` (`auth_authentication`, `cat_feature`, `value`) 
 (5, 10, 2.755558),
 (5, 11, 7.944452),
 (5, 12, 1.002222),
-(5, 13, 2.475556),
+(5, 13, 2.386667),
 (5, 14, 0.585185),
 (5, 15, 4.07778),
 (5, 16, 0.598765),
@@ -314,7 +314,7 @@ INSERT INTO `auth_performances` (`auth_authentication`, `cat_feature`, `value`) 
 (6, 10, 3.07778),
 (6, 11, 0.874074),
 (6, 12, 2.666668),
-(6, 13, 5.303704),
+(6, 13, 5.125927),
 (6, 14, 5.277783),
 (6, 15, 0.344409),
 (6, 16, 0.598765),
@@ -339,7 +339,7 @@ INSERT INTO `auth_performances` (`auth_authentication`, `cat_feature`, `value`) 
 (7, 10, 0.328395),
 (7, 11, 0.874074),
 (7, 12, 2.666668),
-(7, 13, 2.431111),
+(7, 13, 2.342222),
 (7, 14, 0.562963),
 (7, 15, 0.344409),
 (7, 16, 0.598765),
@@ -364,7 +364,7 @@ INSERT INTO `auth_performances` (`auth_authentication`, `cat_feature`, `value`) 
 (8, 10, 3.07778),
 (8, 11, 0.874074),
 (8, 12, 2.666668),
-(8, 13, 2.486667),
+(8, 13, 2.397778),
 (8, 14, 0.562963),
 (8, 15, 0.344409),
 (8, 16, 0.598765),
@@ -389,7 +389,7 @@ INSERT INTO `auth_performances` (`auth_authentication`, `cat_feature`, `value`) 
 (9, 10, 3.07778),
 (9, 11, 0.874074),
 (9, 12, 2.666668),
-(9, 13, 5.200001),
+(9, 13, 5.022223),
 (9, 14, 5.277783),
 (9, 15, 0.344409),
 (9, 16, 0.598765),
@@ -464,7 +464,7 @@ INSERT INTO `auth_performances` (`auth_authentication`, `cat_feature`, `value`) 
 (12, 10, 3.07778),
 (12, 11, 0.874074),
 (12, 12, 2.666668),
-(12, 13, 5.200001),
+(12, 13, 5.022223),
 (12, 14, 5.277783),
 (12, 15, 0.79471),
 (12, 16, 5.111116),
@@ -539,7 +539,7 @@ INSERT INTO `auth_performances` (`auth_authentication`, `cat_feature`, `value`) 
 (15, 10, 3.07778),
 (15, 11, 0.874074),
 (15, 12, 2.666668),
-(15, 13, 5.200001),
+(15, 13, 5.022223),
 (15, 14, 0.562963),
 (15, 15, 1.468148),
 (15, 16, 4.940745),
@@ -610,7 +610,7 @@ INSERT INTO `auth_performances` (`auth_authentication`, `cat_feature`, `value`) 
 (18, 6, 1.333333),
 (18, 7, 1.597778),
 (18, 8, 4.788893),
-(18, 9, 0.737037),
+(18, 9, 0.722222),
 (18, 10, 3.07778),
 (18, 11, 0.874074),
 (18, 12, 2.666668),
@@ -635,7 +635,7 @@ INSERT INTO `auth_performances` (`auth_authentication`, `cat_feature`, `value`) 
 (19, 6, 1.203704),
 (19, 7, 1.597778),
 (19, 8, 4.788893),
-(19, 9, 0.737037),
+(19, 9, 0.722222),
 (19, 10, 3.07778),
 (19, 11, 0.874074),
 (19, 12, 2.666668),
@@ -660,7 +660,7 @@ INSERT INTO `auth_performances` (`auth_authentication`, `cat_feature`, `value`) 
 (20, 6, 0.190123),
 (20, 7, 0.328395),
 (20, 8, 0.674074),
-(20, 9, 0.737037),
+(20, 9, 0.722222),
 (20, 10, 3.07778),
 (20, 11, 0.874074),
 (20, 12, 2.666668),
@@ -710,11 +710,11 @@ INSERT INTO `auth_performances` (`auth_authentication`, `cat_feature`, `value`) 
 (22, 6, 1.148148),
 (22, 7, 1.59037),
 (22, 8, 4.603708),
-(22, 9, 0.737037),
+(22, 9, 0.722222),
 (22, 10, 3.07778),
 (22, 11, 0.874074),
 (22, 12, 2.666668),
-(22, 13, 5.200001),
+(22, 13, 5.022223),
 (22, 14, 5.277783),
 (22, 15, 2.559261),
 (22, 16, 5.111116),
@@ -735,11 +735,11 @@ INSERT INTO `auth_performances` (`auth_authentication`, `cat_feature`, `value`) 
 (23, 6, 1.203704),
 (23, 7, 1.608889),
 (23, 8, 4.788893),
-(23, 9, 0.737037),
+(23, 9, 0.722222),
 (23, 10, 3.07778),
 (23, 11, 0.874074),
 (23, 12, 2.666668),
-(23, 13, 5.200001),
+(23, 13, 5.022223),
 (23, 14, 5.277783),
 (23, 15, 2.514817),
 (23, 16, 5.111116),
@@ -760,11 +760,11 @@ INSERT INTO `auth_performances` (`auth_authentication`, `cat_feature`, `value`) 
 (24, 6, 1.148148),
 (24, 7, 1.597778),
 (24, 8, 4.577782),
-(24, 9, 0.737037),
+(24, 9, 0.722222),
 (24, 10, 2.825928),
 (24, 11, 0.874074),
 (24, 12, 2.666668),
-(24, 13, 5.303704),
+(24, 13, 5.125926),
 (24, 14, 5.277783),
 (24, 15, 2.559261),
 (24, 16, 5.111116),
@@ -785,11 +785,11 @@ INSERT INTO `auth_performances` (`auth_authentication`, `cat_feature`, `value`) 
 (25, 6, 0.525926),
 (25, 7, 0.328395),
 (25, 8, 0.537037),
-(25, 9, 0.737037),
+(25, 9, 0.722222),
 (25, 10, 2.87778),
 (25, 11, 0.874074),
 (25, 12, 2.666668),
-(25, 13, 2.486667),
+(25, 13, 2.397778),
 (25, 14, 0.562963),
 (25, 15, 2.503705),
 (25, 16, 5.111116),
@@ -810,11 +810,11 @@ INSERT INTO `auth_performances` (`auth_authentication`, `cat_feature`, `value`) 
 (26, 6, 0.525926),
 (26, 7, 1.597778),
 (26, 8, 0.537037),
-(26, 9, 0.737037),
+(26, 9, 0.722222),
 (26, 10, 0.376543),
 (26, 11, 0.874074),
 (26, 12, 2.392594),
-(26, 13, 2.486667),
+(26, 13, 2.397778),
 (26, 14, 0.562963),
 (26, 15, 4.07778),
 (26, 16, 5.111116),
@@ -839,7 +839,7 @@ INSERT INTO `auth_performances` (`auth_authentication`, `cat_feature`, `value`) 
 (27, 10, 0.395062),
 (27, 11, 0.874074),
 (27, 12, 2.392594),
-(27, 13, 2.486667),
+(27, 13, 2.397778),
 (27, 14, 0.562963),
 (27, 15, 4.07778),
 (27, 16, 5.111116),
@@ -885,11 +885,11 @@ INSERT INTO `auth_performances` (`auth_authentication`, `cat_feature`, `value`) 
 (29, 6, 0.525926),
 (29, 7, 1.597778),
 (29, 8, 0.674074),
-(29, 9, 0.737037),
+(29, 9, 0.722222),
 (29, 10, 0.328395),
 (29, 11, 0.874074),
 (29, 12, 2.392594),
-(29, 13, 5.200001),
+(29, 13, 5.022223),
 (29, 14, 0.562963),
 (29, 15, 4.07778),
 (29, 16, 5.111116),
@@ -914,7 +914,7 @@ INSERT INTO `auth_performances` (`auth_authentication`, `cat_feature`, `value`) 
 (30, 10, 0.328395),
 (30, 11, 0.874074),
 (30, 12, 0.241481),
-(30, 13, 0.521975),
+(30, 13, 1),
 (30, 14, 5.277783),
 (30, 15, 4.07778),
 (30, 16, 5.111116),
@@ -1010,11 +1010,11 @@ INSERT INTO `auth_performances` (`auth_authentication`, `cat_feature`, `value`) 
 (34, 6, 0.440741),
 (34, 7, 0.328395),
 (34, 8, 0.537037),
-(34, 9, 0.737037),
+(34, 9, 0.722222),
 (34, 10, 0.328395),
 (34, 11, 0.874074),
 (34, 12, 2.666668),
-(34, 13, 5.200001),
+(34, 13, 5.022223),
 (34, 14, 5.277783),
 (34, 15, 4.07778),
 (34, 16, 5.111116),
@@ -1035,11 +1035,11 @@ INSERT INTO `auth_performances` (`auth_authentication`, `cat_feature`, `value`) 
 (35, 6, 1.148148),
 (35, 7, 1.597778),
 (35, 8, 4.603708),
-(35, 9, 0.737037),
+(35, 9, 0.722222),
 (35, 10, 2.755558),
 (35, 11, 0.874074),
 (35, 12, 2.666668),
-(35, 13, 2.486667),
+(35, 13, 2.397778),
 (35, 14, 0.562963),
 (35, 15, 4.07778),
 (35, 16, 4.940745),
@@ -1064,7 +1064,7 @@ INSERT INTO `auth_performances` (`auth_authentication`, `cat_feature`, `value`) 
 (36, 10, 0.339506),
 (36, 11, 0.874074),
 (36, 12, 0.241481),
-(36, 13, 5.381482),
+(36, 13, 5.203704),
 (36, 14, 0.562963),
 (36, 15, 1.557037),
 (36, 16, 0.598765),
@@ -1089,7 +1089,7 @@ INSERT INTO `auth_performances` (`auth_authentication`, `cat_feature`, `value`) 
 (37, 10, 0.298765),
 (37, 11, 0.874074),
 (37, 12, 0.241481),
-(37, 13, 5.381482),
+(37, 13, 5.203704),
 (37, 14, 0.562963),
 (37, 15, 2.537039),
 (37, 16, 0.598765),
@@ -1114,7 +1114,7 @@ INSERT INTO `auth_performances` (`auth_authentication`, `cat_feature`, `value`) 
 (38, 10, 3.07778),
 (38, 11, 0.874074),
 (38, 12, 0.972593),
-(38, 13, 5.381482),
+(38, 13, 5.203704),
 (38, 14, 0.562963),
 (38, 15, 2.525928),
 (38, 16, 0.598765),
@@ -1139,7 +1139,7 @@ INSERT INTO `auth_performances` (`auth_authentication`, `cat_feature`, `value`) 
 (39, 10, 0.298765),
 (39, 11, 0.874074),
 (39, 12, 0.241481),
-(39, 13, 5.381482),
+(39, 13, 5.203704),
 (39, 14, 0.562963),
 (39, 15, 4.07778),
 (39, 16, 5.111116),
@@ -1164,7 +1164,7 @@ INSERT INTO `auth_performances` (`auth_authentication`, `cat_feature`, `value`) 
 (40, 10, 3.07778),
 (40, 11, 0.874074),
 (40, 12, 0.972593),
-(40, 13, 5.381482),
+(40, 13, 5.203704),
 (40, 14, 0.562963),
 (40, 15, 2.51852),
 (40, 16, 0.598765),
@@ -1189,7 +1189,7 @@ INSERT INTO `auth_performances` (`auth_authentication`, `cat_feature`, `value`) 
 (41, 10, 3.07778),
 (41, 11, 0.874074),
 (41, 12, 2.666668),
-(41, 13, 5.333334),
+(41, 13, 5.155556),
 (41, 14, 5.277783),
 (41, 15, 0.270335),
 (41, 16, 0.409877),
@@ -1260,7 +1260,7 @@ INSERT INTO `auth_performances` (`auth_authentication`, `cat_feature`, `value`) 
 (44, 6, 2.35926),
 (44, 7, 1.597778),
 (44, 8, 0.525926),
-(44, 9, 0.737037),
+(44, 9, 0.722222),
 (44, 10, 3.07778),
 (44, 11, 0.874074),
 (44, 12, 2.666668),
@@ -1285,7 +1285,7 @@ INSERT INTO `auth_performances` (`auth_authentication`, `cat_feature`, `value`) 
 (45, 6, 2.177778),
 (45, 7, 1.386667),
 (45, 8, 4.788893),
-(45, 9, 0.848148),
+(45, 9, 1.425927),
 (45, 10, 0.298765),
 (45, 11, 0.874074),
 (45, 12, 0.241481),
@@ -1948,7 +1948,6 @@ INSERT INTO `auth_subfeatures` (`auth_authentication`, `cat_subfeature`) VALUES
 (26, 32),
 (27, 32),
 (29, 32),
-(30, 32),
 (31, 32),
 (33, 32),
 (34, 32),
@@ -2377,7 +2376,7 @@ CREATE TABLE IF NOT EXISTS `auth_suggestions` (
   `suggestion_userid` int(11) DEFAULT NULL,
   `suggestion_date` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 -- --------------------------------------------------------
 
@@ -5720,7 +5719,6 @@ INSERT INTO `cat_class_authentications_value_pair` (`cat_feature`, `cat_class_fe
 (24, 49, 10, 27, 1),
 (2, 56, 10, 30, 1),
 (11, 10, 10, 30, 1),
-(13, 20, 10, 30, 1),
 (14, 22, 10, 30, 1),
 (15, 29, 10, 30, 0.666667),
 (20, 41, 10, 30, 1),
@@ -5937,7 +5935,6 @@ INSERT INTO `cat_class_authentications_value_pair` (`cat_feature`, `cat_class_fe
 (24, 49, 11, 27, 1),
 (25, 51, 11, 27, 1),
 (11, 10, 11, 30, 1),
-(13, 20, 11, 30, 1),
 (14, 22, 11, 30, 1),
 (16, 31, 11, 30, 1),
 (20, 41, 11, 30, 1),
@@ -6458,7 +6455,6 @@ INSERT INTO `cat_class_authentications_value_pair` (`cat_feature`, `cat_class_fe
 (24, 49, 13, 27, 1),
 (25, 51, 13, 27, 1),
 (11, 10, 13, 30, 1),
-(13, 20, 13, 30, 1),
 (14, 22, 13, 30, 1),
 (16, 31, 13, 30, 1),
 (20, 41, 13, 30, 1),
@@ -6934,7 +6930,6 @@ INSERT INTO `cat_class_authentications_value_pair` (`cat_feature`, `cat_class_fe
 (24, 49, 14, 28, 1),
 (25, 51, 14, 28, 1),
 (11, 10, 14, 30, 1),
-(13, 20, 14, 30, 1),
 (14, 22, 14, 30, 1),
 (16, 31, 14, 30, 1),
 (20, 41, 14, 30, 1),
@@ -7821,17 +7816,16 @@ INSERT INTO `cat_class_authentications_value_pair` (`cat_feature`, `cat_class_fe
 (24, 49, 16, 28, 1),
 (25, 51, 16, 28, 1),
 (11, 10, 16, 30, 1),
-(13, 20, 16, 30, 1),
 (14, 22, 16, 30, 0.666667),
 (17, 33, 16, 30, 1),
 (21, 43, 16, 30, 1),
-(22, 45, 16, 30, 1.5);
-INSERT INTO `cat_class_authentications_value_pair` (`cat_feature`, `cat_class_feature`, `auth_authentication_1`, `auth_authentication_2`, `value`) VALUES
+(22, 45, 16, 30, 1.5),
 (23, 47, 16, 30, 1),
 (24, 49, 16, 30, 1),
 (25, 51, 16, 30, 1),
 (1, 52, 16, 31, 1),
-(2, 55, 16, 31, 1),
+(2, 55, 16, 31, 1);
+INSERT INTO `cat_class_authentications_value_pair` (`cat_feature`, `cat_class_feature`, `auth_authentication_1`, `auth_authentication_2`, `value`) VALUES
 (5, 68, 16, 31, 1),
 (9, 1, 16, 31, 1),
 (10, 9, 16, 31, 1.5),
@@ -8424,7 +8418,6 @@ INSERT INTO `cat_class_authentications_value_pair` (`cat_feature`, `cat_class_fe
 (25, 51, 18, 28, 1),
 (6, 71, 18, 30, 1),
 (11, 10, 18, 30, 1),
-(13, 20, 18, 30, 1),
 (14, 22, 18, 30, 1),
 (15, 29, 18, 30, 0.666667),
 (16, 31, 18, 30, 1),
@@ -8926,7 +8919,6 @@ INSERT INTO `cat_class_authentications_value_pair` (`cat_feature`, `cat_class_fe
 (24, 49, 19, 28, 1),
 (25, 51, 19, 28, 1),
 (11, 10, 19, 30, 1),
-(13, 20, 19, 30, 1),
 (16, 31, 19, 30, 1),
 (22, 45, 19, 30, 1.5),
 (23, 47, 19, 30, 1),
@@ -10365,15 +10357,15 @@ INSERT INTO `cat_class_authentications_value_pair` (`cat_feature`, `cat_class_fe
 (11, 10, 29, 7, 1),
 (12, 14, 29, 7, 0.666667),
 (14, 21, 29, 7, 1),
-(20, 41, 29, 7, 1);
-INSERT INTO `cat_class_authentications_value_pair` (`cat_feature`, `cat_class_feature`, `auth_authentication_1`, `auth_authentication_2`, `value`) VALUES
+(20, 41, 29, 7, 1),
 (22, 45, 29, 7, 1),
 (24, 49, 29, 7, 1),
 (4, 66, 29, 8, 0.666667),
 (5, 68, 29, 8, 1),
 (11, 10, 29, 8, 1),
 (12, 14, 29, 8, 0.666667),
-(14, 21, 29, 8, 1),
+(14, 21, 29, 8, 1);
+INSERT INTO `cat_class_authentications_value_pair` (`cat_feature`, `cat_class_feature`, `auth_authentication_1`, `auth_authentication_2`, `value`) VALUES
 (20, 41, 29, 8, 1),
 (22, 45, 29, 8, 1),
 (4, 66, 29, 10, 1),
@@ -10865,13 +10857,11 @@ INSERT INTO `cat_class_authentications_value_pair` (`cat_feature`, `cat_class_fe
 (25, 51, 29, 45, 1.5),
 (1, 53, 30, 4, 1),
 (8, 83, 30, 4, 1.5),
-(13, 20, 30, 4, 1),
 (21, 43, 30, 4, 1.5),
 (24, 49, 30, 4, 1),
 (25, 51, 30, 4, 1),
 (11, 10, 30, 17, 1),
 (12, 12, 30, 17, 1),
-(13, 20, 30, 17, 1),
 (16, 31, 30, 17, 1),
 (22, 45, 30, 17, 0.666667),
 (23, 47, 30, 17, 1),
@@ -10880,7 +10870,6 @@ INSERT INTO `cat_class_authentications_value_pair` (`cat_feature`, `cat_class_fe
 (5, 67, 30, 20, 1),
 (8, 83, 30, 20, 1),
 (11, 10, 30, 20, 1),
-(13, 20, 30, 20, 1),
 (14, 22, 30, 20, 1),
 (15, 29, 30, 20, 1.5),
 (16, 31, 30, 20, 1),
@@ -10891,7 +10880,6 @@ INSERT INTO `cat_class_authentications_value_pair` (`cat_feature`, `cat_class_fe
 (24, 49, 30, 20, 1),
 (25, 51, 30, 20, 1),
 (11, 10, 30, 21, 1),
-(13, 20, 30, 21, 1),
 (14, 22, 30, 21, 1),
 (15, 29, 30, 21, 1.5),
 (22, 45, 30, 21, 0.666667),
@@ -10956,7 +10944,6 @@ INSERT INTO `cat_class_authentications_value_pair` (`cat_feature`, `cat_class_fe
 (23, 47, 30, 38, 1),
 (24, 49, 30, 38, 1),
 (11, 10, 30, 42, 1),
-(13, 20, 30, 42, 1),
 (21, 43, 30, 42, 1),
 (22, 45, 30, 42, 0.666667),
 (23, 47, 30, 42, 1),
@@ -10964,7 +10951,6 @@ INSERT INTO `cat_class_authentications_value_pair` (`cat_feature`, `cat_class_fe
 (25, 51, 30, 42, 1.5),
 (8, 83, 30, 43, 1),
 (11, 10, 30, 43, 1),
-(13, 20, 30, 43, 1),
 (15, 29, 30, 43, 1),
 (17, 33, 30, 43, 1),
 (18, 35, 30, 43, 1),
@@ -11082,7 +11068,6 @@ INSERT INTO `cat_class_authentications_value_pair` (`cat_feature`, `cat_class_fe
 (25, 51, 31, 27, 1),
 (8, 83, 31, 30, 0.666667),
 (11, 10, 31, 30, 1.5),
-(13, 20, 31, 30, 1),
 (14, 22, 31, 30, 1),
 (15, 29, 31, 30, 1),
 (16, 31, 31, 30, 1),
@@ -11861,7 +11846,6 @@ INSERT INTO `cat_class_authentications_value_pair` (`cat_feature`, `cat_class_fe
 (25, 51, 33, 27, 1),
 (8, 83, 33, 30, 0.666667),
 (11, 10, 33, 30, 1),
-(13, 20, 33, 30, 1),
 (14, 22, 33, 30, 1),
 (21, 43, 33, 30, 1),
 (22, 45, 33, 30, 1.5),
@@ -12911,8 +12895,7 @@ INSERT INTO `cat_class_authentications_value_pair` (`cat_feature`, `cat_class_fe
 (11, 10, 36, 27, 1),
 (14, 21, 36, 27, 1),
 (17, 33, 36, 27, 1),
-(24, 49, 36, 27, 1);
-INSERT INTO `cat_class_authentications_value_pair` (`cat_feature`, `cat_class_feature`, `auth_authentication_1`, `auth_authentication_2`, `value`) VALUES
+(24, 49, 36, 27, 1),
 (2, 56, 36, 28, 1),
 (5, 68, 36, 28, 1.5),
 (8, 83, 36, 28, 0.666667),
@@ -12926,7 +12909,8 @@ INSERT INTO `cat_class_authentications_value_pair` (`cat_feature`, `cat_class_fe
 (24, 49, 36, 28, 1),
 (1, 53, 36, 30, 1),
 (2, 56, 36, 30, 1),
-(4, 63, 36, 30, 1),
+(4, 63, 36, 30, 1);
+INSERT INTO `cat_class_authentications_value_pair` (`cat_feature`, `cat_class_feature`, `auth_authentication_1`, `auth_authentication_2`, `value`) VALUES
 (8, 83, 36, 30, 0.666667),
 (10, 8, 36, 30, 1),
 (11, 10, 36, 30, 1),
@@ -15266,7 +15250,6 @@ INSERT INTO `cat_class_authentications_value_pair` (`cat_feature`, `cat_class_fe
 (10, 8, 45, 30, 1),
 (11, 10, 45, 30, 1),
 (12, 12, 45, 30, 1),
-(13, 20, 45, 30, 1),
 (17, 33, 45, 30, 1),
 (22, 45, 45, 30, 1.5),
 (23, 47, 45, 30, 1),
@@ -15390,7 +15373,7 @@ CREATE TABLE IF NOT EXISTS `cat_class_feature` (
   `cat_feature` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`,`cat_feature`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=129 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=99 ;
 
 --
 -- Daten für Tabelle `cat_class_feature`
@@ -15521,22 +15504,18 @@ INSERT INTO `cat_class_value_pair` (`cat_class_class_1`, `cat_class_class_2`, `v
 (1, 5, 0.111111),
 (1, 6, 0.333333),
 (1, 7, 0.166667),
-(1, 86, 0.166667),
 (2, 3, 0.166667),
 (2, 4, 0.333333),
 (2, 5, 0.166667),
-(2, 6, 1),
+(2, 6, 0.333333),
 (2, 7, 0.333333),
-(2, 86, 0.333333),
 (3, 4, 1),
 (3, 5, 0.166667),
 (3, 6, 1),
 (3, 7, 0.166667),
-(3, 86, 0.333333),
 (4, 5, 0.333333),
 (4, 6, 3),
 (4, 7, 1),
-(4, 86, 1),
 (5, 6, 6),
 (5, 7, 3),
 (6, 7, 0.333333),
@@ -15554,11 +15533,9 @@ INSERT INTO `cat_class_value_pair` (`cat_class_class_1`, `cat_class_class_2`, `v
 (16, 18, 0.2),
 (16, 19, 1),
 (16, 20, 5),
-(16, 88, 1),
 (17, 18, 0.111111),
 (17, 19, 0.2),
 (17, 20, 1),
-(17, 88, 0.2),
 (18, 19, 5),
 (18, 20, 9),
 (19, 20, 5),
@@ -15657,35 +15634,17 @@ INSERT INTO `cat_class_value_pair` (`cat_class_class_1`, `cat_class_class_2`, `v
 (77, 80, 0.2),
 (77, 81, 0.111111),
 (77, 82, 1),
-(77, 98, 0.2),
 (78, 79, 5),
 (78, 80, 1),
 (78, 81, 0.2),
 (78, 82, 5),
-(78, 98, 1),
 (79, 80, 0.2),
 (79, 81, 0.111111),
 (79, 82, 1),
-(79, 98, 0.2),
 (80, 81, 0.2),
 (80, 82, 5),
-(80, 98, 1),
 (81, 82, 9),
-(81, 98, 5),
-(83, 84, 0.111111),
-(86, 5, 0.333333),
-(86, 6, 3),
-(86, 7, 1),
-(87, 16, 0.2),
-(87, 17, 1),
-(87, 18, 9),
-(87, 19, 0.2),
-(87, 20, 1),
-(87, 88, 0.2),
-(88, 18, 0.2),
-(88, 19, 1),
-(88, 20, 5),
-(98, 82, 5);
+(83, 84, 0.111111);
 
 -- --------------------------------------------------------
 
@@ -15817,7 +15776,7 @@ CREATE TABLE IF NOT EXISTS `classification_suggestion` (
   `suggestion_userid` int(11) DEFAULT NULL,
   `suggestion_date` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 -- --------------------------------------------------------
 
@@ -15850,7 +15809,7 @@ CREATE TABLE IF NOT EXISTS `discuss_auth` (
   `post_authorid` int(11) DEFAULT NULL,
   `post_date` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 -- --------------------------------------------------------
 
@@ -15900,7 +15859,7 @@ CREATE TABLE IF NOT EXISTS `discuss_thread_auth` (
   `post_authorid` int(11) DEFAULT NULL,
   `post_date` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -15999,7 +15958,7 @@ CREATE TABLE IF NOT EXISTS `invite_codes` (
   `invite_code` varchar(255) DEFAULT NULL,
   `expiry_date` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -16014,38 +15973,38 @@ CREATE TABLE IF NOT EXISTS `log_feature` (
   `jsonhash` varchar(32) NOT NULL,
   PRIMARY KEY (`logid`),
   UNIQUE KEY `jsonhash` (`jsonhash`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=83 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=84 ;
 
 --
 -- Daten für Tabelle `log_feature`
 --
 
 INSERT INTO `log_feature` (`logid`, `quantity`, `jsondata`, `jsonhash`) VALUES
-(1, 25, '"Accessible"', '17f4e0f7f9b18feaf3a0a222eb43d9cd'),
-(2, 21, '"Browser-Compatible"', 'f2e757ec242eec2f5d47991abbe2eda8'),
-(3, 18, '"Mature"', '8a1b1c5f6a97b319ac35a3f537c61b21'),
-(4, 23, '"Negligible-Cost-per-User"', '46bb43e7699463f66e50038d719dd6fd'),
-(5, 16, '"Non-Proprietary"', '7541c78f3df57e18e1c812a315a43422'),
-(6, 22, '"Server-Compatible"', '8530ca6f7d276f41e40764ca3294ab11'),
-(7, 17, '"Requiring-Explicit-Consent"', 'e5f6099c593a475d351d36a5ef5a9a2b'),
-(8, 19, '"Resilient-to-Internal-Observation"', '50b7831ec27b2b270da406d98433f4a6'),
-(9, 22, '"Resilient-to-Leaks-form-Other-Verifiers"', '41528b31c992524ed2433c8e1e4d4967'),
-(10, 20, '"Resilient-to-Phishing"', '7dfe6f7a1cbe9114d90d9518f90d2e31'),
-(11, 20, '"Resilient-to-Physical-Oberservation"', '23abcbd9616549686d413e0b6a5f1be1'),
-(12, 23, '"Resilient-to-Targeted-Impersonation"', '7eaa12a4293e2c6d9598310fdb5e8d59'),
-(13, 22, '"Resilient-to-Theft"', 'd9f97de48a32de8ab68cada8def40e2f'),
-(14, 16, '"Resilient-to-Third-Party"', 'd576549b951f820aff0d442bdee4a084'),
-(15, 19, '"Resilient-to-Throttled-Guessing"', '323dd5ff889cbdf7058537fe0473c992'),
-(16, 19, '"Resilient-to-Unthrottled-Guessing"', '770f9eb5c6c70a9a604a07619c04170f'),
-(17, 17, '"Unlinkable"', 'c7511ca1e8564e7e9b31e7ee2223389f'),
-(18, 21, '"Easy-Recovery-from-Loss"', '730d46b670fb00dcc8c23aaa85a7594c'),
-(19, 20, '"Easy-to-Learn"', 'd23a3a092fd5317dfac1e94b345b3fa1'),
-(20, 20, '"Efficient-to-Use"', '8b1c7d415e52c9461b12346f3a82d887'),
-(21, 20, '"Infrequent-Errors"', 'a9595ffd9187356934f6fdb5e514d58c'),
-(22, 23, '"Memorywise-Effortless"', '7c18817fdabe224aa6b87ab6d4cc4c94'),
-(23, 18, '"Nothing-to-Carry"', '5298bec11e9b4b84596ed02ec2949c3c'),
-(24, 16, '"Physically-Effortless"', '04320bd83ea94658c24a98a73078ad88'),
-(25, 17, '"Scalable-for-Users"', '7e782e3a866d56ac869b065d26081a7f');
+(1, 22, '"Accessible"', '17f4e0f7f9b18feaf3a0a222eb43d9cd'),
+(2, 18, '"Browser-Compatible"', 'f2e757ec242eec2f5d47991abbe2eda8'),
+(3, 16, '"Mature"', '8a1b1c5f6a97b319ac35a3f537c61b21'),
+(4, 20, '"Negligible-Cost-per-User"', '46bb43e7699463f66e50038d719dd6fd'),
+(5, 14, '"Non-Proprietary"', '7541c78f3df57e18e1c812a315a43422'),
+(6, 20, '"Server-Compatible"', '8530ca6f7d276f41e40764ca3294ab11'),
+(7, 15, '"Requiring-Explicit-Consent"', 'e5f6099c593a475d351d36a5ef5a9a2b'),
+(8, 17, '"Resilient-to-Internal-Observation"', '50b7831ec27b2b270da406d98433f4a6'),
+(9, 20, '"Resilient-to-Leaks-form-Other-Verifiers"', '41528b31c992524ed2433c8e1e4d4967'),
+(10, 18, '"Resilient-to-Phishing"', '7dfe6f7a1cbe9114d90d9518f90d2e31'),
+(11, 18, '"Resilient-to-Physical-Oberservation"', '23abcbd9616549686d413e0b6a5f1be1'),
+(12, 21, '"Resilient-to-Targeted-Impersonation"', '7eaa12a4293e2c6d9598310fdb5e8d59'),
+(13, 19, '"Resilient-to-Theft"', 'd9f97de48a32de8ab68cada8def40e2f'),
+(14, 14, '"Resilient-to-Third-Party"', 'd576549b951f820aff0d442bdee4a084'),
+(15, 17, '"Resilient-to-Throttled-Guessing"', '323dd5ff889cbdf7058537fe0473c992'),
+(16, 17, '"Resilient-to-Unthrottled-Guessing"', '770f9eb5c6c70a9a604a07619c04170f'),
+(17, 15, '"Unlinkable"', 'c7511ca1e8564e7e9b31e7ee2223389f'),
+(18, 19, '"Easy-Recovery-from-Loss"', '730d46b670fb00dcc8c23aaa85a7594c'),
+(19, 17, '"Easy-to-Learn"', 'd23a3a092fd5317dfac1e94b345b3fa1'),
+(20, 18, '"Efficient-to-Use"', '8b1c7d415e52c9461b12346f3a82d887'),
+(21, 18, '"Infrequent-Errors"', 'a9595ffd9187356934f6fdb5e514d58c'),
+(22, 20, '"Memorywise-Effortless"', '7c18817fdabe224aa6b87ab6d4cc4c94'),
+(23, 15, '"Nothing-to-Carry"', '5298bec11e9b4b84596ed02ec2949c3c'),
+(24, 14, '"Physically-Effortless"', '04320bd83ea94658c24a98a73078ad88'),
+(25, 15, '"Scalable-for-Users"', '7e782e3a866d56ac869b065d26081a7f');
 
 -- --------------------------------------------------------
 
@@ -16060,28 +16019,22 @@ CREATE TABLE IF NOT EXISTS `log_subfeatures_and` (
   `jsonhash` varchar(32) NOT NULL,
   PRIMARY KEY (`logid`),
   UNIQUE KEY `jsonhash` (`jsonhash`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=28 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
 
 --
 -- Daten für Tabelle `log_subfeatures_and`
 --
 
 INSERT INTO `log_subfeatures_and` (`logid`, `quantity`, `jsondata`, `jsonhash`) VALUES
-(1, 12, '"Accessible-with-Physical-Impairments"', 'f38a0d3145472aba6d4b0d4a6e4ccd41'),
+(1, 11, '"Accessible-with-Physical-Impairments"', 'f38a0d3145472aba6d4b0d4a6e4ccd41'),
 (2, 5, '"Accessible-with-Read-Write-Impairments"', '52ec6f19651688527fdd1ee1708fc58e'),
 (3, 1, '"Resilient-to-Unthrottled-Guessing"', '770f9eb5c6c70a9a604a07619c04170f'),
 (6, 1, '"Server-Compatible"', '8530ca6f7d276f41e40764ca3294ab11'),
 (8, 4, '"Adopted-beyond-Academics"', '0b8dcba104a679a7cfe239fa726d4ed5'),
 (12, 1, '"Resilient-to-Malware"', 'cf6a6a54aadc7822601e2d3f37d4f793'),
-(13, 2, '"Easy-to-Learn"', 'd23a3a092fd5317dfac1e94b345b3fa1'),
+(13, 1, '"Easy-to-Learn"', 'd23a3a092fd5317dfac1e94b345b3fa1'),
 (17, 1, '"Non-Proprietary"', '7541c78f3df57e18e1c812a315a43422'),
-(19, 1, '"Accessible-with-Visual-Impairments"', '225fe9db8531706dded4b661b80d14c2'),
-(21, 1, '"Adopted-in-Academics"', '17acf65a1c2b8efa27b6332948a4e8f1'),
-(22, 1, '"Adopted-Repeatedly"', 'adb3783b67a4f4fe60004b5e576b98e7'),
-(23, 1, '"Negligible-Cost-per-User"', '46bb43e7699463f66e50038d719dd6fd'),
-(24, 1, '"Resilient-to-Phishing"', '7dfe6f7a1cbe9114d90d9518f90d2e31'),
-(25, 1, '"Resilient-to-Theft"', 'd9f97de48a32de8ab68cada8def40e2f'),
-(26, 1, '"Easy-Recovery-from-Loss"', '730d46b670fb00dcc8c23aaa85a7594c');
+(19, 1, '"Accessible-with-Visual-Impairments"', '225fe9db8531706dded4b661b80d14c2');
 
 -- --------------------------------------------------------
 
@@ -16096,7 +16049,7 @@ CREATE TABLE IF NOT EXISTS `log_subfeatures_or` (
   `jsonhash` varchar(32) NOT NULL,
   PRIMARY KEY (`logid`),
   UNIQUE KEY `jsonhash` (`jsonhash`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=23 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
 
 --
 -- Daten für Tabelle `log_subfeatures_or`
@@ -16118,11 +16071,7 @@ INSERT INTO `log_subfeatures_or` (`logid`, `quantity`, `jsondata`, `jsonhash`) V
 (15, 1, '"Accessible-with-Read-Write-Impairments"OR"Accessible-with-Physical-Impairments"', 'a3f3c304a46b924ffd4cd27d7a4b95e1'),
 (16, 1, '"Adopted-Repeatedly"OR"Scalable-for-Users"', '5388daf17f21160e6fb117e58ec9678f'),
 (17, 1, '"Adopted-Repeatedly"OR"Device-to-Carry"', '455f9ed71674eaba90121e9afba01303'),
-(18, 1, '"Device-to-Carry"OR"Adopted-Repeatedly"', 'e53b6295c5aefe479c21119a7ffceafd'),
-(19, 1, '"Accessible-with-Read-Write-Impairments"OR"Adopted-Repeatedly"', '5f99a3daf3d494e0adc7e8361124ccd6'),
-(20, 1, '"Accessible-with-Visual-Impairments"OR"Resilient-to-Eavesdropping"', '94be0333187c8ed0fc2f713eaf0ab7f7'),
-(21, 1, '"Adopted-Repeatedly"OR"Accessible-with-Read-Write-Impairments"', '11940276d8cd79a3876ad6b326a99741'),
-(22, 1, '"Resilient-to-Eavesdropping"OR"Accessible-with-Visual-Impairments"', '51ac1a3ca26200374cad90859cff89a6');
+(18, 1, '"Device-to-Carry"OR"Adopted-Repeatedly"', 'e53b6295c5aefe479c21119a7ffceafd');
 
 -- --------------------------------------------------------
 
@@ -16205,7 +16154,7 @@ CREATE TABLE IF NOT EXISTS `subfeature_suggestion` (
   `suggestion_userid` int(11) DEFAULT NULL,
   `suggestion_date` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 -- --------------------------------------------------------
 
@@ -16219,7 +16168,7 @@ CREATE TABLE IF NOT EXISTS `suggestion_changelog` (
   `log_title` text,
   `log_text` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 -- --------------------------------------------------------
 
@@ -16242,14 +16191,15 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`Id`),
   UNIQUE KEY `Id` (`Id`),
   UNIQUE KEY `EMail` (`EMail`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Daten für Tabelle `users`
 --
 
 INSERT INTO `users` (`Id`, `LastName`, `FirstName`, `Title`, `EMail`, `Organization`, `Password`, `AccountStatus`, `RegisterDate`, `SessionIpv4`, `IsAdmin`) VALUES
-(4, 'Account', 'Test', '', 'q@q.de', 'Testers', '7694f4a66316e53c8cdd9d9954bd611d', 'activated', '2017-05-24 08:55:34', '46.87.132.147', 1);
+(4, 'Account', 'Test', '', 'q@q.de', 'Testers', '7694f4a66316e53c8cdd9d9954bd611d', 'activated', '2017-05-24 08:55:34', '188.97.226.247', 1),
+(5, 'M', 'P', '', 'peter.mayer@secuso.org', 'TUD', 'e180a16caae5501dec153960b4c9d4ed', 'activated', '2017-05-24 09:56:30', '130.83.239.124', 1);
 
 -- --------------------------------------------------------
 

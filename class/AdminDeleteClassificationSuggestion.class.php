@@ -31,12 +31,14 @@ class AdminDeleteClassificationSuggestion
 {
     private $sessionController;
     private $suggestionController;
-    private $schemeId;
+    private $discussionController;
+    private $suggestionId;
 
     public function __construct()
     {
         $this->sessionController = new SessionController();
         $this->suggestionController = new SuggestionController();
+        $this->discussionController = new DiscussionController();
 
         if (!$this->sessionController->getIsAdmin())
             die("error: no access!");
@@ -44,10 +46,10 @@ class AdminDeleteClassificationSuggestion
         $this->getParams();
 
         //get discussion id
-        $discussion_id = $this->suggestionController->getDataForSubfeatureSuggestionThread($this->suggestionId);
+        $discussion_id = $this->suggestionController->getDataForClassificationSuggestionThread($this->suggestionId);
 
         //delete classification suggestion
-        $this->suggestionController->deleteClassificationSuggestion($this->schemeId);
+        $this->suggestionController->deleteClassificationSuggestion($this->suggestionId);
 
         //delete discussion
         $this->discussionController->deleteAuthDiscussion($discussion_id);
@@ -57,7 +59,7 @@ class AdminDeleteClassificationSuggestion
 
     private function getParams()
     {
-        if (isset($_GET['id'])) $this->schemeId = $_GET["id"];
+        if (isset($_GET['id'])) $this->suggestionId = $_GET["id"];
     }
 }
 
