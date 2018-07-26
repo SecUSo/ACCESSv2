@@ -32,11 +32,11 @@
             <div class="jumbotron">
                 <h1>ACCESS PLATFORM</h1>
 
-                <h2>Information and Evaluation of Authentications / Decision Support</h2>
+                <h2>Information and Evaluation of Authentication Schemes / Decision Support</h2>
             </div>
             <hr>
             <ul class="nav nav-tabs">
-                <li class="active"><a data-toggle="tab" href="#home">Authentications</a></li>
+                <li class="active"><a data-toggle="tab" href="#home">Authentication Schemes</a></li>
                 <li><a data-toggle="tab" href="#menu1">Features</a></li>
                 <? if ($data_validSession) { ?>
                     <li><a data-toggle="tab" href="#menu2">Authentication Scheme Suggestion</a></li><? } ?>
@@ -105,7 +105,7 @@
                                 <ul class="pager">
                                     <li id="proceed1" class="next showResult"><a href="javascript:void(0)"><b>Subfeatures
                                                 <span
-                                                    aria-hidden="true">→</span></b></a></li>
+                                                        aria-hidden="true">→</span></b></a></li>
                                 </ul>
                             </nav>
                         </div>
@@ -142,7 +142,7 @@
                             </div>
                         </div>
                         <div
-                            style="padding-left: 60px;padding-right: 60px;border-radius: 6px;background-color: #eee;height: 52px;">
+                                style="padding-left: 60px;padding-right: 60px;border-radius: 6px;background-color: #eee;height: 52px;">
                             <nav aria-label="...">
                                 <ul class="pager">
                                     <li id="proceed1_bottom" class="next showResult">
@@ -174,11 +174,11 @@
                             <nav aria-label="...">
                                 <ul class="pager">
                                     <li id="proceed0" class="previous showFeatures"><a
-                                            href="javascript:void(0)"><b><span
-                                                    aria-hidden="true">←</span> Basic Data</b></a></li>
+                                                href="javascript:void(0)"><b><span
+                                                        aria-hidden="true">←</span> Basic Data</b></a></li>
                                     <li id="proceed2" class="next showResult"><a href="javascript:void(0)"><b>Classification
                                                 <span
-                                                    aria-hidden="true">→</span></b></a></li>
+                                                        aria-hidden="true">→</span></b></a></li>
                                 </ul>
                             </nav>
                         </div>
@@ -246,16 +246,16 @@
                             </div>
                         </div>
                         <div
-                            style="padding-left: 60px;padding-right: 60px;border-radius: 6px;background-color: #eee;height: 52px;">
+                                style="padding-left: 60px;padding-right: 60px;border-radius: 6px;background-color: #eee;height: 52px;">
                             <nav aria-label="...">
                                 <ul class="pager">
                                     <li id="proceed0_bottom" class="previous showFeatures"><a
-                                            href="javascript:void(0)" style="margin-top: 10px;"><b><span
-                                                    aria-hidden="true">←</span> Basic Data</b></a></li>
+                                                href="javascript:void(0)" style="margin-top: 10px;"><b><span
+                                                        aria-hidden="true">←</span> Basic Data</b></a></li>
                                     <li id="proceed2_bottom" class="next showResult"><a href="javascript:void(0)"
                                                                                         style="margin-top: 10px;"><b>Classification
                                                 <span
-                                                    aria-hidden="true">→</span></b></a></li>
+                                                        aria-hidden="true">→</span></b></a></li>
                                 </ul>
                             </nav>
                         </div>
@@ -274,11 +274,11 @@
                             <nav aria-label="...">
                                 <ul class="pager">
                                     <li id="proceed1_copy" class="previous showFeatures"><a
-                                            href="javascript:void(0)"><b><span
-                                                    aria-hidden="true">←</span> Subfeatures</b></a></li>
+                                                href="javascript:void(0)"><b><span
+                                                        aria-hidden="true">←</span> Subfeatures</b></a></li>
                                     <li id="proceed3" class="next showResult"><a
-                                            href="javascript:void(0)"><b>Send Suggestion <span
-                                                    aria-hidden="true">→</span></b></a></li>
+                                                href="javascript:void(0)"><b>Send Suggestion <span
+                                                        aria-hidden="true">→</span></b></a></li>
                                 </ul>
                             </nav>
                         </div>
@@ -288,15 +288,15 @@
                             </div>
                         </div>
                         <div
-                            style="padding-left: 60px;padding-right: 60px;border-radius: 6px;background-color: #eee;height: 52px;">
+                                style="padding-left: 60px;padding-right: 60px;border-radius: 6px;background-color: #eee;height: 52px;">
                             <nav aria-label="...">
                                 <ul class="pager">
                                     <li id="proceed1_copy_bottom" class="previous showFeatures"><a
-                                            href="javascript:void(0)" style="margin-top: 10px;"><b><span
-                                                    aria-hidden="true">←</span> Subfeatures</b></a></li>
+                                                href="javascript:void(0)" style="margin-top: 10px;"><b><span
+                                                        aria-hidden="true">←</span> Subfeatures</b></a></li>
                                     <li id="proceed3_bottom" class="next showResult"><a
-                                            href="javascript:void(0)" style="margin-top: 10px;"><b>Send Suggestion <span
-                                                    aria-hidden="true">→</span></b></a></li>
+                                                href="javascript:void(0)" style="margin-top: 10px;"><b>Send Suggestion <span
+                                                        aria-hidden="true">→</span></b></a></li>
                                 </ul>
                             </nav>
                         </div>
