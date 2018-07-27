@@ -24,6 +24,9 @@
  */
 $( document ).ready(function() {
     initialize();
+    $('.decision_info_box').popover({
+        container:'body'
+    });
     var action = false;
 });
 
@@ -195,7 +198,8 @@ $("#addRemaining").click(function(){
     initialize();
 });
 
-// Toggle Information Overlay for Features
+/*
+// Toggle Information Overlay for Features -->> replaced by popover tooltip info boxes
 $(".info-button").click(function(){
     document.getElementById("info-overlay").style.height = "100%";
     var selTextID = $(this).parent('li').attr("id");
@@ -208,6 +212,7 @@ $(".info-button").click(function(){
 function closeNav() {
     document.getElementById("info-overlay").style.height = "0%";
 }
+*/
 
 // Reinitialize Droppable Elements if new List Container is Created
 function initialize() {

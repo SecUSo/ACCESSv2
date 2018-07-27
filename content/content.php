@@ -44,6 +44,15 @@
                     <tr>
                         <td><? echo $data_subfeatures[$it]['id'] ?></td>
                         <td><? echo $data_subfeatures[$it]['name'] ?></td>
+                        <td> <!-- tooltip box for subfeature info-->
+                            <div class="subfeature_info_box pull-right"
+                                 data-content="<?php echo $data_subfeature_descriptions[$data_subfeatures[$it]['name']];?>"
+                                 title="Description" rel="popover"  data-placement="top" data-trigger="hover">
+                                <div class="btn btn-xs pull-right info-button ">
+                                    <span class="glyphicon glyphicon-info-sign" aria-hidden="true" style="margin-top: 2px;"></span>
+                                </div>
+                            </div>
+                        </td>
                     </tr>
                 <? }; ?>
                 </tbody>
@@ -75,7 +84,7 @@
                 </ul>
             </div>
 
-
+            <script src="js/comment.js"></script>
             <hr>
             <? include 'comment.php'; ?>
         </div> <!-- row -->

@@ -53,7 +53,7 @@
                                 </div>
                         <? } ?>
                     </div>
-                    <button>Save SubFeatures for Authentication</button>
+                    <button>Save SubFeatures for Authentication Scheme</button>
                 </div>
             </div>
         </div>

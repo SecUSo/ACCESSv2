@@ -25,7 +25,7 @@
 <footer class="footer">
     <span class="output"></span>
     <p>ACCESS PLATFORM</p>
-    <p>&copy 2016 SECUSO TU DARMSTADT - <a target="_blank" href="">IMPRINT</a></p>
+    <p>&copy 2016 SECUSO TU DARMSTADT - <a target="_blank" href="?Imprint">IMPRINT</a> - <a target="_blank" href="?Privacypolicy" >PRIVACY POLICY</a></p>
     <p>
         <a href="#">Back to top</a>
     </p>

@@ -28,7 +28,9 @@
 var classData = {};
 $(document).ready(function () {
 
-    $('.subfeature_info_box').popover();
+    $('.subfeature_info_box').popover({
+        container:'body'
+    });
 
     var sortedList = jQuery.makeArray($("#selectSubClass").find('option')).sort(function (a, b) {
         return (jQuery(a).text() > jQuery(b).text()) ? 1 : -1;

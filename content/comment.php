@@ -103,7 +103,7 @@
                 <label for="sel1">Select Type:</label>
                 <select class="form-control" id="selectType">
                     <option value="1">comment</option>
-                    <option value="2">suggestion</option>
+                    <!-- deleted value=2 for suggestion discussion type-->
                     <? if($data_comment_type == "full") { ?>
                     <option value="3">subfeature suggestion</option>
                     <option value="4">classification suggestion</option>
