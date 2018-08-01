@@ -26,7 +26,7 @@
     <div class="comment">
         <h2>Discussion</h2>
         <? for($it = 0; $it < count($data_discussion); $it++) { ?>
-            <? if ($data_discussion[$it]['post_type'] == 'suggestion' || $data_discussion[$it]['post_type'] == 'auto-suggestion'){ ?>
+            <? if ($data_discussion[$it]['post_type'] == 'auto-suggestion'){ ?>
                 <? if ($data_discussion[$it]['post_threadstatus'] == 'accepted'){ ?>
                 <div class="panel panel-success">
                 <? } elseif ($data_discussion[$it]['post_threadstatus'] == 'rejected'){ ?>
@@ -41,17 +41,14 @@
                     <? echo $data_discussion[$it]['Title'] . "&nbsp" . $data_discussion[$it]['FirstName'] . "&nbsp" . $data_discussion[$it]['LastName'] . "  (" . $data_discussion[$it]['Organization'] . ")";?>
                     <span class="label label-default" style="margin-left: 2%"><? echo $data_discussion[$it]['post_date']; ?></span>
                     <span class="label label-primary" style="margin-left: 2%"><? echo $data_discussion[$it]['post_type']; ?></span>
-                    <? if ($data_isAdmin) { ?>
-                    <? if ($data_discussion[$it]['post_type'] == 'suggestion'){ ?>
-                   <button type="button" class="close_btn btn btn-default btn-xs" style="float:right" value="<? echo $data_discussion[$it]['id']; ?>">Reject</button>
-                   <button type="button" class="accept_btn btn btn-default btn-xs" style="float:right" value="<? echo $data_discussion[$it]['id']; ?>">Accept</button>
-                    <? } ?>
+
+                    <? if (($data_isAdmin)&& (!($data_discussion[$it]['post_threadstatus'] == 'accepted'))) { ?>
                     <button type="button" class="del_btn btn btn-default btn-xs" style="float:right" value="<? echo $data_discussion[$it]['id']; ?>">Delete Comment</button>
                     <? } ?>
                 </div>
                 <div class="panel-body word-wrap">
                     <? echo $data_discussion[$it]['post_content']; ?>
-                        <? if ($data_discussion[$it]['post_type'] == 'suggestion' || $data_discussion[$it]['post_type'] == 'auto-suggestion'){ ?>
+                        <? if ( $data_discussion[$it]['post_type'] == 'auto-suggestion'){ ?>
                          <hr>
                          <? for($ity = 0; $ity < count($data_discussion_subthreads); $ity++) {
                           if ($data_discussion[$it]['id'] == $data_discussion_subthreads[$ity]['thread_id']) { ?>
@@ -72,7 +69,7 @@
                          <? }; ?>
                       <? }; ?>
                 </div>
-                <? if (($data_discussion[$it]['post_type'] == 'suggestion' || $data_discussion[$it]['post_type'] == 'auto-suggestion')&& $data_discussion[$it]['post_threadstatus'] == 'active'){ ?>
+                <? if (( $data_discussion[$it]['post_type'] == 'auto-suggestion')&& $data_discussion[$it]['post_threadstatus'] == 'active'){ ?>
                 <div class="panel-footer">
 
                 <div class="post-comment">
@@ -216,7 +213,7 @@
                 <input type="hidden" id="contentID" value="<? echo $data_contentId ?>">
             </div>
             <hr>
-            <p><button type="submit" class="btn btn-default">Send Suggestion</button></p>
+            <p><button type="submit" class="btn btn-default" >Send Suggestion</button></p>
         </form>
     </div>
 </div>
