@@ -97,15 +97,18 @@
     <div class="post-comment">
         <h2>Suggestion</h2>
 			<div class="form-group">
+			<? if($data_comment_type == "full") { ?>
                 <label for="sel1">Select Type:</label>
                 <select class="form-control" id="selectType">
                     <option value="1">comment</option>
                     <!-- deleted value=2 for suggestion discussion type-->
-                    <? if($data_comment_type == "full") { ?>
                     <option value="3">subfeature suggestion</option>
                     <option value="4">classification suggestion</option>
+                    <? } else {?>
+                    <select class="form-control hidden" id="selectType">
+                    <option value="1">comment</option>
                     <? } ?>
-                </select>
+                    </select>
             </div>
         <form role="form" class="form-comment">
             <div id="suggestion_plaintext" class="form-group">

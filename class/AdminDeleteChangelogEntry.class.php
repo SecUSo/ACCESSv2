@@ -27,6 +27,9 @@
  * Class AdminDeleteChangelogEntry
  * @desc JSON API: delete discussion entry by id and type
  */
+
+
+/* Info: Admin can't delete timeline entries anymore, button in content.php for this action was deleted */
 class AdminDeleteChangelogEntry
 {
     public static $isViewable = TRUE;

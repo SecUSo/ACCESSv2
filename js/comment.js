@@ -45,7 +45,7 @@ $(document).ready(function () {
     var selected_subfeature_suggestion = "";
 
     //<content.php>
-
+/* Timeline entries can't be deleted
     $(".timeline-close-btn").click(function (e) {
         var changelog_id = $(this).attr("id");
 
@@ -69,7 +69,7 @@ $(document).ready(function () {
         e.preventDefault(); // avoid to execute the actual submit of the form.
     });
     //</content.php>
-
+*/
 
     $(".form-panelfooter").submit(function (e) {
         var form = $(this);
@@ -193,8 +193,6 @@ $(document).ready(function () {
             var commentType = "";
             if ($('#selectType').val() == "1")
                 commentType = "comment";
-            else if ($('#selectType').val() == "2")
-                commentType = "suggestion";
 
             $.ajax({
                 type: "POST",
