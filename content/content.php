@@ -75,7 +75,8 @@
                                     <div class="timeline-badge"><i class="glyphicon glyphicon-check"></i></div>
                                     <div class="timeline-panel">
                                         <div class="timeline-heading">
-                                            <h4 class="timeline-title"><? echo $timeline_entry["log_title"]; ?></h4>
+                                            <a href="?Content&id=<? echo $timeline_entry["auth_authentication"]."#discussion_id_".$timeline_entry["discussion_id"]; ?>"><h4><? echo $timeline_entry["log_title"]; ?></h4></a>
+                                            <!-- removed button for timeline entry deletion -->
                                         </div>
                                         <div class="timeline-body">
                                             <p><? echo $timeline_entry["log_text"]; ?></p>
