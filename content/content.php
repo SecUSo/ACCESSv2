@@ -29,8 +29,8 @@
             <span class="auth_category">Category: <?php echo $content_category ?></span>
             <hr>
             <ul class="nav nav-tabs">
-                <li class="active"><a data-toggle="tab" href="#description">Description and Timeline</a></li>
-                <li><a data-toggle="tab" href="#discussion">Discussion and Suggestion</a></li>
+                <li class="active" id="firstTab"><a data-toggle="tab" href="#description">Description and Timeline</a></li>
+                <li class="" id="secondTab"><a data-toggle="tab" href="#discussion">Discussion and Suggestion</a></li>
             </ul>
 
             <div class="tab-content" >
@@ -75,8 +75,17 @@
                                     <div class="timeline-badge"><i class="glyphicon glyphicon-check"></i></div>
                                     <div class="timeline-panel">
                                         <div class="timeline-heading">
-                                            <a href="?Content&id=<? echo $timeline_entry["auth_authentication"]."#discussion_id_".$timeline_entry["discussion_id"]; ?>"><h4><? echo $timeline_entry["log_title"]; ?></h4></a>
+                                            <a onclick="toggleFunction()"  href="?Content&id=<? echo $timeline_entry["auth_authentication"]."#discussion_id_".$timeline_entry["discussion_id"]; ?>"><h4><? echo $timeline_entry["log_title"]; ?></h4></a>
                                             <!-- removed button for timeline entry deletion -->
+                                            <script>
+                                                function toggleFunction(){
+                                                    $("#firstTab").removeClass("active");
+                                                    $("#secondTab").addClass("active");
+                                                    $("#description").removeClass("in active");
+                                                    $("#discussion").addClass("in active");
+
+                                                }
+                                            </script>
                                         </div>
                                         <div class="timeline-body">
                                             <p><? echo $timeline_entry["log_text"]; ?></p>
