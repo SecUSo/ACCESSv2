@@ -347,9 +347,11 @@ class DiscussionController
 
         $tempEntry = $this->dbController->secureSet($sqlData1);
 
-        if (count($tempEntry) == 0)
+        /*if (count($tempEntry) == 0)
             return -1;
         else
+          $this->deleteSubFeatureThreads($id, $tempEntry[0]['foreignid']);*/
+        if(count($tempEntry) != 0)
             $this->deleteSubFeatureThreads($id, $tempEntry[0]['foreignid']);
 
         $sqlData = "DELETE FROM discuss_subfeature WHERE id=" . $this->dbController->escapeStripString($id);
@@ -370,9 +372,12 @@ class DiscussionController
 
         $tempEntry = $this->dbController->secureGet($sqlData1);
 
-        if (count($tempEntry) == 0)
+       /* if (count($tempEntry) == 0)
             return -1;
         else
+           $this->deleteFeatureThreads($id, $tempEntry[0]['foreignid']);
+       */
+        if (count($tempEntry) != 0)
             $this->deleteFeatureThreads($id, $tempEntry[0]['foreignid']);
 
         $sqlData = "DELETE FROM discuss_feature WHERE id=" . $this->dbController->escapeStripString($id);
