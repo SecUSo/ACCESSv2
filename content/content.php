@@ -51,15 +51,11 @@
                         <? for ($it = 0; $it < count($data_subfeatures); $it++) { ?>
                             <tr>
                                 <td><? echo $data_subfeatures[$it]['id'] ?></td>
-                                <td><? echo $data_subfeatures[$it]['name'] ?></td>
-                                <td> <!-- tooltip box for subfeature info-->
-                                    <div class="subfeature_info_box pull-right"
-                                         data-content="<?php echo $data_subfeature_descriptions[$data_subfeatures[$it]['name']];?>"
-                                         title="Description" rel="popover"  data-placement="top" data-trigger="hover">
-                                        <div class="btn btn-xs pull-right info-button ">
-                                            <span class="glyphicon glyphicon-info-sign" aria-hidden="true" style="margin-top: 2px;"></span>
-                                        </div>
-                                    </div>
+                                <td>
+                                     <span class="subfeature_info_box pull-left"
+                                           data-content="<?php echo $data_subfeature_descriptions[$data_subfeatures[$it]['name']];?>"
+                                           title="Description" rel="popover"  data-placement="top" data-trigger="hover"><? echo $data_subfeatures[$it]['name'] ?>
+                                    </span>
                                 </td>
                             </tr>
                         <? }; ?>
@@ -97,9 +93,14 @@
                         </ul>
                     </div>
                 </div>
-
                 <div id="discussion" class="tab-pane fade" style="margin-top: 20px;"><? include 'comment.php'; ?></div>
             </div>
+            <script>
+                $(document).ready(function () {
 
+                    $('.subfeature_info_box').popover({
+                        container:'body'
+                    });
+            </script>
         </div> <!-- row -->
     </div> <!-- /container -->
