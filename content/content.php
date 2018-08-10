@@ -28,55 +28,79 @@
             <h1 class="auth_name"><?php echo $content_name ?></h1>
             <span class="auth_category">Category: <?php echo $content_category ?></span>
             <hr>
-            <h2>Description</h2>
-            <span class="auth_desc"><?php echo $content_description ?></span>
-            <hr>
-            <h2>Subfeatures</h2>
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>NAME</th>
-                </tr>
-                </thead>
-                <tbody>
-                <? for ($it = 0; $it < count($data_subfeatures); $it++) { ?>
-                    <tr>
-                        <td><? echo $data_subfeatures[$it]['id'] ?></td>
-                        <td><? echo $data_subfeatures[$it]['name'] ?></td>
-                    </tr>
-                <? }; ?>
-                </tbody>
-            </table>
-            <hr>
-            <h2>Timeline</h2>
-            <p>The timeline shows all changes made to the knowledge database regarding the current authentication scheme through submitted suggestions.</p>
-            <div class="row">
-                <ul class="timeline">
-                    <?php foreach ($data_timeline as $timeline_entry) { ?>
-                        <li>
-                            <div class="timeline-badge"><i class="glyphicon glyphicon-check"></i></div>
-                            <div class="timeline-panel">
-                                <div class="timeline-heading">
-                                    <h4 class="timeline-title"><? echo $timeline_entry["log_title"]; ?></h4>
-                                    <? if ($data_isAdmin) { ?>
-                                        <button type="button"
-                                                id="<? echo $timeline_entry["id"]; ?>"
-                                                class="close timeline-close-btn">×
-                                        </button>
-                                    <? } ?>
-                                </div>
-                                <div class="timeline-body">
-                                    <p><? echo $timeline_entry["log_text"]; ?></p>
-                                </div>
-                            </div>
-                        </li>
-                    <? } ?>
-                </ul>
+            <ul class="nav nav-tabs">
+                <li class="active" id="firstTab"><a data-toggle="tab" href="#description">Description and Timeline</a></li>
+                <li class="" id="secondTab"><a data-toggle="tab" href="#discussion">Discussion and Suggestion</a></li>
+            </ul>
+
+            <div class="tab-content" >
+                <div id="description" class="tab-pane fade in active" style="margin-top: 20px;">
+                    <hr>
+                    <h2>Description</h2>
+                    <span class="auth_desc"><?php echo $content_description ?></span>
+                    <hr>
+                    <h2>Subfeatures</h2>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>NAME</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <? for ($it = 0; $it < count($data_subfeatures); $it++) { ?>
+                            <tr>
+                                <td><? echo $data_subfeatures[$it]['id'] ?></td>
+                                <td>
+                                     <span class="subfeature_info_box pull-left"
+                                           data-content="<?php echo $data_subfeature_descriptions[$data_subfeatures[$it]['name']];?>"
+                                           title="Description" rel="popover"  data-placement="top" data-trigger="hover"><? echo $data_subfeatures[$it]['name'] ?>
+                                    </span>
+                                </td>
+                            </tr>
+                        <? }; ?>
+                        </tbody>
+                    </table>
+                    <hr>
+                    <h2>Timeline</h2>
+                    <p>The timeline shows all changes made to the knowledge database regarding the current authentication scheme through submitted suggestions.</p>
+                    <div class="row">
+                        <ul class="timeline">
+                            <?php foreach ($data_timeline as $timeline_entry) { ?>
+                                <li>
+                                    <div class="timeline-badge"><i class="glyphicon glyphicon-check"></i></div>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <a onclick="toggleFunction()"  href="?Content&id=<? echo $timeline_entry["auth_authentication"]."#discussion_id_".$timeline_entry["discussion_id"]; ?>"><h4><? echo $timeline_entry["log_title"]; ?></h4></a>
+                                            <!-- removed button for timeline entry deletion -->
+                                            <script>
+                                                function toggleFunction(){
+                                                    $("#firstTab").removeClass("active");
+                                                    $("#secondTab").addClass("active");
+                                                    $("#description").removeClass("in active");
+                                                    $("#discussion").addClass("in active");
+
+                                                }
+                                            </script>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p><? echo $timeline_entry["log_text"]; ?></p>
+                                        </div>
+                                        <hr>
+                                    </div>
+                                </li>
+                            <? } ?>
+                        </ul>
+                    </div>
+                </div>
+                <div id="discussion" class="tab-pane fade" style="margin-top: 20px;"><? include 'comment.php'; ?></div>
             </div>
+            <script>
+                $(document).ready(function () {
 
-
-            <hr>
-            <? include 'comment.php'; ?>
+                    $('.subfeature_info_box').popover({
+                        container:'body'
+                    });
+            </script>
         </div> <!-- row -->
     </div> <!-- /container -->

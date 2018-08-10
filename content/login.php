@@ -45,6 +45,7 @@
                     <option>Dr.</option>
                     <option>Prof.</option>
                     <option>Prof. Dr.</option>
+                    <option>PhD.</option>
                 </select>
                 <label for="registerinputFirstName" class="sr-only"></label>
                 <input type="name" id="registerinputFirstName" class="form-control" placeholder="First name" required>
@@ -61,8 +62,7 @@
                 <input type="text" id="registerinputInviteCode" class="form-control" placeholder="Invite code" required>
                 <div class="checkbox">
                     <label>
-                        <input type="checkbox" value="remember-me" required> I have read and do accept the Terms of
-                        License
+                        <input type="checkbox" value="remember-me" required> I have read and do accept the <a target="_blank" href="?PrivacyPolicy" >Terms of Service and Privacy Policy</a>.
                     </label>
                 </div>
                 <p>

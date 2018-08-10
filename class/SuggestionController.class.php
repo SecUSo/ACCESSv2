@@ -1363,16 +1363,18 @@ class SuggestionController
 
     /**
      * insertChangelogEntry($auth_id, $log_title, $log_text)
+     * @param $disc_id - id of related discussion
      * @param $auth_id - auth id
      * @param $log_title - title of timeline entry
      * @param $log_text - text of timeline entry
      * @desc Insert timeline entry for authentication scheme
      */
-    private function insertChangelogEntry($auth_id, $log_title, $log_text)
+    private function insertChangelogEntry($disc_id, $auth_id, $log_title, $log_text)
     {
-        $query = "INSERT INTO suggestion_changelog (auth_authentication,log_title,log_text) VALUES (%d,'%s','%s');";
+        $query = "INSERT INTO suggestion_changelog (discussion_id, auth_authentication,log_title,log_text) VALUES (%d,%d,'%s','%s');";
 
         $query = sprintf($query,
+            $this->dbController->escapeStripString($disc_id),
             $this->dbController->escapeStripString($auth_id),
             $this->dbController->escapeStripString($log_title),
             $log_text); //html-content dont strip
@@ -1402,7 +1404,7 @@ class SuggestionController
      */
     public function insertSubfeatureSuggestionChangelog($suggestion_id)
     {
-        $query = "SELECT subfeature_suggestion.id, subfeature_suggestion.auth_authentication, subfeature_suggestion.value, cat_subfeatures.name FROM subfeature_suggestion JOIN cat_subfeatures ON cat_subfeatures.id = subfeature_suggestion.cat_subfeature WHERE subfeature_suggestion.id='%s';";
+        $query = "SELECT subfeature_suggestion.id, subfeature_suggestion.auth_authentication, subfeature_suggestion.discussion_id, subfeature_suggestion.value, cat_subfeatures.name FROM subfeature_suggestion JOIN cat_subfeatures ON cat_subfeatures.id = subfeature_suggestion.cat_subfeature WHERE subfeature_suggestion.id='%s';";
 
         $query = sprintf($query,
             $this->dbController->escapeStripString($suggestion_id));
@@ -1411,15 +1413,15 @@ class SuggestionController
 
         if (count($result) <= 0)
             return;
-
+        $discussion_id = $result[0]["discussion_id"];
         $auth_authentication = $result[0]["auth_authentication"];
         $subfeature_name = $result[0]["name"];
         $value = $result[0]["value"];
 
         if ($value == "0")
-            $this->insertChangelogEntry($auth_authentication, "Subfeature Suggestion", $subfeature_name . " Removed (-)");
+            $this->insertChangelogEntry($discussion_id, $auth_authentication, "Subfeature Suggestion", $subfeature_name . " Removed (-)");
         else
-            $this->insertChangelogEntry($auth_authentication, "Subfeature Suggestion", $subfeature_name . " Added (+)");
+            $this->insertChangelogEntry($discussion_id, $auth_authentication, "Subfeature Suggestion", $subfeature_name . " Added (+)");
 
 
         return;
@@ -1432,7 +1434,7 @@ class SuggestionController
      */
     public function insertClassificationSuggestionChangelog($suggestion_id)
     {
-        $query = "SELECT classification_suggestion.auth_id, cat_features.name AS feature_name FROM `classification_suggestion` JOIN cat_features ON classification_suggestion.feature_id=cat_features.id WHERE classification_suggestion.id='%s';";
+        $query = "SELECT classification_suggestion.auth_id, classification_suggestion.discussion_id, cat_features.name AS feature_name FROM `classification_suggestion` JOIN cat_features ON classification_suggestion.feature_id=cat_features.id WHERE classification_suggestion.id='%s';";
 
         $query = sprintf($query,
             $this->dbController->escapeStripString($suggestion_id));
@@ -1441,7 +1443,7 @@ class SuggestionController
 
         if (count($result) <= 0)
             return;
-
+        $discussion_id = $result[0]["discussion_id"];
         $auth_authentication = $result[0]["auth_id"];
         $feature_name = $result[0]["feature_name"];
         $auths = $this->getChangedClassvaluesFromClassifcationSuggestion($suggestion_id);
@@ -1481,7 +1483,7 @@ class SuggestionController
 
         }
 
-        $this->insertChangelogEntry($auth_authentication, "Classification Suggestion", $output);
+        $this->insertChangelogEntry($discussion_id, $auth_authentication, "Classification Suggestion", $output);
         return;
     }
 
