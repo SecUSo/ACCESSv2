@@ -62,8 +62,7 @@
                 <input type="text" id="registerinputInviteCode" class="form-control" placeholder="Invite code" required>
                 <div class="checkbox">
                     <label>
-                        <input type="checkbox" value="remember-me" required> I have read and do accept the Terms of
-                        License
+                        <input type="checkbox" value="remember-me" required> I have read and do accept the <a target="_blank" href="?PrivacyPolicy" >Terms of Service and Privacy Policy</a>.
                     </label>
                 </div>
                 <p>

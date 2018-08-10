@@ -24,7 +24,7 @@
 <?/* GLOBAL FOOTER FILE, IS LOADED IN EVERY PAGE ON ACCESS PLATFORM*/?>
 <footer class="footer">
     <span class="output"></span>
-    <p>&copy 2018 Karlsruhe Institute of Technology - <a target="_blank" href="?Imprint">Imprint</a> - <a target="_blank" href="?PrivacyPolicy" >Privacy Policy</a></p>
+    <p>&copy 2018 Karlsruhe Institute of Technology - <a target="_blank" href="?Imprint">Imprint</a> - <a target="_blank" href="?PrivacyPolicy" >Terms of Service/Privacy Policy</a></p>
     <p>
         <a href="#">Back to top</a>
     </p>

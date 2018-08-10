@@ -20,7 +20,7 @@
 
 <div class="container">
     <div class ="page-header text-center">
-        <h4>ACCESS PLATFORM - PRIVACY POLICY</h4>
+        <h4>ACCESS PLATFORM - TERMS OF SERVICE & PRIVACY POLICY</h4>
     </div>
 </div> <!-- /container -->
 
