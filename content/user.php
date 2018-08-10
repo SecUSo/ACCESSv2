@@ -26,16 +26,12 @@
 <div class="container">
     <div class="row">
         <div class="content-block col-sm-12">
-            <h2>Edit User Data</h2>
+            <h2>Edit Your Data</h2>
             <hr>
             <div id="error" class="reg-error alert alert-danger">
                 <strong>Failure!</strong> Please check your data!
             </div>
             <form role="form" class="form-edituser">
-                <div class="form-group">
-                    <label for="Id">ID</label>
-                    <input type="text" class="form-control" id="Id" value="<? echo $data_userData[0]['Id'] ?>"  disabled>
-                </div>
 
                 <div class="form-group">
                     <label for="Title">Title</label>
@@ -49,17 +45,17 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="FirstName">FirstName</label>
+                    <label for="FirstName">First Name</label>
                     <input type="text" class="form-control" id="FirstName" value="<? echo $data_userData[0]['FirstName'] ?>">
                 </div>
 
                 <div class="form-group">
-                    <label for="LastName">LastName</label>
+                    <label for="LastName">Last Name</label>
                     <input type="text" class="form-control" id="LastName" value="<? echo $data_userData[0]['LastName'] ?>">
                 </div>
 
                 <div class="form-group">
-                    <label for="EMail">EMail</label>
+                    <label for="EMail">Email</label>
                     <input type="text" class="form-control" id="EMail" value="<? echo $data_userData[0]['EMail'] ?>">
                 </div>
 
