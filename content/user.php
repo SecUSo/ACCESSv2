@@ -40,11 +40,11 @@
                 <div class="form-group">
                     <label for="Title">Title</label>
                     <select class="form-control" id="Title">
-                        <option selected><? echo $data_userData[0]['Title'] ?></option>
                         <option></option>
                         <option>Dr.</option>
                         <option>Prof.</option>
                         <option>Prof. Dr.</option>
+                        <option>PhD.</option>
                     </select>
                 </div>
 

@@ -45,6 +45,7 @@
                     <option>Dr.</option>
                     <option>Prof.</option>
                     <option>Prof. Dr.</option>
+                    <option>PhD.</option>
                 </select>
                 <label for="registerinputFirstName" class="sr-only"></label>
                 <input type="name" id="registerinputFirstName" class="form-control" placeholder="First name" required>
