@@ -96,8 +96,6 @@
                 <div id="discussion" class="tab-pane fade" style="margin-top: 20px;"><? include 'comment.php'; ?></div>
             </div>
             <script>
-                $(document).ready(function () {
-
                     $('.subfeature_info_box').popover({
                         container:'body'
                     });

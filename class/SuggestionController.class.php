@@ -1432,6 +1432,11 @@ class SuggestionController
      * @param $suggestion_id - suggestion id
      * @desc Insert timeline entry for classification suggestion
      */
+    /**
+     * insertClassificationSuggestionChangelog($suggestion_id)
+     * @param $suggestion_id - suggestion id
+     * @desc Insert timeline entry for classification suggestion
+     */
     public function insertClassificationSuggestionChangelog($suggestion_id)
     {
         $query = "SELECT classification_suggestion.auth_id, classification_suggestion.discussion_id, cat_features.name AS feature_name FROM `classification_suggestion` JOIN cat_features ON classification_suggestion.feature_id=cat_features.id WHERE classification_suggestion.id='%s';";
@@ -1456,9 +1461,9 @@ class SuggestionController
                 $temp = "Feature: " . $feature_name . "<hr><b>" . $this->getAuthNameById($auth["auth_authentication_1"]) . "</b> is better than <b>" . $this->getAuthNameById($auth["auth_authentication_2"]) . "</b></br>";
 
                 if ($auth["auth_authentication_1"] == $auth_authentication) {
-                    $this->insertChangelogEntry($auth["auth_authentication_2"], "Classification Suggestion", $temp);
+                    $this->insertChangelogEntry( $discussion_id, $auth["auth_authentication_2"], "Classification Suggestion", $temp);
                 } else {
-                    $this->insertChangelogEntry($auth["auth_authentication_1"], "Classification Suggestion", $temp);
+                    $this->insertChangelogEntry( $discussion_id, $auth["auth_authentication_1"], "Classification Suggestion", $temp);
                 }
 
             } else if ($auth["value"] == "1") {
@@ -1466,18 +1471,18 @@ class SuggestionController
                 $temp = "Feature: " . $feature_name . "<hr><b>" . $this->getAuthNameById($auth["auth_authentication_1"]) . "</b> is equal to <b>" . $this->getAuthNameById($auth["auth_authentication_2"]) . "</b></br>";
 
                 if ($auth["auth_authentication_1"] == $auth_authentication) {
-                    $this->insertChangelogEntry($auth["auth_authentication_2"], "Classification Suggestion", $temp);
+                    $this->insertChangelogEntry( $discussion_id, $auth["auth_authentication_2"], "Classification Suggestion", $temp);
                 } else {
-                    $this->insertChangelogEntry($auth["auth_authentication_1"], "Classification Suggestion", $temp);
+                    $this->insertChangelogEntry( $discussion_id, $auth["auth_authentication_1"], "Classification Suggestion", $temp);
                 }
             } else {
                 $output .= "<b>" . $this->getAuthNameById($auth["auth_authentication_1"]) . "</b> is worse than <b>" . $this->getAuthNameById($auth["auth_authentication_2"]) . "</b></br>";
                 $temp = "Feature: " . $feature_name . "<hr><b>" . $this->getAuthNameById($auth["auth_authentication_1"]) . "</b> is worse than <b>" . $this->getAuthNameById($auth["auth_authentication_2"]) . "</b></br>";
 
                 if ($auth["auth_authentication_1"] == $auth_authentication) {
-                    $this->insertChangelogEntry($auth["auth_authentication_2"], "Classification Suggestion", $temp);
+                    $this->insertChangelogEntry( $discussion_id, $auth["auth_authentication_2"], "Classification Suggestion", $temp);
                 } else {
-                    $this->insertChangelogEntry($auth["auth_authentication_1"], "Classification Suggestion", $temp);
+                    $this->insertChangelogEntry( $discussion_id, $auth["auth_authentication_1"], "Classification Suggestion", $temp);
                 }
             }
 
@@ -1486,6 +1491,7 @@ class SuggestionController
         $this->insertChangelogEntry($discussion_id, $auth_authentication, "Classification Suggestion", $output);
         return;
     }
+
 
     /**
      * getChangedClassvaluesFromClassifcationSuggestion($suggestion_id)
