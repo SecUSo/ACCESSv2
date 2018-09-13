@@ -33,6 +33,11 @@
             </div>
             <form role="form" class="form-edituser">
 
+                <div class="form-group hidden">
+                    <label for="Id">ID</label>
+                    <input type="text" class="form-control" id="Id" value="<? echo $data_userData[0]['Id'] ?>">
+                </div>
+
                 <div class="form-group">
                     <label for="Title">Title</label>
                     <select class="form-control" id="Title">

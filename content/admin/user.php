@@ -71,11 +71,9 @@
                 <input type="text" class="form-control" id="AccountStatus" value="<? echo $data_userData[0]['AccountStatus'] ?>"  disabled>
             </div>
 
-
-
             <div class="form-group">
-                <label for="Password">Password <strong style="color: red">( ENTER HASHED VALUE !!! )</strong></label>
-                <input type="text" class="form-control" id="Password" value="<? echo $data_userData[0]['Password'] ?>">
+                <label for="Password">Password</label>
+                <input type="text" class="form-control" id="Password" value="">
             </div>
 
             <div class="form-group">

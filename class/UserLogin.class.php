@@ -83,7 +83,7 @@ class UserLogin
 
         // Migrating legacy passwords to better security on the fly
         // First we check whether right mail and pwd has been provided
-        if (!(($tempUser[0]['EMail'] == $this->sEMail) && ($tempUser[0]['Password'] == md5($this->sPassword)))) {
+        if ((($tempUser[0]['EMail'] == $this->sEMail) && ($tempUser[0]['Password'] == md5($this->sPassword)))) {
             // Then we update the hash in the DB, but do not login, this is done in the next check
             $this->userController->updateUser($tempUser[0]['Id'],
                                               $tempUser[0]['LastName'],
