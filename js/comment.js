@@ -115,7 +115,17 @@ $(document).ready(function () {
                 value = "1";
             else
                 value = "0";
-            var references = $('#subfeature_suggestion_references').val();
+
+
+            let references = "";
+            let ref = document.getElementsByName("subfeature_suggestion_references[]");
+            for (let i = 0; i < ref.length; i++){
+                let item = ref[i].value;
+                references += item;
+                references += '<br>';
+            }
+
+
             var comment = $('#subfeature_suggestion_comment').val();
 
             $.ajax({
@@ -163,7 +173,14 @@ $(document).ready(function () {
                 return;
             }
 
-            var references = $('#classification_suggestion_references').val();
+            let references = "";
+            let ref = document.getElementsByName("classification_suggestion_references[]");
+            for (let i = 0; i < ref.length; i++){
+                let item = ref[i].value;
+                references += item;
+                references += '<br>';
+            }
+
             var comment = $('#classification_suggestion_comment').val();
 
             $.ajax({
@@ -218,6 +235,7 @@ $(document).ready(function () {
         e.preventDefault(); // avoid to execute the actual submit of the form.
 
     });
+
 
     $(".del_btn").click(function () {
         $.ajax({
@@ -297,6 +315,29 @@ $(document).ready(function () {
             }
         });
     });
+
+    $('#addRefSub').on("click", function (e) {
+
+        let html = '<div><textarea class="form-control" rows="3" name="subfeature_suggestion_references[]" id="child_subfeature_suggestion_references"></textarea><a type="button" class="btn btn-xs pull-right"  id="remove">Remove Reference</a><br/></div>'
+        $("#reference_subfeature").append(html);;
+
+    });
+
+    $('#reference_subfeature').on("click", "#remove", function () {
+        $(this).parent('div').remove();
+    });
+
+    $('#addRefClass').on("click", function (e) {
+
+        let html = '<div><textarea class="form-control" rows="3" name="classification_suggestion_references[]" id="child_classification_suggestion_references"></textarea><a type="button" class="btn btn-xs pull-right"  id="remove">Remove Reference</a><br/></div>'
+        $("#reference_classification").append(html);;
+
+    });
+
+    $('#reference_classification').on("click", "#remove", function () {
+        $(this).parent('div').remove();
+    });
+
 
     function drawClassifcationTable(data) {
 

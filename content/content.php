@@ -31,6 +31,7 @@
             <ul class="nav nav-tabs">
                 <li class="active" id="firstTab"><a data-toggle="tab" href="#description">Description and Timeline</a></li>
                 <li class="" id="secondTab"><a data-toggle="tab" href="#discussion">Discussion and Suggestion</a></li>
+                <li class="" id="thirdTab"><a data-toggle="tab" href="#references">References</a></li>
             </ul>
 
             <div class="tab-content" >
@@ -94,6 +95,7 @@
                     </div>
                 </div>
                 <div id="discussion" class="tab-pane fade" style="margin-top: 20px;"><? include 'comment.php'; ?></div>
+                <div id="references" class="tab-pane fade" style="margin-top: 20px;"><? include 'bibtexHandler.php'; ?></div>
             </div>
             <script>
                     $('.subfeature_info_box').popover({

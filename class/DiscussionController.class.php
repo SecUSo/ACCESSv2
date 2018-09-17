@@ -76,7 +76,7 @@ class DiscussionController
             $content .= $this->dbController->escapeStripString($class);
 
         $content .= '</dd><dt>References</dt><dd>' .
-            $this->dbController->escapeStripString($reference) .
+            $this->dbController->escapeString($reference) .
             '</dd><dt>Comment</dt><dd>' .
             $this->dbController->escapeStripString($comment) .
             '</dd><dt>Classvalues</dt><dd>';
@@ -131,7 +131,7 @@ class DiscussionController
             $content .= 'Remove (-)';
 
         $content .= '</dd><dt>References</dt><dd>' .
-            $this->dbController->escapeStripString($reference) .
+            $this->dbController->escapeString($reference) .
             '</dd><dt>Comment</dt><dd>' .
             $this->dbController->escapeStripString($comment) .
             '</dd></dl></div></div>';

@@ -182,9 +182,14 @@
                         </div>
                     </div>
                 </div>
+                <div id="reference_subfeature">
                 <label for="subfeature_suggestion_references">References</label>
-                <textarea class="form-control" rows="3" id="subfeature_suggestion_references"></textarea>
-                </br>
+                <textarea class="form-control" rows="3" name="subfeature_suggestion_references[]" id="subfeature_suggestion_references"></textarea>
+                <br/>
+                </div>
+                <br/>
+                <p><button type="button" class="btn btn-default" id="addRefSub">Add another Reference</button></p>
+                <br/>
                 <label for="subfeature_suggestion_comment">Comment</label>
                 <textarea class="form-control" rows="3" id="subfeature_suggestion_comment"></textarea>
             </div>
@@ -205,9 +210,13 @@
                 <div id="authclassification" class="panel panel-default">
                     <div id="siteloader" style="overflow: auto;"></div>​
                 </div>
+                <div id="reference_classification">
                 <label for="classification_suggestion_references">References</label>
-                <textarea class="form-control" rows="3" id="classification_suggestion_references"></textarea>
+                <textarea class="form-control" rows="3" name="classification_suggestion_references[]" id="classification_suggestion_references"></textarea>
                 </br>
+                </div>
+                <br/>
+                <p><button type="button" class="btn btn-default" id="addRefClass">Add another Reference</button></p>
                 <label for="classification_suggestion_comment">Comment</label>
                 <textarea class="form-control" rows="3" id="classification_suggestion_comment"></textarea>
             </div>
@@ -220,7 +229,6 @@
         </form>
     </div>
 </div>
-
 
 <script src="js/comment.js"></script>
 
