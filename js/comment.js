@@ -28,6 +28,8 @@
 var classData = {};
 $(document).ready(function () {
 
+
+
     $('.subfeature_info_box').popover({
         container:'body'
     });
@@ -41,6 +43,8 @@ $(document).ready(function () {
     $("#selectSubClass").val($("#selectSubClass option:first").val());
 
     $("#selectSubClass").trigger('change');
+
+    let reference_count = 0;
 
     var selected_subfeature_suggestion = "";
 
@@ -103,6 +107,7 @@ $(document).ready(function () {
     $(".form-comment").submit(function (e) {
 
         if ($('#selectType').val() == "3") {
+
             var subfeature = selected_subfeature_suggestion;
             var scheme = $("#contentID").val();
             if (subfeature == "" || scheme == "") {
@@ -118,9 +123,9 @@ $(document).ready(function () {
 
 
             let references = "";
-            let ref = document.getElementsByName("subfeature_suggestion_references[]");
+            let ref = document.getElementsByName("suggestion_reference[]");
             for (let i = 0; i < ref.length; i++){
-                let item = ref[i].value;
+                let item = processReference(ref[i]);
                 references += item;
                 references += '<br>';
             }
@@ -150,6 +155,7 @@ $(document).ready(function () {
             });
         }
         else if ($('#selectType').val() == "4") {
+
             var feature_data = $("#selectSubClass option:selected");
             var feature = feature_data.attr("feature");
             var subclass = feature_data.attr("class");
@@ -174,9 +180,9 @@ $(document).ready(function () {
             }
 
             let references = "";
-            let ref = document.getElementsByName("classification_suggestion_references[]");
+            let ref = document.getElementsByName("suggestion_reference[]");
             for (let i = 0; i < ref.length; i++){
-                let item = ref[i].value;
+                let item = processReference(ref[i]);
                 references += item;
                 references += '<br>';
             }
@@ -317,9 +323,7 @@ $(document).ready(function () {
     });
 
     $('#addRefSub').on("click", function (e) {
-
-        let html = '<div><textarea class="form-control" rows="3" name="subfeature_suggestion_references[]" id="child_subfeature_suggestion_references"></textarea><a type="button" class="btn btn-xs pull-right"  id="remove">Remove Reference</a><br/></div>'
-        $("#reference_subfeature").append(html);;
+        addHTMLforRef($("#reference_subfeature"));
 
     });
 
@@ -328,15 +332,259 @@ $(document).ready(function () {
     });
 
     $('#addRefClass').on("click", function (e) {
-
-        let html = '<div><textarea class="form-control" rows="3" name="classification_suggestion_references[]" id="child_classification_suggestion_references"></textarea><a type="button" class="btn btn-xs pull-right"  id="remove">Remove Reference</a><br/></div>'
-        $("#reference_classification").append(html);;
+        addHTMLforRef($("#reference_classification"));
 
     });
 
     $('#reference_classification').on("click", "#remove", function () {
         $(this).parent('div').remove();
     });
+
+
+    function processReference(div) {
+
+        let fields = div.getElementsByClassName("input_flag");
+        let array = [];
+        for (let i = 0; i < fields.length; i++) {
+        array.push(fields[i]);
+        }
+        let ref ="";
+
+        for (let i = 0; i < fields.length; i++) {
+
+            if(fields[i].value != "") {
+                ref += fields[i].value;
+
+                if ((i != fields.length - 1) && moreInputs(array.slice(i+1, fields.length)))
+                    ref += ", ";
+            }
+        }
+        return ref;
+    }
+
+    function moreInputs(fields){
+        let x = false;
+        for (let i = 0; i < fields.length; i++) {
+            if(fields[i].value != "") {
+                x = true;
+                return x;
+            }
+        }
+        return x;
+    }
+
+    function addHTMLforRef(div){
+
+        let count = reference_count.toString();
+        reference_count++;
+        let data = '<div name="suggestion_reference[]" id="suggestion_ref'+count+'" style="border-bottom-style: solid; border-color: #dddddd"></br><label for="selectTypeRef'+count+'">Select Reference Type:</label>';
+        data += '<select class="form-control reference" style="background-color: #eeeeee" id="selectTypeRef'+count+'">';
+        data += '<option value="0"></option>';
+        data += '<option value="1">Article</option>';
+        data += '<option value="2">Book</option>';
+        data += '<option value="3">Booklet</option>';
+        data += '<option value="4">Conference</option>';
+        data += '<option value="5">Inbook</option>';
+        data += '<option value="6">Incollection</option>';
+        data += '<option value="7">Inproceedings</option>';
+        data += '<option value="8">Manual</option>';
+        data += '<option value="9">Master Thesis</option>';
+        data += '<option value="10">Miscellaneous</option>';
+        data += '<option value="11">Ph.D. Thesis</option>';
+        data += '<option value="12">Proceedings</option>';
+        data += '<option value="13">Techreport</option>';
+        data += '<option value="14">Unpublished</option></select>';
+        data += '<label class="hidden refLabel'+count+'" for="reference_author" id="reference_authorLabel'+count+'">Author</label>';
+        data += '<textarea class="form-control hidden ref'+count+'" rows="1" id="reference_author'+count+'"></textarea>';
+        data += '<label  class="hidden refLabel'+count+'" for="reference_title" id="reference_titleLabel'+count+'">Title</label>';
+        data += '<textarea class="form-control hidden ref'+count+'" rows="1" id="reference_title'+count+'"></textarea>';
+        data += '<label class="hidden refLabel'+count+'" for="reference_journal" id="reference_journalLabel'+count+'">Journal</label>';
+        data += '<textarea class="form-control hidden ref'+count+'" rows="1" id="reference_journal'+count+'"></textarea>';
+        data += '<label class="hidden refLabel'+count+'" for="reference_year" id="reference_yearLabel'+count+'">Year</label>';
+        data += '<textarea class="form-control hidden ref'+count+'" rows="1" id="reference_year'+count+'"></textarea>';
+        data += '<label  class="hidden refLabel'+count+'" for="reference_author_or_editor" id="reference_author_or_editorLabel'+count+'">Author/Editor</label>';
+        data += '<textarea class="form-control hidden ref'+count+'" rows="1" id="reference_author_or_editor'+count+'"></textarea>';
+        data += '<label class="hidden refLabel'+count+'" for="reference_publisher" id="reference_publisherLabel'+count+'">Publisher</label>';
+        data += '<textarea class="form-control hidden ref'+count+'" rows="1" id="reference_publisher'+count+'"></textarea>';
+        data += '<label class="hidden refLabel'+count+'" for="reference_booktitle" id="reference_booktitleLabel'+count+'">Booktitle</label>';
+        data += '<textarea class="form-control hidden ref'+count+'" rows="1" id="reference_booktitle'+count+'"></textarea>';
+        data += '<label class="hidden refLabel'+count+'" for="reference_pages" id="reference_pagesLabel'+count+'">Pages/Chapter</label>';
+        data += '<textarea class="form-control hidden ref'+count+'" rows="1" id="reference_pages'+count+'"></textarea>';
+        data += '<label class="hidden refLabel'+count+'" for="reference_address" id="reference_addressLabel'+count+'">Address</label>';
+        data += '<textarea class="form-control hidden ref'+count+'" rows="1" id="reference_address'+count+'"></textarea>';
+        data += '<label class="hidden refLabel'+count+'" for="reference_school" id="reference_schoolLabel'+count+'">School</label>';
+        data += '<textarea class="form-control hidden ref'+count+'" rows="1" id="reference_school'+count+'"></textarea>';
+        data += '<label class="hidden refLabel'+count+'" for="reference_institution" id="reference_institutionLabel'+count+'">Institution</label>';
+        data += '<textarea class="form-control hidden ref'+count+'" rows="1" id="reference_institution'+count+'"></textarea>';
+        data += '<label class="hidden refLabel'+count+'" for="reference_note" id="reference_noteLabel'+count+'">Note</label>';
+        data += '<textarea class="form-control hidden ref'+count+'" rows="1" id="reference_note'+count+'"></textarea>';
+        data += '<label class="hidden refLabel'+count+'" for="reference_month" id="reference_monthLabel'+count+'">Month</label>';
+        data += '<textarea class="form-control hidden ref'+count+'" rows="1" id="reference_month'+count+'"></textarea>';
+        data += '<label class="hidden refLabel'+count+'" for="reference_howpub" id="reference_howpubLabel'+count+'">Form of Publication</label>';
+        data += '<textarea class="form-control hidden ref'+count+'" rows="1" id="reference_howpub'+count+'"></textarea>';
+        data += '<a type="button" class="btn btn-xs pull-right"  id="remove">Remove Reference</a><br/><br/></div>';
+
+        $(div).append(data);
+        addEventHandler('#suggestion_ref' + count, count);
+
+    }
+
+    function addEventHandler(div, counter) {
+        $('.ref-div').on('change', div ,function () {
+
+            $('.ref'+ counter).addClass('hidden').removeClass('input_flag');
+            $('.refLabel'+ counter).addClass('hidden');
+
+            if ($('#selectTypeRef'+ counter).val() == "1") {
+                $('#reference_authorLabel'+ counter).removeClass('hidden');
+                $('#reference_titleLabel'+ counter).removeClass('hidden');
+                $('#reference_journalLabel'+ counter).removeClass('hidden');
+                $('#reference_yearLabel'+ counter).removeClass('hidden');
+                $('#reference_author'+ counter).removeClass('hidden').addClass('input_flag');
+                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag');
+                $('#reference_journal'+ counter).removeClass('hidden').addClass('input_flag');
+                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag');
+
+
+            } else if ($('#selectTypeRef'+ counter).val() == "2") {
+                $('#reference_author_or_editorLabel'+ counter).removeClass('hidden');
+                $('#reference_titleLabel'+ counter).removeClass('hidden');
+                $('#reference_publisherLabel'+ counter).removeClass('hidden');
+                $('#reference_yearLabel'+ counter).removeClass('hidden');
+                $('#reference_author_or_editor'+ counter).removeClass('hidden').addClass('input_flag');
+                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag');
+                $('#reference_publisher'+ counter).removeClass('hidden').addClass('input_flag');
+                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag');
+
+
+            } else if ($('#selectTypeRef'+ counter).val() == "3") {
+                $('#reference_titleLabel'+ counter).removeClass('hidden');
+                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag');
+
+            }
+            else if ($('#selectTypeRef'+ counter).val() == "4") {
+                $('#reference_authorLabel'+ counter).removeClass('hidden');
+                $('#reference_titleLabel'+ counter).removeClass('hidden');
+                $('#reference_booktitleLabel'+ counter).removeClass('hidden');
+                $('#reference_yearLabel'+ counter).removeClass('hidden');
+                $('#reference_author'+ counter).removeClass('hidden').addClass('input_flag');
+                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag');
+                $('#reference_booktitle'+ counter).removeClass('hidden').addClass('input_flag');
+                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag');
+
+
+            } else if ($('#selectTypeRef'+ counter).val() == "5") {
+                $('#reference_author_or_editorLabel'+ counter).removeClass('hidden');
+                $('#reference_titleLabel'+ counter).removeClass('hidden');
+                $('#reference_pagesLabel'+ counter).removeClass('hidden');
+                $('#reference_publisherLabel'+ counter).removeClass('hidden');
+                $('#reference_yearLabel'+ counter).removeClass('hidden');
+                $('#reference_author_or_editor'+ counter).removeClass('hidden').addClass('input_flag');
+                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag');
+                $('#reference_pages'+ counter).removeClass('hidden').addClass('input_flag');
+                $('#reference_publisher'+ counter).removeClass('hidden').addClass('input_flag');
+                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag');
+
+
+            }
+            else if ($('#selectTypeRef'+ counter).val() == "6") {
+                $('#reference_authorLabel'+ counter).removeClass('hidden');
+                $('#reference_titleLabel'+ counter).removeClass('hidden');
+                $('#reference_booktitleLabel'+ counter).removeClass('hidden');
+                $('#reference_publisherLabel'+ counter).removeClass('hidden');
+                $('#reference_yearLabel'+ counter).removeClass('hidden');
+                $('#reference_author'+ counter).removeClass('hidden').addClass('input_flag');
+                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag');
+                $('#reference_booktitle'+ counter).removeClass('hidden').addClass('input_flag');
+                $('#reference_publisher'+ counter).removeClass('hidden').addClass('input_flag');
+                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag');
+
+            }
+            else if ($('#selectTypeRef'+ counter).val() == "7") {
+                $('#reference_authorLabel'+ counter).removeClass('hidden');
+                $('#reference_titleLabel'+ counter).removeClass('hidden');
+                $('#reference_booktitleLabel'+ counter).removeClass('hidden');
+                $('#reference_yearLabel'+ counter).removeClass('hidden');
+                $('#reference_author'+ counter).removeClass('hidden').addClass('input_flag');
+                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag');
+                $('#reference_booktitle'+ counter).removeClass('hidden').addClass('input_flag');
+                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag');
+
+
+            } else if ($('#selectTypeRef'+ counter).val() == "8") {
+                $('#reference_addressLabel'+ counter).removeClass('hidden');
+                $('#reference_titleLabel'+ counter).removeClass('hidden');
+                $('#reference_yearLabel'+ counter).removeClass('hidden');
+                $('#reference_address'+ counter).removeClass('hidden').addClass('input_flag');
+                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag');
+                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag');
+
+
+            } else if ($('#selectTypeRef'+ counter).val() == "9") {
+                $('#reference_authorLabel'+ counter).removeClass('hidden');
+                $('#reference_titleLabel'+ counter).removeClass('hidden');
+                $('#reference_schoolLabel'+ counter).removeClass('hidden');
+                $('#reference_yearLabel'+ counter).removeClass('hidden');
+                $('#reference_author'+ counter).removeClass('hidden').addClass('input_flag');
+                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag');
+                $('#reference_school'+ counter).removeClass('hidden').addClass('input_flag');
+                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag');
+
+
+            } else if ($('#selectTypeRef'+ counter).val() == "10") {
+                $('#reference_authorLabel'+ counter).removeClass('hidden');
+                $('#reference_titleLabel'+ counter).removeClass('hidden');
+                $('#reference_monthLabel'+ counter).removeClass('hidden');
+                $('#reference_yearLabel'+ counter).removeClass('hidden');
+                $('#reference_howpubLabel'+ counter).removeClass('hidden');
+                $('#reference_author'+ counter).removeClass('hidden').addClass('input_flag');
+                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag');
+                $('#reference_month'+ counter).removeClass('hidden').addClass('input_flag');
+                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag');
+                $('#reference_howpub'+ counter).removeClass('hidden').addClass('input_flag');
+
+
+            } else if ($('#selectTypeRef'+ counter).val() == "11") {
+                $('#reference_authorLabel'+ counter).removeClass('hidden');
+                $('#reference_titleLabel'+ counter).removeClass('hidden');
+                $('#reference_schoolLabel'+ counter).removeClass('hidden');
+                $('#reference_yearLabel'+ counter).removeClass('hidden');
+                $('#reference_author'+ counter).removeClass('hidden').addClass('input_flag');
+                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag');
+                $('#reference_school'+ counter).removeClass('hidden').addClass('input_flag');
+                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag');
+
+
+            } else if ($('#selectTypeRef'+ counter).val() == "12") {
+                $('#reference_titleLabel'+ counter).removeClass('hidden');
+                $('#reference_yearLabel'+ counter).removeClass('hidden');
+                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag');
+                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag');
+
+
+            } else if ($('#selectTypeRef'+ counter).val() == "13") {
+                $('#reference_authorLabel'+ counter).removeClass('hidden');
+                $('#reference_titleLabel'+ counter).removeClass('hidden');
+                $('#reference_institutionLabel'+ counter).removeClass('hidden');
+                $('#reference_yearLabel'+ counter).removeClass('hidden');
+                $('#reference_author'+ counter).removeClass('hidden').addClass('input_flag');
+                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag');
+                $('#reference_institution'+ counter).removeClass('hidden').addClass('input_flag');
+                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag');
+
+
+            } else if ($('#selectTypeRef'+ counter).val() == "14") {
+                $('#reference_authorLabel'+ counter).removeClass('hidden');
+                $('#reference_titleLabel'+ counter).removeClass('hidden');
+                $('#reference_noteLabel'+ counter).removeClass('hidden');
+                $('#reference_author'+ counter).removeClass('hidden').addClass('input_flag');
+                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag');
+                $('#reference_note'+ counter).removeClass('hidden').addClass('input_flag');
+
+            }
+        });
+    }
+
 
 
     function drawClassifcationTable(data) {
@@ -457,11 +705,13 @@ $(document).ready(function () {
             $('#suggestion_rate').addClass('hidden');
         }
         else if ($('#selectType').val() == "3") {
+            addHTMLforRef($('#reference_subfeature'));
             $('#suggestion_plaintext').addClass('hidden');
             $('#suggestion_ec').removeClass('hidden');
             $('#suggestion_rate').addClass('hidden');
         }
         else if ($('#selectType').val() == "4") {
+            addHTMLforRef($('#reference_classification'));
             $('#suggestion_plaintext').addClass('hidden');
             $('#suggestion_ec').addClass('hidden');
             $('#suggestion_rate').removeClass('hidden');
