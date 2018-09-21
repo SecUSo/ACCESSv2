@@ -37,7 +37,7 @@ class DiscussionController
         $this->dbController = new DatabaseController();
     }
 
-    public function addClassificationSuggestionForDiscussion($auth_authentication, $auth_name, $feature, $class, $class_values, $reference, $comment, $author_id)
+    public function addClassificationSuggestionForDiscussion($auth_authentication, $auth_name, $feature, $class, $class_values, $reference, $bibtex, $comment, $author_id)
     {
 
         $zeroClassAliases = array(
@@ -101,7 +101,8 @@ class DiscussionController
             }
         }
 
-        $content .= '</dd></dl></div></div>';
+        $content .= '</dd></dl></div></div>'.
+                    $bibtex;
 
 
         $sqlData = "INSERT INTO discuss_auth " .
@@ -119,7 +120,7 @@ class DiscussionController
     }
 
 
-    public function addSubFeatureSuggestionForDiscussion($auth_authentication, $cat_subfeature, $value, $reference, $comment, $author_id)
+    public function addSubFeatureSuggestionForDiscussion($auth_authentication, $cat_subfeature, $value, $reference,$bibtex, $comment, $author_id)
     {
         $content = '<div class="panel panel-default"><div class="panel-heading"><h3 class="panel-title">Subfeature Suggestion</h3></div><div class="panel-body"><dl class="dl-horizontal"><dt>Subfeature</dt><dd>' .
             $this->dbController->escapeStripString($cat_subfeature) .
@@ -134,7 +135,8 @@ class DiscussionController
             $this->dbController->escapeString($reference) .
             '</dd><dt>Comment</dt><dd>' .
             $this->dbController->escapeStripString($comment) .
-            '</dd></dl></div></div>';
+            '</dd></dl></div></div>' .
+            $this->dbController->escapeStripString($bibtex);
 
         $sqlData = "INSERT INTO discuss_auth " .
             "(id, foreignid, post_type, post_threadstatus, post_content, post_authorid, post_date) " .

@@ -29,7 +29,6 @@ var classData = {};
 $(document).ready(function () {
 
 
-
     $('.subfeature_info_box').popover({
         container:'body'
     });
@@ -123,9 +122,15 @@ $(document).ready(function () {
 
 
             let references = "";
+            let bibtex = "bibtex:";
             let ref = document.getElementsByName("suggestion_reference[]");
             for (let i = 0; i < ref.length; i++){
                 let item = processReference(ref[i]);
+                let bibitem = processReferenceBibtex(ref[i]);
+                if(i > 0)
+                    bibtex += ', ';
+
+                bibtex += bibitem;
                 references += item;
                 references += '<br>';
             }
@@ -142,6 +147,7 @@ $(document).ready(function () {
                         scheme: scheme,
                         subfeature: subfeature,
                         references: references,
+                        bibtex: bibtex,
                         comment: comment,
                         value: value
                     })
@@ -180,9 +186,14 @@ $(document).ready(function () {
             }
 
             let references = "";
+            let bibtex = "bibtex:";
             let ref = document.getElementsByName("suggestion_reference[]");
             for (let i = 0; i < ref.length; i++){
                 let item = processReference(ref[i]);
+                let bibitem = processReferenceBibtex(ref[i]);
+                if(i > 0)
+                    bibtex += ', ';
+                bibtex += bibitem;
                 references += item;
                 references += '<br>';
             }
@@ -198,6 +209,7 @@ $(document).ready(function () {
                         feature: feature,
                         class: subclass,
                         references: references,
+                        bibtex: bibtex,
                         comment: comment,
                         classvalues: class_values,
                         scheme: scheme
@@ -350,7 +362,7 @@ $(document).ready(function () {
         }
         let ref ="";
 
-        for (let i = 0; i < fields.length; i++) {
+        for (let i = 1; i < fields.length; i++) {
 
             if(fields[i].value != "") {
                 ref += fields[i].value;
@@ -362,15 +374,217 @@ $(document).ready(function () {
         return ref;
     }
 
-    function moreInputs(fields){
+    function moreInputs(data){
         let x = false;
-        for (let i = 0; i < fields.length; i++) {
-            if(fields[i].value != "") {
+        for (let i = 0; i < data.length; i++) {
+            if(data[i].value != "") {
                 x = true;
                 return x;
             }
         }
         return x;
+    }
+
+    function processReferenceBibtex(div){
+
+        let referenceType = div.getElementsByClassName("reference")[0].value;
+        let refID = div.getElementsByClassName("id")[0].value;
+        let referenceBib = "";
+        if(referenceType == "1"){
+            let author = div.getElementsByClassName("author")[0].value;
+            let title = div.getElementsByClassName("title")[0].value;
+            let journal = div.getElementsByClassName("journal")[0].value;
+            let year = div.getElementsByClassName("year")[0].value;
+            referenceBib = '@article{' + refID + ',' +
+                'author = {' + author + '},' +
+                'title = {' +  title + '},' +
+                'journal = {' + journal + '},' +
+                'year = {' + year + '}' +
+                '}';
+            return referenceBib;
+
+        } else if (referenceType == "2"){
+            let author =  div.getElementsByClassName("editor")[0].value;
+            let title =  div.getElementsByClassName("title")[0].value;
+            let publisher =  div.getElementsByClassName("publisher")[0].value;
+            let year =  div.getElementsByClassName("year")[0].value;
+
+            referenceBib = '@book{' + refID + ',' +
+                'author = {' + author + '},' +
+                'title = {' +  title + '},' +
+                'publisher = {' + publisher + '},' +
+                'year = {' + year + '}' +
+                '}';
+
+            return referenceBib;
+        } else if (referenceType == "3"){
+            let title =  div.getElementsByClassName("title")[0].value;
+
+            referenceBib = '@booklet{' + refID + ',' +
+                'title = {' +  title + '}' +
+                '}';
+            return referenceBib;
+
+        } else if (referenceType == "4"){
+            let author =  div.getElementsByClassName("author")[0].value;
+            let title =  div.getElementsByClassName("title")[0].value;
+            let booktitle =  div.getElementsByClassName("booktitle")[0].value;
+            let year =  div.getElementsByClassName("year")[0].value;
+
+            referenceBib = '@conference{' + refID + ',' +
+                'author = {' + author + '},' +
+                'title = {' +  title + '},' +
+                'booktitle = {' + booktitle + '},' +
+                'year = {' + year + '}' +
+                '}';
+            return referenceBib;
+
+        } else if (referenceType == "5"){
+            let author =  div.getElementsByClassName("editor")[0].value;
+            let title =  div.getElementsByClassName("title")[0].value;
+            let chapter =  div.getElementsByClassName("pages")[0].value;
+            let publisher =  div.getElementsByClassName("publisher")[0].value;
+            let year =  div.getElementsByClassName("year")[0].value;
+
+            referenceBib = '@inbook{' + refID + ',' +
+                'author = {' + author + '},' +
+                'title = {' +  title + '},' +
+                'chapter = {' + chapter + '},' +
+                'publisher = {' + publisher + '},' +
+                'year = {' + year + '}' +
+                '}';
+            return referenceBib;
+        } else if (referenceType == "6"){
+            let author =  div.getElementsByClassName("author")[0].value;
+            let title =  div.getElementsByClassName("title")[0].value;
+            let booktitle =  div.getElementsByClassName("booktitle")[0].value;
+            let publisher =  div.getElementsByClassName("publisher")[0].value;
+            let year =  div.getElementsByClassName("year")[0].value;
+
+            referenceBib = '@incollection{' + refID + ',' +
+                'author = {' + author + '},' +
+                'title = {' +  title + '},' +
+                'booktitle = {' + booktitle + '},' +
+                'publisher = {' + publisher + '},' +
+                'year = {' + year + '}' +
+                '}';
+            return referenceBib;
+
+        } else if (referenceType == "7"){
+            let author =  div.getElementsByClassName("author")[0].value;
+            let title =  div.getElementsByClassName("title")[0].value;
+            let booktitle =  div.getElementsByClassName("booktitle")[0].value;
+            let year =  div.getElementsByClassName("year")[0].value;
+
+            referenceBib = '@inproceedings{' + refID + ',' +
+                'author = {' + author + '},' +
+                'title = {' +  title + '},' +
+                'booktitle = {' + booktitle + '},' +
+                'year = {' + year + '}' +
+                '}';
+            return referenceBib;
+        } else if (referenceType == "8"){
+            let address =  div.getElementsByClassName("address")[0].value;
+            let title =  div.getElementsByClassName("title")[0].value;
+            let year =  div.getElementsByClassName("year")[0].value;
+
+            referenceBib = '@manual{' + refID + ',' +
+                'address = {' + address + '},' +
+                'title = {' +  title + '},' +
+                'year = {' + year + '}' +
+                '}';
+            return referenceBib;
+        } else if (referenceType == "9"){
+            let author =  div.getElementsByClassName("author")[0].value;
+            let title =  div.getElementsByClassName("title")[0].value;
+            let school =  div.getElementsByClassName("school")[0].value;
+            let year =  div.getElementsByClassName("year")[0].value;
+
+            referenceBib = '@mastersthesis{' + refID + ',' +
+                'author = {' + author + '},' +
+                'title = {' +  title + '},' +
+                'school = {' + school + '},' +
+                'year = {' + year + '}' +
+                '}';
+            return referenceBib;
+
+        } else if (referenceType == "10"){
+
+            let author =  div.getElementsByClassName("author")[0].value;
+            let title =  div.getElementsByClassName("title")[0].value;
+            let month =  div.getElementsByClassName("month")[0].value;
+            let year =  div.getElementsByClassName("year")[0].value;
+            let note =  div.getElementsByClassName("note")[0].value;
+            let howpub =  div.getElementsByClassName("howpub")[0].value;
+
+            referenceBib = '@misc{';
+            if(author != "")
+                referenceBib += 'author = {'+ author + '},';
+            if(title != "")
+                referenceBib += 'title = {'+ title + '},';
+            if(month != "")
+                referenceBib += 'month = {'+ month + '},';
+            if(year != "")
+                referenceBib += 'year = {'+ year + '},';
+            if(note != "")
+                referenceBib += 'note = {'+ note + '},';
+            if(howpub != "")
+                referenceBib += 'howpublished = {'+ howpub + '},';
+
+
+            referenceBib += '}';
+            return referenceBib;
+
+        } else if (referenceType == "11"){
+            let author =  div.getElementsByClassName("author")[0].value;
+            let title =  div.getElementsByClassName("title")[0].value;
+            let school =  div.getElementsByClassName("school")[0].value;
+            let year =  div.getElementsByClassName("year")[0].value;
+
+            referenceBib = '@phdthesis{' + refID + ',' +
+                'author = {' + author + '},' +
+                'title = {' +  title + '},' +
+                'school = {' + school + '},' +
+                'year = {' + year + '}' +
+                '}';
+            return referenceBib;
+
+        } else if (referenceType == "12"){
+            let title =  div.getElementsByClassName("title")[0].value;
+            let year = div.getElementsByClassName("year")[0].value;
+
+            referenceBib = '@proceedings{' + refID + ',' +
+                'title = {' +  title + '},' +
+                'year = {' + year + '}' +
+                '}';
+
+            return referenceBib;
+
+        } else if (referenceType == "13"){
+            let author =  div.getElementsByClassName("author")[0].value;
+            let title =  div.getElementsByClassName("title")[0].value;
+            let institution = div.getElementsByClassName("institution")[0].value;
+            let year = div.getElementsByClassName("year")[0].value;
+
+            referenceBib = '@techreport{' + refID + ',' +
+                'author = {' + author + '},' +
+                'title = {' +  title + '},' +
+                'institution = {' + institution + '},' +
+                'year = {' + year + '}' +
+                '}';
+            return referenceBib;
+        } else {
+            let author =  div.getElementsByClassName("author")[0].value;
+            let title =  div.getElementsByClassName("title")[0].value;
+            let note = div.getElementsByClassName("note")[0].value;
+
+            referenceBib = '@unpublished{' + refID + ',' +
+                'author = {' + author + '},' +
+                'title = {' +  title + '},' +
+                'note = {' + note + '}' +
+                '}';
+            return referenceBib;
+        }
     }
 
     function addHTMLforRef(div){
@@ -394,34 +608,36 @@ $(document).ready(function () {
         data += '<option value="12">Proceedings</option>';
         data += '<option value="13">Techreport</option>';
         data += '<option value="14">Unpublished</option></select>';
+        data += '<label class="hidden refLabel'+count+'" for="reference_id" id="reference_idLabel'+count+'">Reference ID</label>';
+        data += '<input class="form-control id hidden ref'+count+'" rows="1" id="reference_id'+count+'"></input>';
         data += '<label class="hidden refLabel'+count+'" for="reference_author" id="reference_authorLabel'+count+'">Author</label>';
-        data += '<textarea class="form-control hidden ref'+count+'" rows="1" id="reference_author'+count+'"></textarea>';
+        data += '<input class="form-control author hidden ref'+count+'" rows="1" id="reference_author'+count+'"></input>';
         data += '<label  class="hidden refLabel'+count+'" for="reference_title" id="reference_titleLabel'+count+'">Title</label>';
-        data += '<textarea class="form-control hidden ref'+count+'" rows="1" id="reference_title'+count+'"></textarea>';
+        data += '<input class="form-control title hidden ref'+count+'" rows="1" id="reference_title'+count+'"></input>';
         data += '<label class="hidden refLabel'+count+'" for="reference_journal" id="reference_journalLabel'+count+'">Journal</label>';
-        data += '<textarea class="form-control hidden ref'+count+'" rows="1" id="reference_journal'+count+'"></textarea>';
+        data += '<input class="form-control journal hidden ref'+count+'" rows="1" id="reference_journal'+count+'"></input>';
         data += '<label class="hidden refLabel'+count+'" for="reference_year" id="reference_yearLabel'+count+'">Year</label>';
-        data += '<textarea class="form-control hidden ref'+count+'" rows="1" id="reference_year'+count+'"></textarea>';
+        data += '<input class="form-control year hidden ref'+count+'" type="text" minlength="4" maxlength="4" pattern="[0-9]{4}" rows="1" id="reference_year'+count+'"></input>';
         data += '<label  class="hidden refLabel'+count+'" for="reference_author_or_editor" id="reference_author_or_editorLabel'+count+'">Author/Editor</label>';
-        data += '<textarea class="form-control hidden ref'+count+'" rows="1" id="reference_author_or_editor'+count+'"></textarea>';
+        data += '<input class="form-control editor hidden ref'+count+'" rows="1" id="reference_author_or_editor'+count+'"></input>';
         data += '<label class="hidden refLabel'+count+'" for="reference_publisher" id="reference_publisherLabel'+count+'">Publisher</label>';
-        data += '<textarea class="form-control hidden ref'+count+'" rows="1" id="reference_publisher'+count+'"></textarea>';
+        data += '<input class="form-control publisher hidden ref'+count+'" rows="1" id="reference_publisher'+count+'"></input>';
         data += '<label class="hidden refLabel'+count+'" for="reference_booktitle" id="reference_booktitleLabel'+count+'">Booktitle</label>';
-        data += '<textarea class="form-control hidden ref'+count+'" rows="1" id="reference_booktitle'+count+'"></textarea>';
+        data += '<input class="form-control booktitle hidden ref'+count+'" rows="1" id="reference_booktitle'+count+'"></input>';
         data += '<label class="hidden refLabel'+count+'" for="reference_pages" id="reference_pagesLabel'+count+'">Pages/Chapter</label>';
-        data += '<textarea class="form-control hidden ref'+count+'" rows="1" id="reference_pages'+count+'"></textarea>';
+        data += '<input class="form-control pages hidden ref'+count+'" rows="1" id="reference_pages'+count+'"></input>';
         data += '<label class="hidden refLabel'+count+'" for="reference_address" id="reference_addressLabel'+count+'">Address</label>';
-        data += '<textarea class="form-control hidden ref'+count+'" rows="1" id="reference_address'+count+'"></textarea>';
+        data += '<input class="form-control address hidden ref'+count+'" rows="1" id="reference_address'+count+'"></input>';
         data += '<label class="hidden refLabel'+count+'" for="reference_school" id="reference_schoolLabel'+count+'">School</label>';
-        data += '<textarea class="form-control hidden ref'+count+'" rows="1" id="reference_school'+count+'"></textarea>';
+        data += '<input class="form-control school hidden ref'+count+'" rows="1" id="reference_school'+count+'"></input>';
         data += '<label class="hidden refLabel'+count+'" for="reference_institution" id="reference_institutionLabel'+count+'">Institution</label>';
-        data += '<textarea class="form-control hidden ref'+count+'" rows="1" id="reference_institution'+count+'"></textarea>';
+        data += '<input class="form-control institution hidden ref'+count+'" rows="1" id="reference_institution'+count+'"></input>';
         data += '<label class="hidden refLabel'+count+'" for="reference_note" id="reference_noteLabel'+count+'">Note</label>';
-        data += '<textarea class="form-control hidden ref'+count+'" rows="1" id="reference_note'+count+'"></textarea>';
+        data += '<input class="form-control note hidden ref'+count+'" rows="1" id="reference_note'+count+'"></input>';
         data += '<label class="hidden refLabel'+count+'" for="reference_month" id="reference_monthLabel'+count+'">Month</label>';
-        data += '<textarea class="form-control hidden ref'+count+'" rows="1" id="reference_month'+count+'"></textarea>';
+        data += '<input class="form-control month hidden ref'+count+'" rows="1" id="reference_month'+count+'"></input>';
         data += '<label class="hidden refLabel'+count+'" for="reference_howpub" id="reference_howpubLabel'+count+'">Form of Publication</label>';
-        data += '<textarea class="form-control hidden ref'+count+'" rows="1" id="reference_howpub'+count+'"></textarea>';
+        data += '<input class="form-control howpub hidden ref'+count+'" rows="1" id="reference_howpub'+count+'"></input>';
         data += '<a type="button" class="btn btn-xs pull-right"  id="remove">Remove Reference</a><br/><br/></div>';
 
         $(div).append(data);
@@ -432,154 +648,184 @@ $(document).ready(function () {
     function addEventHandler(div, counter) {
         $('.ref-div').on('change', div ,function () {
 
-            $('.ref'+ counter).addClass('hidden').removeClass('input_flag');
+            $('.ref'+ counter).addClass('hidden').removeClass('input_flag').prop('required',false);
             $('.refLabel'+ counter).addClass('hidden');
 
             if ($('#selectTypeRef'+ counter).val() == "1") {
+                $('#reference_idLabel'+ counter).removeClass('hidden');
                 $('#reference_authorLabel'+ counter).removeClass('hidden');
                 $('#reference_titleLabel'+ counter).removeClass('hidden');
                 $('#reference_journalLabel'+ counter).removeClass('hidden');
                 $('#reference_yearLabel'+ counter).removeClass('hidden');
-                $('#reference_author'+ counter).removeClass('hidden').addClass('input_flag');
-                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag');
-                $('#reference_journal'+ counter).removeClass('hidden').addClass('input_flag');
-                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag');
+                $('#reference_id'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_author'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_journal'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
 
 
             } else if ($('#selectTypeRef'+ counter).val() == "2") {
+                $('#reference_idLabel'+ counter).removeClass('hidden');
                 $('#reference_author_or_editorLabel'+ counter).removeClass('hidden');
                 $('#reference_titleLabel'+ counter).removeClass('hidden');
                 $('#reference_publisherLabel'+ counter).removeClass('hidden');
                 $('#reference_yearLabel'+ counter).removeClass('hidden');
-                $('#reference_author_or_editor'+ counter).removeClass('hidden').addClass('input_flag');
-                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag');
-                $('#reference_publisher'+ counter).removeClass('hidden').addClass('input_flag');
-                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag');
+                $('#reference_id'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_author_or_editor'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_publisher'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
 
 
             } else if ($('#selectTypeRef'+ counter).val() == "3") {
+                $('#reference_idLabel'+ counter).removeClass('hidden');
                 $('#reference_titleLabel'+ counter).removeClass('hidden');
-                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag');
+                $('#reference_id'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
 
             }
             else if ($('#selectTypeRef'+ counter).val() == "4") {
+                $('#reference_idLabel'+ counter).removeClass('hidden');
                 $('#reference_authorLabel'+ counter).removeClass('hidden');
                 $('#reference_titleLabel'+ counter).removeClass('hidden');
                 $('#reference_booktitleLabel'+ counter).removeClass('hidden');
                 $('#reference_yearLabel'+ counter).removeClass('hidden');
-                $('#reference_author'+ counter).removeClass('hidden').addClass('input_flag');
-                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag');
-                $('#reference_booktitle'+ counter).removeClass('hidden').addClass('input_flag');
-                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag');
+                $('#reference_id'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_author'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_booktitle'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
 
 
             } else if ($('#selectTypeRef'+ counter).val() == "5") {
+                $('#reference_idLabel'+ counter).removeClass('hidden');
                 $('#reference_author_or_editorLabel'+ counter).removeClass('hidden');
                 $('#reference_titleLabel'+ counter).removeClass('hidden');
                 $('#reference_pagesLabel'+ counter).removeClass('hidden');
                 $('#reference_publisherLabel'+ counter).removeClass('hidden');
                 $('#reference_yearLabel'+ counter).removeClass('hidden');
-                $('#reference_author_or_editor'+ counter).removeClass('hidden').addClass('input_flag');
-                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag');
-                $('#reference_pages'+ counter).removeClass('hidden').addClass('input_flag');
-                $('#reference_publisher'+ counter).removeClass('hidden').addClass('input_flag');
-                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag');
+                $('#reference_id'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_author_or_editor'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_pages'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_publisher'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
 
 
             }
             else if ($('#selectTypeRef'+ counter).val() == "6") {
+                $('#reference_idLabel'+ counter).removeClass('hidden');
                 $('#reference_authorLabel'+ counter).removeClass('hidden');
                 $('#reference_titleLabel'+ counter).removeClass('hidden');
                 $('#reference_booktitleLabel'+ counter).removeClass('hidden');
                 $('#reference_publisherLabel'+ counter).removeClass('hidden');
                 $('#reference_yearLabel'+ counter).removeClass('hidden');
-                $('#reference_author'+ counter).removeClass('hidden').addClass('input_flag');
-                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag');
-                $('#reference_booktitle'+ counter).removeClass('hidden').addClass('input_flag');
-                $('#reference_publisher'+ counter).removeClass('hidden').addClass('input_flag');
-                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag');
+                $('#reference_id'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_author'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_booktitle'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_publisher'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
 
             }
             else if ($('#selectTypeRef'+ counter).val() == "7") {
+                $('#reference_idLabel'+ counter).removeClass('hidden');
                 $('#reference_authorLabel'+ counter).removeClass('hidden');
                 $('#reference_titleLabel'+ counter).removeClass('hidden');
                 $('#reference_booktitleLabel'+ counter).removeClass('hidden');
                 $('#reference_yearLabel'+ counter).removeClass('hidden');
-                $('#reference_author'+ counter).removeClass('hidden').addClass('input_flag');
-                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag');
-                $('#reference_booktitle'+ counter).removeClass('hidden').addClass('input_flag');
-                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag');
+                $('#reference_id'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_author'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_booktitle'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
 
 
             } else if ($('#selectTypeRef'+ counter).val() == "8") {
+                $('#reference_idLabel'+ counter).removeClass('hidden');
                 $('#reference_addressLabel'+ counter).removeClass('hidden');
                 $('#reference_titleLabel'+ counter).removeClass('hidden');
                 $('#reference_yearLabel'+ counter).removeClass('hidden');
-                $('#reference_address'+ counter).removeClass('hidden').addClass('input_flag');
-                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag');
-                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag');
+                $('#reference_id'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_address'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
 
 
             } else if ($('#selectTypeRef'+ counter).val() == "9") {
+                $('#reference_idLabel'+ counter).removeClass('hidden');
                 $('#reference_authorLabel'+ counter).removeClass('hidden');
                 $('#reference_titleLabel'+ counter).removeClass('hidden');
                 $('#reference_schoolLabel'+ counter).removeClass('hidden');
                 $('#reference_yearLabel'+ counter).removeClass('hidden');
-                $('#reference_author'+ counter).removeClass('hidden').addClass('input_flag');
-                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag');
-                $('#reference_school'+ counter).removeClass('hidden').addClass('input_flag');
-                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag');
+                $('#reference_id'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_author'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_school'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
 
 
             } else if ($('#selectTypeRef'+ counter).val() == "10") {
+                $('#reference_idLabel'+ counter).removeClass('hidden');
                 $('#reference_authorLabel'+ counter).removeClass('hidden');
                 $('#reference_titleLabel'+ counter).removeClass('hidden');
                 $('#reference_monthLabel'+ counter).removeClass('hidden');
                 $('#reference_yearLabel'+ counter).removeClass('hidden');
+                $('#reference_noteLabel'+ counter).removeClass('hidden');
                 $('#reference_howpubLabel'+ counter).removeClass('hidden');
+                $('#reference_id'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
                 $('#reference_author'+ counter).removeClass('hidden').addClass('input_flag');
                 $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag');
                 $('#reference_month'+ counter).removeClass('hidden').addClass('input_flag');
                 $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag');
+                $('#reference_note'+ counter).removeClass('hidden').addClass('input_flag');
                 $('#reference_howpub'+ counter).removeClass('hidden').addClass('input_flag');
 
 
             } else if ($('#selectTypeRef'+ counter).val() == "11") {
+                $('#reference_idLabel'+ counter).removeClass('hidden');
                 $('#reference_authorLabel'+ counter).removeClass('hidden');
                 $('#reference_titleLabel'+ counter).removeClass('hidden');
                 $('#reference_schoolLabel'+ counter).removeClass('hidden');
                 $('#reference_yearLabel'+ counter).removeClass('hidden');
-                $('#reference_author'+ counter).removeClass('hidden').addClass('input_flag');
-                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag');
-                $('#reference_school'+ counter).removeClass('hidden').addClass('input_flag');
-                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag');
+                $('#reference_id'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_author'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_school'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
 
 
             } else if ($('#selectTypeRef'+ counter).val() == "12") {
+                $('#reference_idLabel'+ counter).removeClass('hidden');
                 $('#reference_titleLabel'+ counter).removeClass('hidden');
                 $('#reference_yearLabel'+ counter).removeClass('hidden');
-                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag');
-                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag');
+                $('#reference_id'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
 
 
             } else if ($('#selectTypeRef'+ counter).val() == "13") {
+                $('#reference_idLabel'+ counter).removeClass('hidden');
                 $('#reference_authorLabel'+ counter).removeClass('hidden');
                 $('#reference_titleLabel'+ counter).removeClass('hidden');
                 $('#reference_institutionLabel'+ counter).removeClass('hidden');
                 $('#reference_yearLabel'+ counter).removeClass('hidden');
-                $('#reference_author'+ counter).removeClass('hidden').addClass('input_flag');
-                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag');
-                $('#reference_institution'+ counter).removeClass('hidden').addClass('input_flag');
-                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag');
+                $('#reference_id'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_author'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_institution'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
 
 
             } else if ($('#selectTypeRef'+ counter).val() == "14") {
+                $('#reference_idLabel'+ counter).removeClass('hidden');
                 $('#reference_authorLabel'+ counter).removeClass('hidden');
                 $('#reference_titleLabel'+ counter).removeClass('hidden');
                 $('#reference_noteLabel'+ counter).removeClass('hidden');
-                $('#reference_author'+ counter).removeClass('hidden').addClass('input_flag');
-                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag');
-                $('#reference_note'+ counter).removeClass('hidden').addClass('input_flag');
+                $('#reference_id'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_author'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_note'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
 
             }
         });

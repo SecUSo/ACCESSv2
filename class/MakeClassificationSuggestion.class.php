@@ -67,6 +67,7 @@ class MakeClassificationSuggestion
             $this->jsonArr["class"],
             $fixed_classvalues,
             $this->jsonArr["references"],
+            $this->jsonArr["bibtex"],
             $this->jsonArr["comment"],
             $this->sessionController->getId()
         );

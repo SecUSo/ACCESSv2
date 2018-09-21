@@ -25,7 +25,8 @@
 <div class="comment-section">
     <div class="comment">
         <h2>Discussion</h2>
-        <? for($it = 0; $it < count($data_discussion); $it++) { ?>
+        <? $references = "";
+        for($it = 0; $it < count($data_discussion); $it++) { ?>
             <? if ($data_discussion[$it]['post_type'] == 'auto-suggestion'){ ?>
                 <? if ($data_discussion[$it]['post_threadstatus'] == 'accepted'){ ?>
                 <div class="panel panel-success">
@@ -47,7 +48,10 @@
                     <? } ?>
                 </div>
                 <div class="panel-body word-wrap">
-                    <? echo $data_discussion[$it]['post_content']; ?>
+                    <?  $array = explode('bibtex:',$data_discussion[$it]['post_content']);
+                    if((count($array) == 2) && ($data_discussion[$it]['post_threadstatus'] == 'accepted'))
+                        $references .= $array[1];
+                    echo $array[0]; ?>
                         <? if ( $data_discussion[$it]['post_type'] == 'auto-suggestion'){ ?>
                          <hr>
                          <? for($ity = 0; $ity < count($data_discussion_subthreads); $ity++) {
@@ -67,7 +71,7 @@
                              </div>
                           <? } ?>
                          <? }; ?>
-                      <? }; ?>
+                      <? };?>
                 </div>
                 <? if (( $data_discussion[$it]['post_type'] == 'auto-suggestion')&& $data_discussion[$it]['post_threadstatus'] == 'active'){ ?>
                 <div class="panel-footer">
@@ -91,7 +95,7 @@
                  <? }?>
 
             </div>
-        <? }; ?>
+        <? }; file_put_contents('citations.bib', $references);?>
     </div>
     <hr>
     <div class="post-comment">
