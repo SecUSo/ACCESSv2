@@ -2,7 +2,7 @@
 
 ACCESS is a platform that helps developers and decision makers to select appropriate authentication schemes. It allows specifying the requirements needed from a suitable authentication scheme. Then, the platform compares the requirements with the entries of its knowledge base and lists the five most suitable authentication schemes and their suitability scores with respect to the specified requirements. The platform comprises three modules: the information module, the discussion module, and the decision support module.
 
-More information can be found at: [https://secuso.aifb.kit.edu/](https://secuso.aifb.kit.edu/english/115.php)
+More information can be found at: [https://secuso.aifb.kit.edu/](https://secuso.aifb.kit.edu/Authentication_ChoiCE_Support_System.php)
 
 
 ## Live Platform
