@@ -125,14 +125,18 @@ $(document).ready(function () {
             let bibtex = "bibtex:";
             let ref = document.getElementsByName("suggestion_reference[]");
             for (let i = 0; i < ref.length; i++){
-                let item = processReference(ref[i]);
-                let bibitem = processReferenceBibtex(ref[i]);
-                if(i > 0)
-                    bibtex += ', ';
+                if(ref[i].getElementsByClassName("reference")[0].value != "0") {
+                    let item = processReference(ref[i]);
+                    let bibitem = processReferenceBibtex(ref[i]);
+                    if (i > 0)
+                        bibtex += ', ';
 
-                bibtex += bibitem;
-                references += item;
-                references += '<br>';
+                    bibtex += bibitem;
+                    if (item != "") {
+                        references += item;
+                        references += '<br>';
+                    }
+                }
             }
 
 
@@ -360,18 +364,20 @@ $(document).ready(function () {
         for (let i = 0; i < fields.length; i++) {
         array.push(fields[i]);
         }
-        let ref ="";
+            let ref = "";
 
-        for (let i = 1; i < fields.length; i++) {
+            for (let i = 1; i < fields.length; i++) {
 
-            if(fields[i].value != "") {
-                ref += fields[i].value;
+                if (fields[i].value != "") {
+                    ref += fields[i].value;
 
-                if ((i != fields.length - 1) && moreInputs(array.slice(i+1, fields.length)))
-                    ref += ", ";
+                    if ((i != fields.length - 1) && moreInputs(array.slice(i + 1, fields.length)))
+                        ref += ", ";
+                }
             }
-        }
-        return ref;
+
+            return ref;
+
     }
 
     function moreInputs(data){
