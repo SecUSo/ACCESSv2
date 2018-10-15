@@ -373,7 +373,7 @@ $(document).ready(function () {
 
                     if ((i != fields.length - 1) && moreInputs(array.slice(i + 1, fields.length)))
                         ref += ", ";
-                }
+                } 
             }
 
             return ref;
@@ -657,17 +657,18 @@ $(document).ready(function () {
             $('.ref'+ counter).addClass('hidden').removeClass('input_flag').prop('required',false);
             $('.refLabel'+ counter).addClass('hidden');
 
+
             if ($('#selectTypeRef'+ counter).val() == "1") {
                 $('#reference_idLabel'+ counter).removeClass('hidden');
                 $('#reference_authorLabel'+ counter).removeClass('hidden');
                 $('#reference_titleLabel'+ counter).removeClass('hidden');
                 $('#reference_journalLabel'+ counter).removeClass('hidden');
                 $('#reference_yearLabel'+ counter).removeClass('hidden');
-                $('#reference_id'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
-                $('#reference_author'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
-                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
-                $('#reference_journal'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
-                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_id'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_author'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_journal'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
 
 
             } else if ($('#selectTypeRef'+ counter).val() == "2") {
@@ -676,18 +677,18 @@ $(document).ready(function () {
                 $('#reference_titleLabel'+ counter).removeClass('hidden');
                 $('#reference_publisherLabel'+ counter).removeClass('hidden');
                 $('#reference_yearLabel'+ counter).removeClass('hidden');
-                $('#reference_id'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
-                $('#reference_author_or_editor'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
-                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
-                $('#reference_publisher'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
-                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_id'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_author_or_editor'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_publisher'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
 
 
             } else if ($('#selectTypeRef'+ counter).val() == "3") {
                 $('#reference_idLabel'+ counter).removeClass('hidden');
                 $('#reference_titleLabel'+ counter).removeClass('hidden');
-                $('#reference_id'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
-                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_id'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
 
             }
             else if ($('#selectTypeRef'+ counter).val() == "4") {
@@ -696,11 +697,11 @@ $(document).ready(function () {
                 $('#reference_titleLabel'+ counter).removeClass('hidden');
                 $('#reference_booktitleLabel'+ counter).removeClass('hidden');
                 $('#reference_yearLabel'+ counter).removeClass('hidden');
-                $('#reference_id'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
-                $('#reference_author'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
-                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
-                $('#reference_booktitle'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
-                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_id'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_author'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_booktitle'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
 
 
             } else if ($('#selectTypeRef'+ counter).val() == "5") {
@@ -710,12 +711,12 @@ $(document).ready(function () {
                 $('#reference_pagesLabel'+ counter).removeClass('hidden');
                 $('#reference_publisherLabel'+ counter).removeClass('hidden');
                 $('#reference_yearLabel'+ counter).removeClass('hidden');
-                $('#reference_id'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
-                $('#reference_author_or_editor'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
-                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
-                $('#reference_pages'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
-                $('#reference_publisher'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
-                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_id'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_author_or_editor'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_pages'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_publisher'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
 
 
             }
@@ -726,12 +727,12 @@ $(document).ready(function () {
                 $('#reference_booktitleLabel'+ counter).removeClass('hidden');
                 $('#reference_publisherLabel'+ counter).removeClass('hidden');
                 $('#reference_yearLabel'+ counter).removeClass('hidden');
-                $('#reference_id'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
-                $('#reference_author'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
-                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
-                $('#reference_booktitle'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
-                $('#reference_publisher'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
-                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_id'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_author'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_booktitle'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_publisher'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
 
             }
             else if ($('#selectTypeRef'+ counter).val() == "7") {
@@ -740,11 +741,11 @@ $(document).ready(function () {
                 $('#reference_titleLabel'+ counter).removeClass('hidden');
                 $('#reference_booktitleLabel'+ counter).removeClass('hidden');
                 $('#reference_yearLabel'+ counter).removeClass('hidden');
-                $('#reference_id'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
-                $('#reference_author'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
-                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
-                $('#reference_booktitle'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
-                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_id'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_author'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_booktitle'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
 
 
             } else if ($('#selectTypeRef'+ counter).val() == "8") {
@@ -752,10 +753,10 @@ $(document).ready(function () {
                 $('#reference_addressLabel'+ counter).removeClass('hidden');
                 $('#reference_titleLabel'+ counter).removeClass('hidden');
                 $('#reference_yearLabel'+ counter).removeClass('hidden');
-                $('#reference_id'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
-                $('#reference_address'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
-                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
-                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_id'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_address'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
 
 
             } else if ($('#selectTypeRef'+ counter).val() == "9") {
@@ -764,11 +765,11 @@ $(document).ready(function () {
                 $('#reference_titleLabel'+ counter).removeClass('hidden');
                 $('#reference_schoolLabel'+ counter).removeClass('hidden');
                 $('#reference_yearLabel'+ counter).removeClass('hidden');
-                $('#reference_id'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
-                $('#reference_author'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
-                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
-                $('#reference_school'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
-                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_id'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_author'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_school'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
 
 
             } else if ($('#selectTypeRef'+ counter).val() == "10") {
@@ -779,7 +780,7 @@ $(document).ready(function () {
                 $('#reference_yearLabel'+ counter).removeClass('hidden');
                 $('#reference_noteLabel'+ counter).removeClass('hidden');
                 $('#reference_howpubLabel'+ counter).removeClass('hidden');
-                $('#reference_id'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_id'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
                 $('#reference_author'+ counter).removeClass('hidden').addClass('input_flag');
                 $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag');
                 $('#reference_month'+ counter).removeClass('hidden').addClass('input_flag');
@@ -794,20 +795,20 @@ $(document).ready(function () {
                 $('#reference_titleLabel'+ counter).removeClass('hidden');
                 $('#reference_schoolLabel'+ counter).removeClass('hidden');
                 $('#reference_yearLabel'+ counter).removeClass('hidden');
-                $('#reference_id'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
-                $('#reference_author'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
-                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
-                $('#reference_school'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
-                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_id'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_author'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_school'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
 
 
             } else if ($('#selectTypeRef'+ counter).val() == "12") {
                 $('#reference_idLabel'+ counter).removeClass('hidden');
                 $('#reference_titleLabel'+ counter).removeClass('hidden');
                 $('#reference_yearLabel'+ counter).removeClass('hidden');
-                $('#reference_id'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
-                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
-                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_id'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
 
 
             } else if ($('#selectTypeRef'+ counter).val() == "13") {
@@ -816,11 +817,11 @@ $(document).ready(function () {
                 $('#reference_titleLabel'+ counter).removeClass('hidden');
                 $('#reference_institutionLabel'+ counter).removeClass('hidden');
                 $('#reference_yearLabel'+ counter).removeClass('hidden');
-                $('#reference_id'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
-                $('#reference_author'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
-                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
-                $('#reference_institution'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
-                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_id'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_author'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_institution'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
 
 
             } else if ($('#selectTypeRef'+ counter).val() == "14") {
@@ -828,10 +829,10 @@ $(document).ready(function () {
                 $('#reference_authorLabel'+ counter).removeClass('hidden');
                 $('#reference_titleLabel'+ counter).removeClass('hidden');
                 $('#reference_noteLabel'+ counter).removeClass('hidden');
-                $('#reference_id'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
-                $('#reference_author'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
-                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
-                $('#reference_note'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true);
+                $('#reference_id'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_author'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_note'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
 
             }
         });
