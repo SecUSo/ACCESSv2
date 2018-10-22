@@ -356,7 +356,7 @@ $(document).ready(function () {
         $(this).parent('div').remove();
     });
 
-
+/*
     function processReference(div) {
 
         let fields = div.getElementsByClassName("input_flag");
@@ -379,11 +379,171 @@ $(document).ready(function () {
             return ref;
 
     }
+    */
 
-    function moreInputs(data){
+    function processReference(div){
+
+            let referenceType = div.getElementsByClassName("reference")[0].value;
+            let reference = "";
+
+            if(referenceType == "1"){
+                let author = div.getElementsByClassName("author")[0].value;
+                let title = div.getElementsByClassName("title")[0].value;
+                let journal = div.getElementsByClassName("journal")[0].value;
+                let year = div.getElementsByClassName("year")[0].value;
+                reference = title + " ("+ author + "), In " + journal + ", " + year + ".";
+                return reference;
+
+            } else if (referenceType == "2"){
+                let author =  div.getElementsByClassName("editor")[0].value;
+                let title =  div.getElementsByClassName("title")[0].value;
+                let publisher =  div.getElementsByClassName("publisher")[0].value;
+                let year =  div.getElementsByClassName("year")[0].value;
+
+                reference = title + " ("+ author + "), " + publisher + ", " + year + ".";
+
+                return reference;
+
+            } else if (referenceType == "3"){
+                let title =  div.getElementsByClassName("title")[0].value;
+
+                reference = title + ".";
+                return reference;
+
+            } else if (referenceType == "4"){
+                let author =  div.getElementsByClassName("author")[0].value;
+                let title =  div.getElementsByClassName("title")[0].value;
+                let booktitle =  div.getElementsByClassName("booktitle")[0].value;
+                let year =  div.getElementsByClassName("year")[0].value;
+
+                reference = title + " (" + author + "), " + booktitle+ ", " + year + ".";
+                return reference;
+
+            } else if (referenceType == "5"){
+                let author =  div.getElementsByClassName("editor")[0].value;
+                let title =  div.getElementsByClassName("title")[0].value;
+                let chapter =  div.getElementsByClassName("pages")[0].value;
+                let publisher =  div.getElementsByClassName("publisher")[0].value;
+                let year =  div.getElementsByClassName("year")[0].value;
+
+                reference = title + " ("  + author + "), Chapter in " + chapter + ", " + publisher + ", " + year + ".";
+                return reference;
+
+            } else if (referenceType == "6"){
+                let author =  div.getElementsByClassName("author")[0].value;
+                let title =  div.getElementsByClassName("title")[0].value;
+                let booktitle =  div.getElementsByClassName("booktitle")[0].value;
+                let publisher =  div.getElementsByClassName("publisher")[0].value;
+                let year =  div.getElementsByClassName("year")[0].value;
+
+                reference = title + " ("  + author + "), " + chapter + " in " + booktitle + ", " + publisher + ", " + year + ".";
+                return reference;
+
+            } else if (referenceType == "7"){
+                let author =  div.getElementsByClassName("author")[0].value;
+                let title =  div.getElementsByClassName("title")[0].value;
+                let booktitle =  div.getElementsByClassName("booktitle")[0].value;
+                let year =  div.getElementsByClassName("year")[0].value;
+
+                reference =  title + " ("  + author + "), In " + booktitle + ", " + year + ".";
+                return reference;
+
+            } else if (referenceType == "8"){
+                let title =  div.getElementsByClassName("title")[0].value;
+                let year =  div.getElementsByClassName("year")[0].value;
+
+                reference = title + ", " + year + ".";
+                return reference;
+
+            } else if (referenceType == "9"){
+                let author =  div.getElementsByClassName("author")[0].value;
+                let title =  div.getElementsByClassName("title")[0].value;
+                let school =  div.getElementsByClassName("school")[0].value;
+                let year =  div.getElementsByClassName("year")[0].value;
+
+                reference =  title + " ("  + author + "), Master\'s thesis, " + school + ", " + year + ".";
+
+                return reference;
+
+            } else if (referenceType == "10"){
+
+                let author =  div.getElementsByClassName("author")[0].value;
+                let title =  div.getElementsByClassName("title")[0].value;
+                let year =  div.getElementsByClassName("year")[0].value;
+                let howpub =  div.getElementsByClassName("howpub")[0].value;
+
+                if((title != "")&&(author != "")&&(howpub != "")&&(year != "")) {
+                    reference = title + ' (' + author + '), ' + howpub + ', ' + year + ".";
+                    return reference;
+                } else {
+                    let array = [];
+                    array.push(title, author, howpub, year);
+                    let i;
+                    for (i = 0; i < 4; i++) {
+                        if (array[i] != "") {
+                            if ((i < 3) && moreInputs(array, i+1)) {
+                                if (array[i] == title && array[i + 1] != "") {
+                                    reference += array[i];
+                                } else {
+                                    if (array[i] == author) {
+                                        reference += " (" + array[i] + "), ";
+                                    } else {
+                                        reference += array[i] + ", ";
+                                    }
+                                }
+                            } else {
+                                if (array[i] == author) {
+                                    reference += " (" + author + ").";
+                                } else {
+                                    reference += array[i] + ".";
+                                }
+                            }
+                        }
+                    }
+                }
+                return reference;
+
+            } else if (referenceType == "11"){
+                let author =  div.getElementsByClassName("author")[0].value;
+                let title =  div.getElementsByClassName("title")[0].value;
+                let school =  div.getElementsByClassName("school")[0].value;
+                let year =  div.getElementsByClassName("year")[0].value;
+
+                reference =  title + " ("  + author + "), PhD thesis, " + school + ", " + year + ".";
+
+                return reference;
+
+            } else if (referenceType == "12"){
+                let title =  div.getElementsByClassName("title")[0].value;
+                let year = div.getElementsByClassName("year")[0].value;
+
+                reference = title + ", " + year + ".";
+                return reference;
+
+            } else if (referenceType == "13"){
+                let author =  div.getElementsByClassName("author")[0].value;
+                let title =  div.getElementsByClassName("title")[0].value;
+                let institution = div.getElementsByClassName("institution")[0].value;
+                let year = div.getElementsByClassName("year")[0].value;
+
+                reference =  title + " ("  + author + "), Technical report, " + institution + ", " + year + ".";
+                return reference;
+
+            } else {
+                let author =  div.getElementsByClassName("author")[0].value;
+                let title =  div.getElementsByClassName("title")[0].value;
+                let note = div.getElementsByClassName("note")[0].value;
+
+                reference = title + " ("  + author + ").";
+                return reference;
+            }
+    }
+
+
+    function moreInputs(data, index){
         let x = false;
-        for (let i = 0; i < data.length; i++) {
-            if(data[i].value != "") {
+        for (let i = index ; i < data.length; i++) {
+            if(data[i] != "") {
                 x = true;
                 return x;
             }
@@ -623,7 +783,7 @@ $(document).ready(function () {
         data += '<label class="hidden refLabel'+count+'" for="reference_journal" id="reference_journalLabel'+count+'">Journal</label>';
         data += '<input class="form-control journal hidden ref'+count+'" rows="1" id="reference_journal'+count+'"></input>';
         data += '<label class="hidden refLabel'+count+'" for="reference_year" id="reference_yearLabel'+count+'">Year</label>';
-        data += '<input class="form-control year hidden ref'+count+'" type="text" minlength="4" maxlength="4" pattern="[0-9]{4}" rows="1" id="reference_year'+count+'"></input>';
+        data += '<input class="form-control year hidden ref'+count+'" type="number"  rows="1" id="reference_year'+count+'"></input>';
         data += '<label  class="hidden refLabel'+count+'" for="reference_author_or_editor" id="reference_author_or_editorLabel'+count+'">Author/Editor</label>';
         data += '<input class="form-control editor hidden ref'+count+'" rows="1" id="reference_author_or_editor'+count+'"></input>';
         data += '<label class="hidden refLabel'+count+'" for="reference_publisher" id="reference_publisherLabel'+count+'">Publisher</label>';
@@ -668,7 +828,7 @@ $(document).ready(function () {
                 $('#reference_author'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
                 $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
                 $('#reference_journal'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
-                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please enter a valid year.')").attr('oninput', "setCustomValidity('')");
 
 
             } else if ($('#selectTypeRef'+ counter).val() == "2") {
@@ -681,7 +841,7 @@ $(document).ready(function () {
                 $('#reference_author_or_editor'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
                 $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
                 $('#reference_publisher'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
-                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please enter a valid year.')").attr('oninput', "setCustomValidity('')");
 
 
             } else if ($('#selectTypeRef'+ counter).val() == "3") {
@@ -701,7 +861,7 @@ $(document).ready(function () {
                 $('#reference_author'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
                 $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
                 $('#reference_booktitle'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
-                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please enter a valid year.')").attr('oninput', "setCustomValidity('')");
 
 
             } else if ($('#selectTypeRef'+ counter).val() == "5") {
@@ -716,7 +876,7 @@ $(document).ready(function () {
                 $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
                 $('#reference_pages'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
                 $('#reference_publisher'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
-                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please enter a valid year.')").attr('oninput', "setCustomValidity('')");
 
 
             }
@@ -732,7 +892,7 @@ $(document).ready(function () {
                 $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
                 $('#reference_booktitle'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
                 $('#reference_publisher'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
-                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please enter a valid year.')").attr('oninput', "setCustomValidity('')");
 
             }
             else if ($('#selectTypeRef'+ counter).val() == "7") {
@@ -745,7 +905,7 @@ $(document).ready(function () {
                 $('#reference_author'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
                 $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
                 $('#reference_booktitle'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
-                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please enter a valid year.')").attr('oninput', "setCustomValidity('')");
 
 
             } else if ($('#selectTypeRef'+ counter).val() == "8") {
@@ -756,7 +916,7 @@ $(document).ready(function () {
                 $('#reference_id'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
                 $('#reference_address'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
                 $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
-                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please enter a valid year.')").attr('oninput', "setCustomValidity('')");
 
 
             } else if ($('#selectTypeRef'+ counter).val() == "9") {
@@ -769,7 +929,7 @@ $(document).ready(function () {
                 $('#reference_author'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
                 $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
                 $('#reference_school'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
-                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please enter a valid year.')").attr('oninput', "setCustomValidity('')");
 
 
             } else if ($('#selectTypeRef'+ counter).val() == "10") {
@@ -784,7 +944,7 @@ $(document).ready(function () {
                 $('#reference_author'+ counter).removeClass('hidden').addClass('input_flag');
                 $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag');
                 $('#reference_month'+ counter).removeClass('hidden').addClass('input_flag');
-                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag');
+                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').attr('oninvalid', "setCustomValidity('Please enter a valid year.')").attr('oninput', "setCustomValidity('')");
                 $('#reference_note'+ counter).removeClass('hidden').addClass('input_flag');
                 $('#reference_howpub'+ counter).removeClass('hidden').addClass('input_flag');
 
@@ -799,7 +959,7 @@ $(document).ready(function () {
                 $('#reference_author'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
                 $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
                 $('#reference_school'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
-                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please enter a valid year.')").attr('oninput', "setCustomValidity('')");
 
 
             } else if ($('#selectTypeRef'+ counter).val() == "12") {
@@ -808,7 +968,7 @@ $(document).ready(function () {
                 $('#reference_yearLabel'+ counter).removeClass('hidden');
                 $('#reference_id'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
                 $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
-                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please enter a valid year.')").attr('oninput', "setCustomValidity('')");
 
 
             } else if ($('#selectTypeRef'+ counter).val() == "13") {
@@ -821,7 +981,7 @@ $(document).ready(function () {
                 $('#reference_author'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
                 $('#reference_title'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
                 $('#reference_institution'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
-                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please fill out this field.')").attr('oninput', "setCustomValidity('')");
+                $('#reference_year'+ counter).removeClass('hidden').addClass('input_flag').prop('required',true).attr('oninvalid', "setCustomValidity('Please enter a valid year.')").attr('oninput', "setCustomValidity('')");
 
 
             } else if ($('#selectTypeRef'+ counter).val() == "14") {
