@@ -41,8 +41,8 @@ class GetClassDataForClassificationSuggestion
         $this->classifyAuthenticationsController = new ClassifyAuthenticationsController();
         $this->contentController = new ContentController();
 
-        if (!$this->sessionController->getIsAdmin())
-            die("error: no access!");
+       /* if (!$this->sessionController->getIsAdmin())
+            die("error: no access!");*/
 
         $this->getParams();
         $this->init();
