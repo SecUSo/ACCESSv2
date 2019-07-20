@@ -34,7 +34,7 @@
 
                 <!--<h2>The Collaborative Authentication Research and Decision Support Platform</h2>-->
 
-                <p>ACCESS is a collaborative authentication research and decision support platform. It comprises three modules: the information module, the discussion module, and the decision support module. All modules have been evaluated in user studies.</p>
+                <p>ACCESS is a collaborative authentication research and decision support platform. It comprises three modules: the information module, the discussion module, and the decision support module.</p>
 
                 <h2>Information Module</h2>
                 <p>Using the information module, users of the platform can access the information about the different authentication systems, features and sub-features held in the platforms knowledge base. To explore the information held by this platform click one of the authentication schemes or (sub-)features in the <a href="#info-divider">lists on this page</a>.</p>
