@@ -97,7 +97,7 @@ class UserRegistration
             $this->returnStatus(2);
 
         $this->userController->addUser($this->sLastName, $this->sFirstName, $this->sTitle,
-            $this->sEMail, $this->sOrganization, md5($this->sPassword), $this->sPGPPublicKey);
+            $this->sEMail, $this->sOrganization, password_hash($this->sPassword, PASSWORD_DEFAULT), $this->sPGPPublicKey);
 
         $tempUser = $this->userController->getUserByEMail($this->sEMail);
         $this->sessionController->setSessionData($tempUser[0]['Id']);

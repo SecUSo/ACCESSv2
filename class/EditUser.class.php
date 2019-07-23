@@ -105,7 +105,7 @@ class EditUser
         if ($this->sPassword == "")
             $this->userController->updateUser($this->sId, $this->sLastName, $this->sFirstName, $this->sTitle, $tempUser[0]['EMail'], $this->sOrganization, $tempUser[0]['Password'], $tempUser[0]['IsAdmin']);
         else
-            $this->userController->updateUser($this->sId, $this->sLastName, $this->sFirstName, $this->sTitle, $tempUser[0]['EMail'], $this->sOrganization, md5($this->sPassword), $tempUser[0]['IsAdmin']);
+            $this->userController->updateUser($this->sId, $this->sLastName, $this->sFirstName, $this->sTitle, $tempUser[0]['EMail'], $this->sOrganization, password_hash($this->sPassword, PASSWORD_DEFAULT), $tempUser[0]['IsAdmin']);
 
         $this->returnStatus(0);
 

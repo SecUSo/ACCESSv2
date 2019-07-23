@@ -17,9 +17,9 @@ class GetSubclassesForNewAuthSuggestion
         $this->sessionController = new SessionController();
         $this->contentController = new ContentController();
 
-         /*if (!$this->sessionController->getIsAdmin())
-            die("error: no access!");*/
-
+       /* if (!$this->sessionController->getIsAdmin())
+            die("error: no access!");
+*/
         $this->init();
     }
 

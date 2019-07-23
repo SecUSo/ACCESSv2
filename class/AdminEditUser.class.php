@@ -75,7 +75,7 @@ class AdminEditUser
         if ($this->sFirstName == '' ||
             $this->sLastName == '' ||
             $this->sEMail == '' ||
-            $this->sPassword == '' ||
+            //$this->sPassword == '' ||
             $this->sId == ''
         ) {
             return FALSE;
@@ -100,7 +100,11 @@ class AdminEditUser
             $this->returnStatus(2);
         }
 
-        $this->userController->updateUser($this->sId, $this->sLastName, $this->sFirstName, $this->sTitle, $this->sEMail, $this->sOrganization, $this->sPassword, $this->bIsAdmin);
+        if ($this->sPassword == "")
+            $this->userController->updateUser($this->sId, $this->sLastName, $this->sFirstName, $this->sTitle, $this->sEMail, $this->sOrganization, $tempUser[0]['Password'], $this->bIsAdmin);
+        else
+            $this->userController->updateUser($this->sId, $this->sLastName, $this->sFirstName, $this->sTitle, $this->sEMail, $this->sOrganization, password_hash($this->sPassword, PASSWORD_DEFAULT), $this->bIsAdmin);
+
         $this->returnStatus(0);
 
     }

@@ -58,6 +58,7 @@ class MakeSubfeatureSuggestion
             $this->jsonArr["subfeature"],
             $this->jsonArr["value"],
             $this->jsonArr["references"],
+            $this->jsonArr["bibtex"],
             $this->jsonArr["comment"],
             $this->sessionController->getId()
         );

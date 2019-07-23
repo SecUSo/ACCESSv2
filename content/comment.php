@@ -25,7 +25,8 @@
 <div class="comment-section">
     <div class="comment">
         <h2>Discussion</h2>
-        <? for($it = 0; $it < count($data_discussion); $it++) { ?>
+        <? $references = "";
+        for($it = 0; $it < count($data_discussion); $it++) { ?>
             <? if ($data_discussion[$it]['post_type'] == 'auto-suggestion'){ ?>
                 <? if ($data_discussion[$it]['post_threadstatus'] == 'accepted'){ ?>
                 <div class="panel panel-success">
@@ -47,7 +48,10 @@
                     <? } ?>
                 </div>
                 <div class="panel-body word-wrap">
-                    <? echo $data_discussion[$it]['post_content']; ?>
+                    <?  $array = explode('bibtex:',$data_discussion[$it]['post_content']);
+                    if((count($array) == 2) && ($data_discussion[$it]['post_threadstatus'] == 'accepted'))
+                        $references .= $array[1];
+                    echo $array[0]; ?>
                         <? if ( $data_discussion[$it]['post_type'] == 'auto-suggestion'){ ?>
                          <hr>
                          <? for($ity = 0; $ity < count($data_discussion_subthreads); $ity++) {
@@ -67,7 +71,7 @@
                              </div>
                           <? } ?>
                          <? }; ?>
-                      <? }; ?>
+                      <? };?>
                 </div>
                 <? if (( $data_discussion[$it]['post_type'] == 'auto-suggestion')&& $data_discussion[$it]['post_threadstatus'] == 'active'){ ?>
                 <div class="panel-footer">
@@ -91,7 +95,7 @@
                  <? }?>
 
             </div>
-        <? }; ?>
+        <? }; file_put_contents('citations.bib', $references);?>
     </div>
     <hr>
     <div class="post-comment">
@@ -182,10 +186,13 @@
                         </div>
                     </div>
                 </div>
-                <label for="subfeature_suggestion_references">References</label>
-                <textarea class="form-control" rows="3" id="subfeature_suggestion_references"></textarea>
-                </br>
-                <label for="subfeature_suggestion_comment">Comment</label>
+                <div class="ref-div" id="reference_subfeature">
+                <h4>References</h4>
+                </div>
+                <br/>
+                <p><button type="button" class="btn btn-default" id="addRefSub">Add another Reference</button></p>
+                <br/>
+                <label for="subfeature_suggestion_comment"><h4>Comment</h4></label>
                 <textarea class="form-control" rows="3" id="subfeature_suggestion_comment"></textarea>
             </div>
             <div id="suggestion_rate" class="form-group3 hidden">
@@ -205,10 +212,12 @@
                 <div id="authclassification" class="panel panel-default">
                     <div id="siteloader" style="overflow: auto;"></div>​
                 </div>
-                <label for="classification_suggestion_references">References</label>
-                <textarea class="form-control" rows="3" id="classification_suggestion_references"></textarea>
-                </br>
-                <label for="classification_suggestion_comment">Comment</label>
+                <div class="ref-div" id="reference_classification">
+                <h4>References</h4>
+                </div>
+                <br/>
+                <p><button type="button" class="btn btn-default" id="addRefClass">Add another Reference</button></p>
+                <label for="classification_suggestion_comment"><h4>Comment</h4></label>
                 <textarea class="form-control" rows="3" id="classification_suggestion_comment"></textarea>
             </div>
             <div class="form-group">
@@ -220,7 +229,6 @@
         </form>
     </div>
 </div>
-
 
 <script src="js/comment.js"></script>
 
