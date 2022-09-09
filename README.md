@@ -37,3 +37,7 @@ Philip Stumpf<br />
 Thomas Weber<br />
 Christian Engelbert<br />
 Christian Manoscu<br />
+
+<a href="https://github.com/SecUSo/ACCESSv2/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=SecUSo/ACCESSv2&max=100&columns=20" />
+</a>
