@@ -1,0 +1,27 @@
+version: "3.3"
+
+networks:
+  traefik-public:
+    external: true
+
+services:
+  web:
+    image: accessv2-master_web:latest
+    build:
+      context: ./image
+      dockerfile: Dockerfile
+    networks:
+      - traefik-public
+    volumes:
+      - /storage/docker-volumes/org_secuso_auto-deploy_repos/ACCESSv2/www:/var/www/html/:ro
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.docker.network=traefik-public
+        - traefik.http.routers.access-http.rule=Host(`access.secuso.org`)
+        - traefik.http.routers.access-http.entrypoints=http
+        - traefik.http.routers.access-https.rule=Host(`access.secuso.org`)
+        - traefik.http.routers.access-https.entrypoints=https
+        - traefik.http.routers.access-https.service=access
+        - traefik.http.services.access.loadbalancer.server.scheme=http
+        - traefik.http.services.access.loadbalancer.server.port=80
