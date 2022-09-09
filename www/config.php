@@ -26,9 +26,9 @@
 /*
  *
  */
-define('DB_HOST', 'localhost');
-define('DB_USER', 'root');
-define('DB_PASSWORD', '');
-define('DB_DB', 'access');
+define('DB_HOST', $_ENV["DB_HOST"]);
+define('DB_USER', $_ENV["DB_USER"]);
+define('DB_PASSWORD', $_ENV["DB_PASSWORD"]);
+define('DB_DB', $_ENV["DB_DB"]);
 
 ?>
