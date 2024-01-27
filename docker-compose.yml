@@ -6,7 +6,7 @@ networks:
 
 services:
   web:
-    image: accessv2-master_web:latest
+    image: ACCESSv2-master_web:latest
     build:
       context: ./image
       dockerfile: Dockerfile
