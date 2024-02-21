@@ -46,6 +46,7 @@ if (!defined('BIBTEXBROWSER')) {
 // it will help you to upgrade the script with a new version
 // the changes that require existing bibtexbrowser symbols should be in bibtexbrowser.after.php (included at the end of this file)
 // per bibtex file configuration
+    @define('Q_FILE', 'bib');
     @include(@$_GET[Q_FILE].'.local.php');
     @include(preg_replace('/\.php$/','.local.php',__FILE__));
 
@@ -182,7 +183,6 @@ if (!defined('BIBTEXBROWSER')) {
     @define('Q_YEAR_INPRESS', 'in press');
     @define('Q_YEAR_ACCEPTED', 'accepted');
     @define('Q_YEAR_SUBMITTED', 'submitted');
-    @define('Q_FILE', 'bib');
     @define('Q_AUTHOR', 'author');
     @define('Q_AUTHOR_PAGE', 'author_page');
     @define('Q_TAG', 'keywords');
